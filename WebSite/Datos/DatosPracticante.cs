@@ -51,6 +51,7 @@ namespace Datos
 					CitaPracticanteModelo cita = new CitaPracticanteModelo();
 					cita.HoraCita = citaActual.HoraCita;
 					cita.CitaId = citaActual.CitaId;
+					cita.PacienteId = citaActual.PacienteId;
 					cita.EstadoCita = citaActual.EstadoCita;
 					cita.FechaCita = citaActual.FechaCita;
 					cita.Practicante = citaActual.Practicante;

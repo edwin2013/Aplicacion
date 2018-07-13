@@ -8,6 +8,31 @@ namespace Negocios
 {
 	public class NegociosPaciente
 	{
+
+		public List<PacienteModelo> ObtenerPacientes(int pacienteId)
+		{
+			try
+			{
+				return new DatosPaciente().ObtenerPacientes(pacienteId);
+			}
+			catch (Exception excepcion)
+			{
+				throw new Exception(excepcion.Message);
+			}
+		}
+
+		public Mensaje ActualizarPaciente(PacienteModelo pacienteModelo)
+		{
+			try
+			{
+				return new DatosPaciente().ActualizarPaciente(pacienteModelo);
+			}
+			catch (Exception excepcion)
+			{
+				throw new Exception(excepcion.Message);
+			}
+		}
+
 		public List<DiasOfertaMes> ObtenerDiasOfertaMes(int mes, int anio)
 		{
 			try

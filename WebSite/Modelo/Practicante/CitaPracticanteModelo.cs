@@ -5,6 +5,7 @@
 		public string Accion { set; get; }
 		public string HoraCita { set; get; }
 		public int CitaId { set; get; }
+		public int PacienteId { set; get; }
 		public string EstadoCita { set; get; }
 		public string FechaCita { set; get; }
 		public string Practicante { set; get; }

@@ -22,9 +22,11 @@ namespace Modelo.ModeloMapeo
         public string Identificacion { get; set; }
         public string Telefono { get; set; }
         public string CorreoElectronico { get; set; }
+        public int PacienteId { get; set; }
         public Nullable<int> Edad { get; set; }
         public Nullable<int> CantidadHijos { get; set; }
         public string EstadoCivil { get; set; }
+        public Nullable<int> EstadoCivilId { get; set; }
         public string Nacionalidad { get; set; }
         public string Antecedentes { get; set; }
         public string Recomendaciones { get; set; }

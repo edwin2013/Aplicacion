@@ -9,6 +9,66 @@ namespace Datos
 {
 	public class DatosPaciente
 	{
+		public List<PacienteModelo> ObtenerPacientes(int pacienteId)
+		{
+			List<PacienteModelo> listaPacientes = new List<PacienteModelo>();
+
+			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+			{
+				var pacientes = contexto.FUN_ObtenerPacientes(pacienteId);
+
+				foreach (FUN_ObtenerPacientes_Result paciente in pacientes)
+				{
+					PacienteModelo pacienteModelo = new PacienteModelo();
+					pacienteModelo.PacienteId = paciente.PacienteId ?? default(int);
+					pacienteModelo.Nombre = paciente.Nombre ;
+					pacienteModelo.Apellidos = paciente.Apellidos;
+					pacienteModelo.CorreoElectronico = paciente.CorreoElectronico ;
+					pacienteModelo.Telefono = paciente.Telefono ;
+					pacienteModelo.Nacionalidad = paciente.Nacionalidad;
+					pacienteModelo.Identificacion = paciente.Identificacion;
+					pacienteModelo.EstadoCivil = paciente.EstadoCivil ?? default(int);
+					pacienteModelo.Edad = paciente.Edad ?? default(int);
+					pacienteModelo.CantidadHijos = paciente.CantidadHijos ?? default(int);
+					
+					listaPacientes.Add(pacienteModelo);
+				}
+			}
+
+			return listaPacientes;
+		}
+
+		public Mensaje ActualizarPaciente(PacienteModelo pacienteModelo)
+		{
+			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
+			ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
+
+			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+			{
+				contexto.SP_ActualizarPaciente(
+					pacienteModelo.PacienteId,
+					pacienteModelo.Nombre,
+					pacienteModelo.Apellidos,
+					pacienteModelo.CorreoElectronico,
+					pacienteModelo.Telefono,
+					pacienteModelo.Nacionalidad,
+					pacienteModelo.Identificacion,
+					pacienteModelo.EstadoCivil,
+					pacienteModelo.Edad,
+					pacienteModelo.CantidadHijos,
+					resultado,
+					mensaje
+					);
+			}
+
+			Mensaje mensajeMantenimiento =
+				new Mensaje(
+					Convert.ToBoolean(resultado.Value),
+					Convert.ToString(mensaje.Value));
+
+			return mensajeMantenimiento;
+		}
+
 		public List<DiasOfertaMes> ObtenerDiasOfertaMes(int mes, int anio)
 		{
 			List<DiasOfertaMes> listaDiasOferta = new List<DiasOfertaMes>();

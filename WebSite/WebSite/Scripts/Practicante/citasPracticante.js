@@ -4,7 +4,6 @@
 	$( '#txbFechaFin' ).val( fechaActual );
 	$( '#txbFechaInicio' ).val( fechaActual );
 
-	obtenerCitasPracticante();
 	obtenerUsuariosPorRol();
 } );
 
@@ -14,7 +13,7 @@ function mostrarPopUpEditarCita( citaId, recomendaciones, antecedentes, paciente
 	$( '#txaRecomendaciones' ).val( recomendaciones );
 	$( '#hdfCitaId' ).val( citaId );
 	$( '#hdfAccion' ).val( 'A' );
-	$( '#tituloPopUp' ).html( 'Datos del paciente ' + paciente );
+	$( '#tituloPopUp' ).html( 'Cita del paciente ' + paciente );
 
 	$( '#popUpEditarCita' ).modal( 'show' );
 }
@@ -30,144 +29,9 @@ function mostrarPopUpEliminarCita( citaId, fecha, hora, paciente )
 	$( '#popUpEliminarCita' ).modal( 'show' );
 }
 
-function obtenerDatosFiltro()
+function mostrarPopUpInformacionPaciente( pacienteId )
 {
-	var datos = JSON.stringify( {
-		FechaInicio: $( '#txbFechaInicio' ).val() != '' ? $( '#txbFechaInicio' ).val() : '-1',
-		FechaFin: $( '#txbFechaFin' ).val() != '' ? $( '#txbFechaFin' ).val() : '-1',
-		Apellidos: $( '#txbApellidos' ).val() != '' ? $( '#txbApellidos' ).val() : '-1',
-		Identificacion: $( '#txbIdentificacion' ).val() != '' ? $( '#txbIdentificacion' ).val() : '-1',
-		UsuarioId: $( '#ddlUsuario' ).val() != '' ? $( '#ddlUsuario' ).val() : '-1'
-	} );
-
-	return datos;
-}
-
-function validarConsulta()
-{
-	var fechaInicioValida = $( '#txbFechaInicio' ).val() != '' && $( '#txbFechaInicio' ).val() !== null;
-	var fechaFinValida = $( '#txbFechaFin' ).val() != '' && $( '#txbFechaFin' ).val() !== null;
-	var rangoFechasValido = comprarFechasInicioFinal( $( '#txbFechaInicio' ).val(), $( '#txbFechaFin' ).val() );
-	var practicanteValido = $( '#ddlUsuario' ).val() != '' && $( '#ddlUsuario' ).val() != '-1';
-
-	var mensajeError = '';
-
-	mensajeError = fechaInicioValida ? mensajeError : ( mensajeError + '<p>Digite la fecha inicial.</p>' );
-	mensajeError = fechaFinValida ? mensajeError : ( mensajeError + '<p>Digite la fecha final.</p>' );
-	mensajeError = rangoFechasValido ? mensajeError : ( mensajeError + '<p>La fecha final debe ser mayor a la fecha inicial.</p>' );
-	mensajeError = practicanteValido ? mensajeError : ( mensajeError + '<p>Por favor seleccione un practicante.</p>' );
-
-	var formularioValido = mensajeError == '';
-
-	if ( !formularioValido )
-	{
-		mostrarMensaje( 'Campos requeridos para la consulta', mensajeError, 'alerta' );
-	}
-
-	return formularioValido;
-}
-
-function obtenerCitasPracticante()
-{
-	var envioDatosEsValido = validarConsulta();
-
-	if ( envioDatosEsValido )
-	{
-		var datos = obtenerDatosFiltro()
-		mostrarLoading();
-
-		$.ajax( {
-			type: "POST",
-			url: '/Practicante/ObtenerCitasPracticante',
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: datos,
-			success: function ( data )
-			{
-				ocultarLoading();
-				var lista = $.parseJSON( data );
-				crearGridCitas( lista );
-			},
-			error: function ( jqXHR, textStatus, errorThrown )
-			{
-				ocultarLoading();
-				var responseText = jqXHR.responseText;
-				var mensajeError = obtenerMensajeError( responseText );
-				mostrarMensaje( 'Error', mensajeError, 'error' );
-			}
-		} );
-	}
-}
-
-function crearGridCitas( lista )
-{
-	var divContenedor = $( '#divGridCitas' );
-	divContenedor.empty();
-
-	var tabla = '<table id="gridCitas" class="table table-striped table-hover table-bordered"  >' +
-                              '<thead>' +
-                              '<tr>' +
-							  '<th></th>' +
-							  '<th></th>' +
-							  '<th>Paciente</th>' +
-                              '<th>Fecha</th>' +
-                              '<th>Hora</th>' +
-                              '<th>Identificacion</th>' +
-                              '<th>Telefono</th>' +
-                              '<th>Correo</th>' +
-                              '<th>Estado cita</th>' +
-
-
-                              '</tr>' +
-                              '</thead>' +
-                              '<tbody>' +
-                             '</tbody>' +
-                             '</table>';
-
-	divContenedor.append( tabla );
-	var tBody = divContenedor.children();
-
-	$.each( lista, function ( index, item )
-	{
-		var fecha = "'" + item.FechaCita + "'";
-		var hora = "'" + item.HoraCita + "'";
-		var paciente = "'" + item.Paciente + "'";
-		var identificacion = "'" + item.Identificacion + "'";
-		var telefono = "'" + item.Telefono + "'";
-		var correo = "'" + item.CorreoElectronico + "'";
-		var estado = "'" + item.EstadoCita + "'";
-		var recomendaciones = "'" + item.Recomendaciones + "'";
-		var antecedentes = "'" + item.Antecedentes + "'";
-		var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' + recomendaciones + ',' + antecedentes + ',' + paciente + ');"></i>';
-		var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' + item.CitaId + ',' + fecha + ',' + hora + ',' + paciente + ',' + ');"></i>';
-
-		var fila =
-        '<tr>' +
-		'<td>' + botonEditar + '</td>' +
-		'<td>' + botonEliminar + '</td>' +
-		'<td>' + item.Paciente + '</td>' +
-        '<td>' + item.FechaCita + '</td>' +
-        '<td>' + item.HoraCita + '</td>' +
-        '<td>' + item.Identificacion + '</td>' +
-        '<td>' + item.Telefono + '</td>' +
-        '<td>' + item.CorreoElectronico + '</td>' +
-        '<td>' + item.EstadoCita + '</td>' +
-
-        '</tr>';
-
-		tBody.append( fila );
-	} );
-
-	var poseeDatos = lista.length > 0;
-
-	if ( poseeDatos )
-	{
-		ConfiguracionGrid( $( '#gridCitas' ), 2 );
-	}
-	else
-	{
-		tBody.append( '<strong>Sin datos para mostrar</strong>' );
-	}
+	obtenerPaciente( pacienteId );//ESTA FUNCION SE ENCUENTRA EN EL ARCHIVO ACTUALIZARPACIENTE.JS
 }
 
 
@@ -263,6 +127,147 @@ function mantenimientoCita()
 	}
 }
 
+function obtenerDatosFiltro()
+{
+	var datos = JSON.stringify( {
+		FechaInicio: $( '#txbFechaInicio' ).val() != '' ? $( '#txbFechaInicio' ).val() : '-1',
+		FechaFin: $( '#txbFechaFin' ).val() != '' ? $( '#txbFechaFin' ).val() : '-1',
+		Apellidos: $( '#txbApellidos' ).val() != '' ? $( '#txbApellidos' ).val() : '-1',
+		Identificacion: $( '#txbIdentificacion' ).val() != '' ? $( '#txbIdentificacion' ).val() : '-1',
+		UsuarioId: $( '#ddlUsuario' ).val() != '' ? $( '#ddlUsuario' ).val() : '-1'
+	} );
+
+	return datos;
+}
+
+function validarConsulta()
+{
+	var fechaInicioValida = $( '#txbFechaInicio' ).val() != '' && $( '#txbFechaInicio' ).val() !== null;
+	var fechaFinValida = $( '#txbFechaFin' ).val() != '' && $( '#txbFechaFin' ).val() !== null;
+	var rangoFechasValido = comprarFechasInicioFinal( $( '#txbFechaInicio' ).val(), $( '#txbFechaFin' ).val() );
+	var practicanteValido = $( '#ddlUsuario' ).val() != '' && $( '#ddlUsuario' ).val() != '-1';
+
+	var mensajeError = '';
+
+	mensajeError = fechaInicioValida ? mensajeError : ( mensajeError + '<p>Digite la fecha inicial.</p>' );
+	mensajeError = fechaFinValida ? mensajeError : ( mensajeError + '<p>Digite la fecha final.</p>' );
+	mensajeError = rangoFechasValido ? mensajeError : ( mensajeError + '<p>La fecha final debe ser mayor a la fecha inicial.</p>' );
+	mensajeError = practicanteValido ? mensajeError : ( mensajeError + '<p>Por favor seleccione un practicante.</p>' );
+
+	var formularioValido = mensajeError == '';
+
+	if ( !formularioValido )
+	{
+		mostrarMensaje( 'Campos requeridos para la consulta', mensajeError, 'alerta' );
+	}
+
+	return formularioValido;
+}
+
+function obtenerCitasPracticante()
+{
+	var envioDatosEsValido = validarConsulta();
+
+	if ( envioDatosEsValido )
+	{
+		var datos = obtenerDatosFiltro()
+		mostrarLoading();
+
+		$.ajax( {
+			type: "POST",
+			url: '/Practicante/ObtenerCitasPracticante',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: datos,
+			success: function ( data )
+			{
+				ocultarLoading();
+				var lista = $.parseJSON( data );
+				crearGridCitas( lista );
+			},
+			error: function ( jqXHR, textStatus, errorThrown )
+			{
+				ocultarLoading();
+				var responseText = jqXHR.responseText;
+				var mensajeError = obtenerMensajeError( responseText );
+				mostrarMensaje( 'Error', mensajeError, 'error' );
+			}
+		} );
+	}
+}
+
+function crearGridCitas( lista )
+{
+	var divContenedor = $( '#divGridCitas' );
+	divContenedor.empty();
+
+	var tabla = '<table id="gridCitas" class="table table-striped table-hover table-bordered"  >' +
+                              '<thead>' +
+                              '<tr>' +
+							  '<th></th>' +
+							  '<th></th>' +
+							  '<th></th>' +
+							  '<th>Paciente</th>' +
+                              '<th>Fecha</th>' +
+                              '<th>Hora</th>' +
+                              '<th>Identificacion</th>' +
+                              '<th>Telefono</th>' +
+                              '<th>Estado cita</th>' +
+
+
+                              '</tr>' +
+                              '</thead>' +
+                              '<tbody>' +
+                             '</tbody>' +
+                             '</table>';
+
+	divContenedor.append( tabla );
+	var tBody = divContenedor.children();
+
+	$.each( lista, function ( index, item )
+	{
+		var fecha = "'" + item.FechaCita + "'";
+		var hora = "'" + item.HoraCita + "'";
+		var paciente = "'" + item.Paciente + "'";
+		var identificacion = "'" + item.Identificacion + "'";
+		var telefono = "'" + item.Telefono + "'";
+		var correo = "'" + item.CorreoElectronico + "'";
+		var estado = "'" + item.EstadoCita + "'";
+		var recomendaciones = "'" + item.Recomendaciones + "'";
+		var antecedentes = "'" + item.Antecedentes + "'";
+		var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' + recomendaciones + ',' + antecedentes + ',' + paciente + ');"></i>';
+		var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' + item.CitaId + ',' + fecha + ',' + hora + ',' + paciente + ',' + ');"></i>';
+		var botonInformacion = '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
+
+		var fila =
+        '<tr>' +
+		'<td>' + botonInformacion + '</td>' +
+		'<td>' + botonEditar + '</td>' +
+		'<td>' + botonEliminar + '</td>' +
+		'<td>' + item.Paciente + '</td>' +
+        '<td>' + item.FechaCita + '</td>' +
+        '<td>' + item.HoraCita + '</td>' +
+        '<td>' + item.Identificacion + '</td>' +
+        '<td>' + item.Telefono + '</td>' +
+        '<td>' + item.EstadoCita + '</td>' +
+
+        '</tr>';
+
+		tBody.append( fila );
+	} );
+
+	var poseeDatos = lista.length > 0;
+
+	if ( poseeDatos )
+	{
+		ConfiguracionGrid( $( '#gridCitas' ), 2 );
+	}
+	else
+	{
+		tBody.append( '<strong>Sin datos para mostrar</strong>' );
+	}
+}
+
 function obtenerUsuariosPorRol()
 {
 	mostrarLoading();
@@ -282,6 +287,7 @@ function obtenerUsuariosPorRol()
 			var esRolPracticante = datos.EsRolPracticante;
 			var usuarioId = datos.UsuarioId;
 			llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId );
+			obtenerCitasPracticante();
 		},
 		error: function ( jqXHR, textStatus, errorThrown )
 		{

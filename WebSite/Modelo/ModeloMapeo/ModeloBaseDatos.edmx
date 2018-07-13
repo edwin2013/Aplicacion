@@ -160,6 +160,25 @@
           <Parameter Name="Hora" Type="int" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="FUN_ObtenerPacientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PacienteId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="PacienteId" Type="int" />
+                <Property Name="Nombre" Type="varchar" MaxLength="200" />
+                <Property Name="Apellidos" Type="varchar" MaxLength="200" />
+                <Property Name="CorreoElectronico" Type="varchar" MaxLength="200" />
+                <Property Name="Telefono" Type="varchar" MaxLength="200" />
+                <Property Name="Nacionalidad" Type="varchar" MaxLength="200" />
+                <Property Name="Identificacion" Type="varchar" MaxLength="200" />
+                <Property Name="EstadoCivil" Type="int" />
+                <Property Name="Edad" Type="int" />
+                <Property Name="CantidadHijos" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FUN_ObtenerSesionesActivas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dia" Type="varchar" Mode="In" />
           <ReturnType>
@@ -187,6 +206,20 @@
               </RowType>
             </CollectionType>
           </ReturnType>
+        </Function>
+        <Function Name="SP_ActualizarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PacienteId" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="CorreoElectronico" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Nacionalidad" Type="varchar" Mode="In" />
+          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="EstadoCivil" Type="int" Mode="In" />
+          <Parameter Name="Edad" Type="int" Mode="In" />
+          <Parameter Name="CantidadHijos" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -549,13 +582,6 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerCitasPracticante" ReturnType="Collection(ManejoCitasModel.SP_ObtenerCitasPracticante_Result)">
-            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
-            <Parameter Name="FechaInicio" Mode="In" Type="String" />
-            <Parameter Name="FechaFin" Mode="In" Type="String" />
-            <Parameter Name="Apellidos" Mode="In" Type="String" />
-            <Parameter Name="Ideintificacion" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ObtenerSesionesActivas" ReturnType="Collection(ManejoCitasModel.SP_ObtenerSesionesActivas_Result)">
           <Parameter Name="Dia" Mode="In" Type="String" />
           </FunctionImport>
@@ -570,7 +596,31 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
-            <Parameter Name="RolId" Mode="In" Type="Int32" />
+          <Parameter Name="RolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ActualizarPaciente">
+            <Parameter Name="PacienteId" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Nacionalidad" Mode="In" Type="String" />
+            <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="EstadoCivil" Mode="In" Type="Int32" />
+            <Parameter Name="Edad" Mode="In" Type="Int32" />
+            <Parameter Name="CantidadHijos" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerPacientes" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerPacientes_Result)">
+          <Parameter Name="PacienteId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ObtenerCitasPracticante" ReturnType="Collection(ManejoCitasModel.SP_ObtenerCitasPracticante_Result)">
+            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="Ideintificacion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -588,23 +638,6 @@
           <Property Type="Int32" Name="DiaOferta" Nullable="true" />
           <Property Type="String" Name="DetalleDiaOferta" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="FechaDiaOferta" Nullable="true" MaxLength="4000" />
-        </ComplexType>
-        <ComplexType Name="SP_ObtenerCitasPracticante_Result">
-          <Property Type="String" Name="HoraCita" Nullable="true" />
-          <Property Type="Int32" Name="CitaId" Nullable="false" />
-          <Property Type="String" Name="EstadoCita" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="FechaCita" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Practicante" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="Paciente" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="Edad" Nullable="true" />
-          <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
-          <Property Type="String" Name="EstadoCivil" Nullable="true" MaxLength="14" />
-          <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="Antecedentes" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
         </ComplexType>
         <ComplexType Name="SP_ObtenerSesionesActivas_Result">
           <Property Type="Int32" Name="Hora" Nullable="true" />
@@ -651,6 +684,37 @@
           <Property Type="Int32" Name="CarreraId" Nullable="true" />
           <Property Type="DateTime" Name="InicioPractica" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="FinPractica" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerPacientes_Result">
+          <Property Type="Int32" Name="PacienteId" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Nacionalidad" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="EstadoCivil" Nullable="true" />
+          <Property Type="Int32" Name="Edad" Nullable="true" />
+          <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ObtenerCitasPracticante_Result">
+          <Property Type="String" Name="HoraCita" Nullable="true" />
+          <Property Type="Int32" Name="CitaId" Nullable="false" />
+          <Property Type="String" Name="EstadoCita" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="FechaCita" Nullable="true" />
+          <Property Type="String" Name="Practicante" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="Paciente" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PacienteId" Nullable="false" />
+          <Property Type="Int32" Name="Edad" Nullable="true" />
+          <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
+          <Property Type="String" Name="EstadoCivil" Nullable="true" MaxLength="14" />
+          <Property Type="Int32" Name="EstadoCivilId" Nullable="true" />
+          <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Antecedentes" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -784,27 +848,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_MantenimientoCita" FunctionName="ManejoCitasModel.Store.SP_MantenimientoCita" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerCitasPracticante" FunctionName="ManejoCitasModel.Store.SP_ObtenerCitasPracticante">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerCitasPracticante_Result">
-                <ScalarProperty Name="HoraCita" ColumnName="HoraCita" />
-                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
-                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
-                <ScalarProperty Name="FechaCita" ColumnName="FechaCita" />
-                <ScalarProperty Name="Practicante" ColumnName="Practicante" />
-                <ScalarProperty Name="Paciente" ColumnName="Paciente" />
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
-                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
-                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ObtenerSesionesActivas" FunctionName="ManejoCitasModel.Store.SP_ObtenerSesionesActivas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerSesionesActivas_Result">
@@ -848,6 +891,46 @@
                 <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
                 <ScalarProperty Name="InicioPractica" ColumnName="InicioPractica" />
                 <ScalarProperty Name="FinPractica" ColumnName="FinPractica" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ActualizarPaciente" FunctionName="ManejoCitasModel.Store.SP_ActualizarPaciente" />
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerPacientes" FunctionName="ManejoCitasModel.Store.FUN_ObtenerPacientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerPacientes_Result">
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCitasPracticante" FunctionName="ManejoCitasModel.Store.SP_ObtenerCitasPracticante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerCitasPracticante_Result">
+                <ScalarProperty Name="HoraCita" ColumnName="HoraCita" />
+                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
+                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
+                <ScalarProperty Name="FechaCita" ColumnName="FechaCita" />
+                <ScalarProperty Name="Practicante" ColumnName="Practicante" />
+                <ScalarProperty Name="Paciente" ColumnName="Paciente" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="EstadoCivilId" ColumnName="EstadoCivilId" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
+                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

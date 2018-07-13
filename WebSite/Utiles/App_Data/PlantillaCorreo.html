@@ -1,79 +1,93 @@
 <!DOCTYPE html>
 <html>
-		<head>
-			<style type="text/css">
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
 
-th, td {
-    text-align: left;
-    padding: 8px;
-}
+		th, td {
+			text-align: left;
+			padding: 8px;
+		}
 
-tr:nth-child(even){background-color: #f2f2f2}
-			</style>
-		</head>
-		
-		<body>
-		<div class="container" style="margin: 0 auto;width: 85%;">
-			<div class="row">
-				<div class="col-sm-1">
-				</div>
-				<div class="col-sm-10">
-					<div class="card">
-						<div class="card-body">
-							<div>
-								<div class="container" style="background: #f05f40;color: white;padding: 10px;border-radius: 10px;">
-									<h2>Despacho de citas</h2>
-									<h4>
-                            Sistema de de gestión de citas
-									</h4>
-										</div>
-									</div>
-									<div class="container">
-										<h3>Estimado $$NombrePaciente$$, su cita se ha creado con exito, a continuacion se muestran los detalles.</h3>
-										<div class="table-responsive">
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th></th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-												<tr>
-														<td><b>Fecha</b></td>
-														<td>$$FechaCita$$</td>
-													</tr>
-													<tr>
-														<td><b>Hora</b></td>
-														<td>$$HoraCita$$</td>
-													</tr>
-													<tr>
-														<td><b>Teléfono</b></td>
-														<td>$$Telefono$$</td>
-													</tr>
-													<tr>
-														<td><b>Correo electrónico</b></td>
-														<td>$$CorreoElectronico$$</td>
-													</tr>
-													<tr>
-														<td><b>Identificación</b></td>
-														<td>$$Identificacion$$</td>
-													</tr>																									
-												</tbody>
-											</table>
-										</div>
-									</div>
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
 
-								</div>
+		.container {
+			border-radius: 5px;
+			background-color: #f2f2f2;
+			padding: 20px;
+		}
+
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="container" style="margin: 0 auto;width: 85%;">
+		<div class="row">
+			<div class="col-sm-1">
+			</div>
+			<div class="col-sm-10">
+				<div class="card">
+					<div class="card-body">
+						<div>
+							<div class="container" style="background: #f05f40;color: white;padding: 10px;border-radius: 10px;">
+								<h2>Despacho de citas</h2>
+								<h4>
+									Sistema de de gestión de citas
+								</h4>
 							</div>
 						</div>
-						<div class="col-sm-1">
+						<div class="container">
+							<h3>Estimado $$NombrePaciente$$, su cita se ha creado con éxito, a continuación se muestran los detalles.</h3>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><b>Fecha</b></td>
+											<td>$$FechaCita$$</td>
+										</tr>
+										<tr>
+											<td><b>Hora</b></td>
+											<td>$$HoraCita$$</td>
+										</tr>
+										<tr>
+											<td><b>Teléfono</b></td>
+											<td>$$Telefono$$</td>
+										</tr>
+										<tr>
+											<td><b>Correo electrónico</b></td>
+											<td>$$CorreoElectronico$$</td>
+										</tr>
+										<tr>
+											<td><b>Identificación</b></td>
+											<td>$$Identificacion$$</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
+
 					</div>
 				</div>
-			</body>
-		</html>
+			</div>
+			<div class="col-sm-1">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -47,7 +47,6 @@ var OfertaHorario = function ()
 	this.horaInicio = $( '#txbHoraInicio' ).val();
 	this.horaFin = $( '#txbHoraFin' ).val();
 	this.practicanteId = $( '#ddlPracticante' ).val();
-	//ddlPracticante
 
 	this.obtenerDatos = function ()
 	{
@@ -349,7 +348,8 @@ function crearGridCitas( lista )
 
 	if ( poseeDatos )
 	{
-		ConfiguracionGrid( $( '#gridOferta' ), 1 );
+		var columnaFecha = 1;
+		ConfiguracionGrid( $( '#gridOferta' ), columnaFecha );
 	}
 	else
 	{

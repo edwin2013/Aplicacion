@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\MBC\Documents\Proyectos\Reservacion Citas\Solucion\WebSite\Modelo\ModeloMapeo\ModeloBaseDatos.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\MBC\Documents\Proyectos\Reservacion Citas\Aplicacion\WebSite\Modelo\ModeloMapeo\ModeloBaseDatos.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

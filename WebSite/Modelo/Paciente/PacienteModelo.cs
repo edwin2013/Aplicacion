@@ -8,6 +8,7 @@ namespace Modelo.Paciente
 {
 	public class PacienteModelo
 	{
+		public int PacienteId { set; get; }
 		public string Nombre { set; get; }
 		public string Apellidos { set; get; }
 		public string CorreoElectronico { set; get; }
@@ -16,8 +17,6 @@ namespace Modelo.Paciente
 		public string Identificacion { set; get; }
 		public int EstadoCivil { set; get; }
 		public int Edad { set; get; }
-		public int CantidadHijos { set; get; }
-		public int PacienteId { set; get; }
-		
+		public int CantidadHijos { set; get; }	
 	}
 }
