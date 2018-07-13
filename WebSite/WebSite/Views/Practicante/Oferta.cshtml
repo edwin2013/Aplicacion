@@ -1,0 +1,211 @@
+﻿
+@{
+	ViewBag.Title = "Oferta";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href="~/Template/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+	<link href="~/Template/css/sb-admin.css" rel="stylesheet">
+	<link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
+	<link href="~/Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	<input type="hidden" id="hdfAccion" name="hdfAccion">
+	<input type="hidden" id="hdfOfertaHorarioId" name="hdfOfertaHorarioId">
+
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="#">Oferta</a>
+		</li>
+		<li class="breadcrumb-item active">Listado</li>
+	</ol>
+	<div class="container mb-3 mt-3">
+		<div class="row">
+			<div class="col-md-5">
+
+			</div>
+			<div class="col-md-5">
+
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="mostrarPopUpMantenimientoOferta();">Nueva oferta</button>
+			</div>
+		</div>
+	</div>
+	<div class="card mb-3">
+		<div class="card-header">
+			<div class="container mt-3">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">Fecha inicio :</span>
+								<input type="text" class="form-control" id="txbFechaInicio" data-date-format="dd/mm/yyyy" name="txbFechaInicio" value="" readonly />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">Fecha fin :</span>
+								<input type="text" class="form-control" id="txbFechaFin" data-date-format="dd/mm/yyyy" name="txbFechaFin" value="" readonly />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">Practicante :</span>
+								<select id="ddlUsuario" name="ddlUsuario" class="form-control" onchange="obtenerPracticantes();"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">Apellido :</span>
+								<input type="text" class="form-control" id="txbApellidos" name="txbApellidos" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">Identificación :</span>
+								<input type="text" class="form-control" id="txbIdentificacion" name="txbIdentificacion" value="" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"></span>
+								<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="obtenerOfertasPracticante();">Buscar ofertas</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<div id="divGridOferta"></div>
+			</div>
+		</div>
+		<div class="card-footer small text-muted"></div>
+	</div>
+
+	<div class="modal fade" id="popUpMantenimientoOfertaHorario" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Crear oferta</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col-md-6">
+								<label>Practicante *</label>
+								<select id="ddlPracticante" name="ddlPracticante" class="form-control" onchange="obtenerPracticantes();"></select>
+							</div>
+							<div class="col-md-6">
+								<label>Día *</label>
+								<input type="text" class="form-control" id="txbDia" data-date-format="dd/mm/yyyy" name="txbDia" value="" readonly />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="form-row">
+
+							<div class="col-md-6">
+								<label>Hora inicio *</label>
+								<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+									<input id="txbHoraInicio" type="text" class="form-control" readonly>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label>Hora final *</label>
+								<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+									<input id="txbHoraFin" type="text" class="form-control" readonly>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-primary" onclick="mantenimientoOfertaHorario()">Guardar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="popUpEliminarOferta" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="lblTituloPopUp">Eliminar oferta</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<label id="lblAEliminar"></label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" onclick="mantenimientoOfertaHorario()">Eliminar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	@section Scripts{
+		<script src="@Url.Content("~/Template/vendor/datatables/jquery.dataTables.js")"></script>
+		<script src="@Url.Content("~/Template/vendor/datatables/dataTables.bootstrap4.js")"></script>
+		<script src="@Url.Content("~/Template/js/sb-admin.min.js")"></script>
+		<script src="@Url.Content("~/Template/js/sb-admin-datatables.min.js")"></script>
+		<script src="~/Scripts/bootstrap-datepicker.js"></script>
+		<script src="~/Scripts/bootstrap-clockpicker.min.js"></script>
+		<script src="~/Scripts/Practicante/oferta.js"></script>
+	}
+
+	<script>
+		$( document ).ready( function ()
+		{
+			$( "#txbDia" ).datepicker( { autoclose: true } );
+			$( "#txbFechaInicio" ).datepicker( { autoclose: true } );
+			$( "#txbFechaFin" ).datepicker( { autoclose: true } );
+
+			$( '.clockpicker' ).clockpicker();
+		} );
+	</script>
+
+</body>
+</html>

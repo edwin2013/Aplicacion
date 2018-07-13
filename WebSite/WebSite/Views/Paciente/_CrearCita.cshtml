@@ -1,0 +1,80 @@
+﻿
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card card-register mx-auto mt-5">
+				<div class="card-header bg-primary">Datos personales</div>
+				<div class="card-body">
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col-md-6">
+								<label>Nombre *</label>
+								<input class="form-control" id="txbNombre" type="text" placeholder="Nombre">
+							</div>
+							<div class="col-md-6">
+								<label>Apellidos *</label>
+								<input class="form-control" id="txbApellidos" type="text" placeholder="Apellidos">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col-md-6">
+								<label>Teléfono *</label>
+								<input class="form-control" id="txbTelefono" type="number" placeholder="Teléfono">
+							</div>
+							<div class="col-md-6">
+								<label>Correo electrónico *</label>
+								<input class="form-control" id="txbCorreo" type="email" placeholder="Correo">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col-md-12">
+								<label>Identificación *</label>
+								<input class="form-control" type="number" id="txbIdentificacion" placeholder="Cédula o pasaporte">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="col-md-6">
+            <div class="card card-register mx-auto mt-5">
+                <div class="card-header bg-primary">Horario</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <label>Mes *</label>
+                                <input type="text" class="form-control" id="txbMes" name="txbDia" value="" readonly />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Día *</label>
+                                <select id="ddlDias" name="ddlDias" class="form-control" onchange="obtenerSesionesActivas();"></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Hora cita *</label>
+                                <select id="ddlHoras" name="ddlHoras" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" onclick="crearCita();" class="btn btn-primary btn-block">Enviar cita</button>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>

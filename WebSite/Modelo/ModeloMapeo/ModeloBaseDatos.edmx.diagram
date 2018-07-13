@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c0aa9eeeaba44e37b8cbba6b41ea7f7b" Name="Diagram1">
+        <EntityTypeShape EntityType="ManejoCitasModel.Actividad" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.Cita" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.OfertaHorario" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.Paciente" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.Sesion" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManejoCitasModel.Usuario" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="ManejoCitasModel.FK_Cita_Paciente" ManuallyRouted="false" />
+        <AssociationConnector Association="ManejoCitasModel.FK_Cita_Sesion" ManuallyRouted="false" />
+        <AssociationConnector Association="ManejoCitasModel.FK_OfertaHorario_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="ManejoCitasModel.FK_Sesion_Sesion" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ManejoCitasModel.Carrera" Width="1.5" PointX="0.75" PointY="10.875" />
+        <AssociationConnector Association="ManejoCitasModel.FK_Usuario_Carrera" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
