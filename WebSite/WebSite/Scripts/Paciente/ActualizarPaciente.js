@@ -1,4 +1,5 @@
 ﻿
+//test
 function actualizarPaciente()
 {
 	paciente = new PacienteModelo();
