@@ -182,6 +182,7 @@ function obtenerUsuariosPorRol()
 
 function llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId )
 {
+    debugger
 	var combo = $( "#ddlUsuario" );
 	combo.empty();
 
@@ -201,15 +202,15 @@ function llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId )
 		comboPracticante.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
 	}
 
-	$.each( listaUsuarios, function ()
+    $.each(listaUsuarios, function (indice, elemento)
 	{
-		var nombre = this.Nombre + ' ' + this.Apellidos;
-		var usuarioId = this.UsuarioId;
+        var nombre = elemento.Nombre + ' ' + elemento.Apellidos;
+        var usuarioId = elemento.UsuarioId;
 		combo.append( $( "<option />" ).val( usuarioId ).text( nombre ) );
 		comboPracticante.append( $( "<option />" ).val( usuarioId ).text( nombre ) );
 	} );
 
-	if ( esRolPracticante )
+    if (esRolPracticante)
 	{
 		combo.val( usuarioId );
 		combo.prop( 'disabled', true );

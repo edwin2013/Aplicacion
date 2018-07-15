@@ -121,6 +121,7 @@ namespace Datos
 					citaModelo.PacienteId,
 					citaModelo.Dia,
 					citaModelo.Hora,
+                    citaModelo.IdentificadorGUID,
 					resultado,
 					mensaje
 					);

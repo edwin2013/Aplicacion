@@ -191,6 +191,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\General.css" />
     <Content Include="Content\Paciente.css" />
+    <Content Include="Content\ratingStart.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -202,6 +203,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\General\General.js" />
+    <Content Include="Scripts\General\ratingStart.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -483,6 +485,7 @@
     <Content Include="TemplatePaciente\README.md" />
     <Content Include="Views\Paciente\Paciente.cshtml" />
     <Content Include="Views\Practicante\CitasPracticante.cshtml" />
+    <Content Include="Views\Paciente\_CalificacionEstrellas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

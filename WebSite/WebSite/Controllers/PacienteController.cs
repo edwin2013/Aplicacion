@@ -25,12 +25,14 @@ namespace WebSite.Controllers
 
 		public JsonResult CrearCita(CrearCitaModelo crearCitaModelo)
 		{
-			Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().CrearCita(crearCitaModelo);
+            string identificadorGUID = new GeneracionCodigo().GenerarCodigoUnico();
+            crearCitaModelo.CitaModelo.IdentificadorGUID = identificadorGUID;
+            Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().CrearCita(crearCitaModelo);
 
 			if (mensajeRespuesta.Exito)
 			{
 				string asunto = ConfigurationManager.AppSettings["asuntoCita"];
-				ManejadorCorreos manejadorCorreos = new ManejadorCorreos(crearCitaModelo.PacienteModelo.CorreoElectronico, asunto);
+                ManejadorCorreos manejadorCorreos = new ManejadorCorreos(crearCitaModelo.PacienteModelo.CorreoElectronico, asunto);
 				Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioDatosPaciente(crearCitaModelo);
 				string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantilla"];
 				manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);

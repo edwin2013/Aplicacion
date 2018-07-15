@@ -1,6 +1,7 @@
 ﻿using Modelo.Usuario;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -20,8 +21,8 @@ namespace WebSite.Controllers
 			JavaScriptSerializer seralizador = new JavaScriptSerializer();
 			seralizador.MaxJsonLength = Int32.MaxValue;
 
-			bool esRolPracticante = true;//TODO depende del rol
-			int usuarioId = 1;//TODO Id usuario logueado
+			bool esRolPracticante = false;//TODO depende del rol
+			int usuarioId = listaUsuarios.FirstOrDefault().UsuarioId;//TODO Id usuario logueado
 			var datosEnviar = new
 			{
 				ListaUsuarios = listaUsuarios,

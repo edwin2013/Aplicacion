@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link href="~/Content/ratingStart.css" rel="stylesheet" />
+</head>
+<body>
+    <header class='header text-center'></header>
+    <input type="hidden" id="hdfCalificacion" name="hdfCalificacion" value="-1">
+    <div class="modal fade" id="popUpCalificacion" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calificar atención</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class='rating-stars text-center'>
+                        <ul id='stars'>
+                            <li class='star' data-value='1'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='2'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='3'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='4'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='5'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='6'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='7'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='8'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='9'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                            <li class='star' data-value='10'>
+                                <i class='fa fa-star fa-fw'></i>
+                            </li>
+                        </ul>
+                        <div class='success-box'>
+                            <div>
+                                <h4 id="lblcalificacion"></h4>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="calificarCita()">Calificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/General/ratingStart.js"></script>
+</body>
+</html>

@@ -13,254 +13,254 @@
 	<link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
 	<link href="~/Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
 </head>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-	<input type="hidden" id="hdfCitaId" name="hdfCitaId">
-	<input type="hidden" id="hdfAccion" name="hdfCitaId">
-	<input type="hidden" id="hdfPacienteId" name="hdfPacienteId">
+    <input type="hidden" id="hdfCitaId" name="hdfCitaId">
+    <input type="hidden" id="hdfAccion" name="hdfAccion">
+    <input type="hidden" id="hdfCorreoPaciente" name="hdfCorreoPaciente">
+    <input type="hidden" id="hdfNombrePaciente" name="hdfNombrePaciente">
+    <input type="hidden" id="hdfPacienteId" name="hdfPacienteId">
 
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item">
-			<a href="#">Citas</a>
-		</li>
-		<li class="breadcrumb-item active">Listado</li>
-	</ol>
-	<!-- Example DataTables Card-->
-	<div class="card mb-3">
-		<div class="card-header">
-			<div class="container m-3">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Fecha inicio :</span>
-								<input type="text" class="form-control" id="txbFechaInicio" data-date-format="dd/mm/yyyy" name="txbFechaInicio" value="" readonly />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Fecha fin :</span>
-								<input type="text" class="form-control" id="txbFechaFin" data-date-format="dd/mm/yyyy" name="txbFechaFin" value="" readonly />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Practicante :</span>
-								<select id="ddlUsuario" name="ddlUsuario" class="form-control" onchange="obtenerPracticantes();"></select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Apellido :</span>
-								<input type="text" class="form-control" id="txbApellidos" name="txbApellidos" value="" />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Identificación :</span>
-								<input type="text" class="form-control" id="txbIdentificacion" name="txbIdentificacion" value="" />
-							</div>
-						</div>
-					</div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Citas</a>
+        </li>
+        <li class="breadcrumb-item active">Listado</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="container m-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Fecha inicio :</span>
+                                <input type="text" class="form-control" id="txbFechaInicio" data-date-format="dd/mm/yyyy" name="txbFechaInicio" value="" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Fecha fin :</span>
+                                <input type="text" class="form-control" id="txbFechaFin" data-date-format="dd/mm/yyyy" name="txbFechaFin" value="" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Practicante :</span>
+                                <select id="ddlUsuario" name="ddlUsuario" class="form-control" onchange="obtenerPracticantes();"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Apellido :</span>
+                                <input type="text" class="form-control" id="txbApellidos" name="txbApellidos" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Identificación :</span>
+                                <input type="text" class="form-control" id="txbIdentificacion" name="txbIdentificacion" value="" />
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"></span>
-								<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="obtenerCitasPracticante();">Buscar citas</button>
-							</div>
-						</div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="obtenerCitasPracticante();">Buscar citas</button>
+                            </div>
+                        </div>
 
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<div class="table-responsive">
-				<div id="divGridCitas"></div>
-			</div>
-		</div>
-		<div class="card-footer small text-muted"></div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="divGridCitas"></div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div>
+    </div>
 
-	<div class="modal fade" id="popUpEditarCita" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 id="tituloPopUp" class="modal-title">Recomendaciones y antecedentes</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-12">
-								<label>Antecedentes: *</label>
-								<textarea id="txaAntecedentes" rows="4" cols="50" class="form-control">
+    <div class="modal fade" id="popUpEditarCita" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="tituloPopUp" class="modal-title">Recomendaciones y antecedentes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label>Antecedentes: *</label>
+                                <textarea id="txaAntecedentes" rows="4" cols="50" class="form-control">
 									At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 								</textarea>
-							</div>
-						</div>
-					</div>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-12">
-								<label>Recomendaciones: *</label>
-								<textarea id="txaRecomendaciones" rows="4" cols="50" class="form-control">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label>Recomendaciones: *</label>
+                                <textarea id="txaRecomendaciones" rows="4" cols="50" class="form-control">
 									At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 								</textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" onclick="mantenimientoCita()">Guardar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="mantenimientoCita()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-	<div class="modal fade" id="popUpEliminarCita" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="lblTituloPopUp">Eliminar cita</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12">
-								<label id="lblAEliminar"></label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" onclick="mantenimientoCita()">Eliminar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal fade" id="popUpEliminarCita" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lblTituloPopUp">Eliminar cita</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label id="lblAEliminar"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="mantenimientoCita()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="modal fade" id="popUpMostrarInformacionPaciente" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Información del paciente</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-6">
-								<label>Nombre *</label>
-								<input id="txbNombrePaciente" name="txbNombrePaciente" class="form-control" value=""></input>
-							</div>
-							<div class="col-md-6">
-								<label>Apellidos *</label>
-								<input type="text" class="form-control" name="txbApellidosPaciente" id="txbApellidosPaciente" value="" />
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-6">
-								<label>Telefono *</label>
-								<input type="number" class="form-control" name="txbTelefonoPaciente" id="txbTelefonoPaciente" value="" />
-							</div>
-							<div class="col-md-6">
-								<label>Correo electronico *</label>
-								<input type="text" class="form-control" name="txbCoreoElectronicoPaciente" id="txbCoreoElectronicoPaciente" value="" />
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-6">
-								<label>Identificacion *</label>
-								<input type="number" class="form-control" name="txbIdentificadorPaciente" id="txbIdentificadorPaciente" value="" />
-							</div>
-							<div class="col-md-6">
-								<label>Estado civil *</label>
-								<select id="ddlEstadoCivilPaciente" class="form-control">
-									<option value="0">Seleccione</option>
-									<option value="1">Soltero (a)</option>
-									<option value="2">Union libre</option>
-									<option value="3">Casado (a)</option>
-									<option value="4">Divorciado (a)</option>
-									<option value="5">Viudo (a)</option>
-								</select>
-							</div>
-						</div>
-					</div>
+    <div class="modal fade" id="popUpMostrarInformacionPaciente" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información del paciente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Nombre *</label>
+                                <input id="txbNombrePaciente" name="txbNombrePaciente" class="form-control" value=""></input>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Apellidos *</label>
+                                <input type="text" class="form-control" name="txbApellidosPaciente" id="txbApellidosPaciente" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Telefono *</label>
+                                <input type="number" class="form-control" name="txbTelefonoPaciente" id="txbTelefonoPaciente" value="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Correo electronico *</label>
+                                <input type="text" class="form-control" name="txbCoreoElectronicoPaciente" id="txbCoreoElectronicoPaciente" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Identificacion *</label>
+                                <input type="number" class="form-control" name="txbIdentificadorPaciente" id="txbIdentificadorPaciente" value="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Estado civil *</label>
+                                <select id="ddlEstadoCivilPaciente" class="form-control">
+                                    <option value="0">Seleccione</option>
+                                    <option value="1">Soltero (a)</option>
+                                    <option value="2">Union libre</option>
+                                    <option value="3">Casado (a)</option>
+                                    <option value="4">Divorciado (a)</option>
+                                    <option value="5">Viudo (a)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<div class="form-row">
-							<div class="col-md-6">
-								<label>Nacionalidad *</label>
-								<input type="text" class="form-control" name="txbNacionalidadPaciente" id="txbNacionalidadPaciente" value="" />
-							</div>
-							<div class="col-md-3">
-								<label>Edad *</label>
-								<input type="number" class="form-control" name="txbEdadPaciente" id="txbEdadPaciente" value="" />
-							</div>
-							<div class="col-md-3">
-								<label>Hijos *</label>
-								<input type="number" class="form-control" name="txbHijosPaciente" id="txbHijosPaciente" value="" />
-							</div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Nacionalidad *</label>
+                                <input type="text" class="form-control" name="txbNacionalidadPaciente" id="txbNacionalidadPaciente" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Edad *</label>
+                                <input type="number" class="form-control" name="txbEdadPaciente" id="txbEdadPaciente" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Hijos *</label>
+                                <input type="number" class="form-control" name="txbHijosPaciente" id="txbHijosPaciente" value="" />
+                            </div>
 
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" class="btn btn-primary" onclick="actualizarPaciente()">Guardar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="actualizarPaciente()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-	@section Scripts{
-		<script src="@Url.Content("~/Template/vendor/datatables/jquery.dataTables.js")"></script>
-		<script src="@Url.Content("~/Template/vendor/datatables/dataTables.bootstrap4.js")"></script>
-		<script src="@Url.Content("~/Template/js/sb-admin.min.js")"></script>
-		<script src="@Url.Content("~/Template/js/sb-admin-datatables.min.js")"></script>
-		<script src="~/Scripts/bootstrap-datepicker.js"></script>
-		<script src="~/Scripts/bootstrap-clockpicker.min.js"></script>
-		<script src="~/Scripts/Practicante/citasPracticante.js"></script>
-		<script src="~/Scripts/Paciente/ActualizarPaciente.js"></script>
-	}
+    @section Scripts{
+        <script src="@Url.Content("~/Template/vendor/datatables/jquery.dataTables.js")"></script>
+        <script src="@Url.Content("~/Template/vendor/datatables/dataTables.bootstrap4.js")"></script>
+        <script src="@Url.Content("~/Template/js/sb-admin.min.js")"></script>
+        <script src="@Url.Content("~/Template/js/sb-admin-datatables.min.js")"></script>
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+        <script src="~/Scripts/bootstrap-clockpicker.min.js"></script>
+        <script src="~/Scripts/Practicante/citasPracticante.js"></script>
+        <script src="~/Scripts/Paciente/ActualizarPaciente.js"></script>
+    }
 
-	<script>
-		$( document ).ready( function ()
-		{
-			$( "#txbFechaInicio" ).datepicker();
-			$( "#txbFechaFin" ).datepicker();
+    <script>
+        $(document).ready(function () {
+            $("#txbFechaInicio").datepicker();
+            $("#txbFechaFin").datepicker();
 
-			$( '.clockpicker' ).clockpicker();
-		} );
-	</script>
+            $('.clockpicker').clockpicker();
+        });
+    </script>
 </body>
 </html>

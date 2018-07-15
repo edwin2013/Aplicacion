@@ -17,5 +17,14 @@ namespace Utiles
 
 			return datosPaciente;
 		}
-	}
+
+        public Dictionary<string, string> CrearDiccionarioCorreoCalificacion(string nombrePaciente, string urlpagina)
+        {
+            Dictionary<string, string> datosPaciente = new Dictionary<string, string>();
+            datosPaciente.Add("NombrePaciente", nombrePaciente);
+            datosPaciente.Add("UrlPagina", urlpagina);
+
+            return datosPaciente;
+        }
+    }
 }

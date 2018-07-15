@@ -3,9 +3,12 @@ using Modelo.Paciente;
 using Modelo.Practicante;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Utiles;
+using WebSite.Models;
 
 namespace WebSite.Controllers
 {
@@ -50,8 +53,13 @@ namespace WebSite.Controllers
 			bool citaFueCerrada = citaModelo.Accion == "A" && mensajeRespuesta.Exito;
 			if (citaFueCerrada)
 			{
-				//Enviar correo
-			}
+                string asunto = ConfigurationManager.AppSettings["asuntoCita"];
+                ManejadorCorreos manejadorCorreos = new Models.ManejadorCorreos(citaModelo.CorreoElectronico, asunto);
+                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, "http://localhost:59186/Paciente/Paciente");
+                string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantillaCalificacion"];
+                manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
+                manejadorCorreos.EnviarCorreo();
+            }
 			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
 			return Json(datos, JsonRequestBehavior.AllowGet);
 		}
