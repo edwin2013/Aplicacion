@@ -30,5 +30,6 @@ namespace Modelo.ModeloMapeo
         public string Nacionalidad { get; set; }
         public string Antecedentes { get; set; }
         public string Recomendaciones { get; set; }
+        public string IdentificadorGUID { get; set; }
     }
 }

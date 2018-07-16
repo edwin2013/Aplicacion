@@ -1,8 +1,10 @@
 ﻿using Modelo.General;
 using Modelo.Paciente;
+using Modelo.Practicante;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Utiles;
@@ -10,55 +12,94 @@ using WebSite.Models;
 
 namespace WebSite.Controllers
 {
-	public class PacienteController : Controller
-	{
-		// GET: Paciente
-		public ActionResult Index()
-		{
-			return View();
-		}
+    public class PacienteController : Controller
+    {
+        // GET: Paciente
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-		public ActionResult Paciente()
-		{
-			return View();
-		}
+        public ActionResult Paciente()
+        {
+            return View();
+        }
 
-		public JsonResult CrearCita(CrearCitaModelo crearCitaModelo)
-		{
+        [HttpGet]
+        public ActionResult Calificacion(string identificadorGUID)
+        {
+            CitaModelo cita = new Negocios.NegociosPaciente().ObtenerCitas(identificadorGUID).FirstOrDefault();
+            bool existeCita = cita != null;
+            bool citaNoHaSidoCalificada = true;
+
+            if (existeCita)
+            {
+                citaNoHaSidoCalificada = cita.Calificacion == 0;
+                if (!citaNoHaSidoCalificada)
+                {
+                    identificadorGUID = "YaFueCalificada";
+                }
+            }
+            else
+            {
+                identificadorGUID = "NoExiste";
+            }
+
+            ViewBag.IdentificadorGUID = identificadorGUID;
+            return View("Paciente");
+        }
+
+        public JsonResult EnviarCalificacion(CitaPracticanteModelo citaModelo)
+        {
+            CitaModelo cita =
+            new Negocios.NegociosPaciente().ObtenerCitas(citaModelo.IdentificadorGUID).FirstOrDefault();
+
+            citaModelo.CitaId = cita.CitaId;
+            citaModelo.Accion = "A";//ACCION DE ACTUALIZAR
+            citaModelo.Antecedentes = cita.Antecedentes;
+            citaModelo.Recomendaciones = cita.Recomendaciones;
+            Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
+
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CrearCita(CrearCitaModelo crearCitaModelo)
+        {
             string identificadorGUID = new GeneracionCodigo().GenerarCodigoUnico();
             crearCitaModelo.CitaModelo.IdentificadorGUID = identificadorGUID;
             Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().CrearCita(crearCitaModelo);
 
-			if (mensajeRespuesta.Exito)
-			{
-				string asunto = ConfigurationManager.AppSettings["asuntoCita"];
+            if (mensajeRespuesta.Exito)
+            {
+                string asunto = ConfigurationManager.AppSettings["asuntoCita"];
                 ManejadorCorreos manejadorCorreos = new ManejadorCorreos(crearCitaModelo.PacienteModelo.CorreoElectronico, asunto);
-				Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioDatosPaciente(crearCitaModelo);
-				string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantilla"];
-				manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
-				manejadorCorreos.EnviarCorreo();
-			}
+                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioDatosPaciente(crearCitaModelo);
+                string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantilla"];
+                manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
+                manejadorCorreos.EnviarCorreo();
+            }
 
-			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerDiasOfertaMes(string fechaOferta)
-		{
-			string[] fecha = fechaOferta.Split('/');
-			int mes = Convert.ToInt32(fecha[0]);
-			int anio = Convert.ToInt32(fecha[1]);
+        public JsonResult ObtenerDiasOfertaMes(string fechaOferta)
+        {
+            string[] fecha = fechaOferta.Split('/');
+            int mes = Convert.ToInt32(fecha[0]);
+            int anio = Convert.ToInt32(fecha[1]);
 
-			List<DiasOfertaMes> listaDiasOfertaMes = new Negocios.NegociosPaciente().ObtenerDiasOfertaMes(mes, anio);
-			var datos = new JavaScriptSerializer().Serialize(listaDiasOfertaMes);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            List<DiasOfertaMes> listaDiasOfertaMes = new Negocios.NegociosPaciente().ObtenerDiasOfertaMes(mes, anio);
+            var datos = new JavaScriptSerializer().Serialize(listaDiasOfertaMes);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerSesionesActivas(string fechaDia)
-		{
-			List<SesionModelo> listaSesionesDisponibles = new Negocios.NegociosPaciente().ObtenerSesionesActivas(fechaDia);
-			var datos = new JavaScriptSerializer().Serialize(listaSesionesDisponibles);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
-	}
+        public JsonResult ObtenerSesionesActivas(string fechaDia)
+        {
+            List<SesionModelo> listaSesionesDisponibles = new Negocios.NegociosPaciente().ObtenerSesionesActivas(fechaDia);
+            var datos = new JavaScriptSerializer().Serialize(listaSesionesDisponibles);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

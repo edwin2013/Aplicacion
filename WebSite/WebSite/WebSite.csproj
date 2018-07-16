@@ -213,6 +213,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Paciente\ActualizarPaciente.js" />
+    <Content Include="Scripts\Paciente\calificarCita.js" />
     <Content Include="Scripts\Paciente\crearCita.js" />
     <Content Include="Scripts\Practicante\citasPracticante.js" />
     <Content Include="Scripts\Practicante\oferta.js" />

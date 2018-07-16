@@ -6,14 +6,14 @@
     obtenerUsuariosPorRol();
 });
 
-function mostrarPopUpEditarCita(citaId, recomendaciones, antecedentes, paciente, correoPaciente) {
+function mostrarPopUpEditarCita(citaId, recomendaciones, antecedentes, paciente, correoPaciente, identificadorGUID) {
     $('#txaAntecedentes').val(antecedentes);
     $('#txaRecomendaciones').val(recomendaciones);
     $('#hdfCitaId').val(citaId);
     $('#hdfAccion').val('A');
     $('#hdfCorreoPaciente').val(correoPaciente);
     $('#hdfNombrePaciente').val(paciente);
-    
+    $('#hdfIdentificadorGUID').val(identificadorGUID);
     $('#tituloPopUp').html('Cita del paciente ' + paciente);
 
     $('#popUpEditarCita').modal('show');
@@ -42,13 +42,15 @@ var CitaModelo = function () {
     this.recomendaciones = $('#txaRecomendaciones').val();
     this.antecedentes = $('#txaAntecedentes').val();
     this.nombre = $('#hdfNombrePaciente').val();
-      
+    this.identificadorGUID = $('#hdfIdentificadorGUID').val();
+
     this.obtenerDatos = function () {
         var datos = JSON.stringify({
             Accion: this.accion,
             CitaId: this.citaId,
             CorreoElectronico: this.correo,
-            Paciente : this.nombre,
+            Paciente: this.nombre,
+            IdentificadorGUID: this.identificadorGUID,
             Antecedentes: this.antecedentes,
             Recomendaciones: this.recomendaciones,
         });
@@ -136,7 +138,7 @@ function validarConsulta() {
     var fechaInicioValida = $('#txbFechaInicio').val() != '' && $('#txbFechaInicio').val() !== null;
     var fechaFinValida = $('#txbFechaFin').val() != '' && $('#txbFechaFin').val() !== null;
     var rangoFechasValido = comprarFechasInicioFinal($('#txbFechaInicio').val(), $('#txbFechaFin').val());
-    var practicanteValido = $('#ddlUsuario').val() != '' && $('#ddlUsuario').val() != '-1';
+    var practicanteValido = $('#ddlUsuario').val() != '';
 
     var mensajeError = '';
 
@@ -219,7 +221,16 @@ function crearGridCitas(lista) {
         var estado = "'" + item.EstadoCita + "'";
         var recomendaciones = "'" + item.Recomendaciones + "'";
         var antecedentes = "'" + item.Antecedentes + "'";
-        var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' + recomendaciones + ',' + antecedentes + ',' + paciente + ',' + correo + ');"></i>';
+        var identificadorGUID = "'" + item.IdentificadorGUID + "'";
+
+        var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' +
+            recomendaciones + ',' +
+            antecedentes + ',' +
+            paciente + ',' +
+            correo + ',' +
+            identificadorGUID +
+
+            ');"></i>';
         var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' + item.CitaId + ',' + fecha + ',' + hora + ',' + paciente + ',' + ');"></i>';
         var botonInformacion = '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
 

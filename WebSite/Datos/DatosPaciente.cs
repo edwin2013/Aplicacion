@@ -9,7 +9,34 @@ namespace Datos
 {
 	public class DatosPaciente
 	{
-		public List<PacienteModelo> ObtenerPacientes(int pacienteId)
+
+        public List<CitaModelo> ObtenerCitas(string identificadorGUID)
+        {
+            List<CitaModelo> listaCitas = new List<CitaModelo>();
+
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var citas = contexto.FUN_ObtenerCitas(identificadorGUID);
+
+                foreach (FUN_ObtenerCitas_Result citaActual in citas)
+                {
+                    CitaModelo cita = new CitaModelo();
+                    cita.CitaId = citaActual.CitaId ?? default(int); ;
+                    cita.PacienteId = citaActual.PacienteId ?? default(int);
+                    cita.EstadoCita = citaActual.EstadoCita ?? default(int);
+                    cita.Calificacion = citaActual.Calificacion ?? default(int);
+                    cita.SesionId = citaActual.SesionId ?? default(Int64);
+                    cita.Antecedentes = citaActual.Antecedentes;
+                    cita.Recomendaciones = citaActual.Recomendaciones;
+                    cita.IdentificadorGUID = citaActual.IdentificadorGUID;
+                    listaCitas.Add(cita);
+                }
+            }
+
+            return listaCitas;
+        }
+
+        public List<PacienteModelo> ObtenerPacientes(int pacienteId)
 		{
 			List<PacienteModelo> listaPacientes = new List<PacienteModelo>();
 

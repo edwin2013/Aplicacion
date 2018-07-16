@@ -150,6 +150,23 @@
         <Function Name="ConversionHoraEstandar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="Hora" Type="int" Mode="In" />
         </Function>
+        <Function Name="FUN_ObtenerCitas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdentificadorGUID" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CitaId" Type="int" />
+                <Property Name="PacienteId" Type="int" />
+                <Property Name="Antecedentes" Type="nvarchar" MaxLength="1000" />
+                <Property Name="Recomendaciones" Type="nvarchar" MaxLength="1000" />
+                <Property Name="EstadoCita" Type="int" />
+                <Property Name="Calificacion" Type="int" />
+                <Property Name="SesionId" Type="bigint" />
+                <Property Name="IdentificadorGUID" Type="nvarchar" MaxLength="500" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FUN_ObtenerPacientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PacienteId" Type="int" Mode="In" />
           <ReturnType>
@@ -236,6 +253,7 @@
         <Function Name="SP_MantenimientoCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Accion" Type="char" Mode="In" />
           <Parameter Name="CitaId" Type="int" Mode="In" />
+          <Parameter Name="Calificacion" Type="int" Mode="In" />
           <Parameter Name="Antecedentes" Type="nvarchar" Mode="In" />
           <Parameter Name="Recomendaciones" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
@@ -528,14 +546,6 @@
             <Parameter Name="Mes" Mode="In" Type="Int32" />
             <Parameter Name="Anio" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_MantenimientoCita">
-            <Parameter Name="Accion" Mode="In" Type="String" />
-            <Parameter Name="CitaId" Mode="In" Type="Int32" />
-            <Parameter Name="Antecedentes" Mode="In" Type="String" />
-            <Parameter Name="Recomendaciones" Mode="In" Type="String" />
-            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
-            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ObtenerSesionesActivas" ReturnType="Collection(ManejoCitasModel.SP_ObtenerSesionesActivas_Result)">
           <Parameter Name="Dia" Mode="In" Type="String" />
           </FunctionImport>
@@ -569,6 +579,14 @@
           <FunctionImport Name="FUN_ObtenerPacientes" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerPacientes_Result)">
           <Parameter Name="PacienteId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_CrearCita">
+            <Parameter Name="PacienteId" Mode="In" Type="Int32" />
+            <Parameter Name="Dia" Mode="In" Type="String" />
+            <Parameter Name="Hora" Mode="In" Type="Int32" />
+            <Parameter Name="IdentificadorGUID" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_ObtenerCitasPracticante" ReturnType="Collection(ManejoCitasModel.SP_ObtenerCitasPracticante_Result)">
             <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="FechaInicio" Mode="In" Type="String" />
@@ -576,11 +594,15 @@
             <Parameter Name="Apellidos" Mode="In" Type="String" />
             <Parameter Name="Ideintificacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_CrearCita">
-            <Parameter Name="PacienteId" Mode="In" Type="Int32" />
-            <Parameter Name="Dia" Mode="In" Type="String" />
-            <Parameter Name="Hora" Mode="In" Type="Int32" />
-            <Parameter Name="IdentificadorGUID" Mode="In" Type="String" />
+          <FunctionImport Name="FUN_ObtenerCitas" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCitas_Result)">
+          <Parameter Name="IdentificadorGUID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MantenimientoCita">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="CitaId" Mode="In" Type="Int32" />
+            <Parameter Name="Calificacion" Mode="In" Type="Int32" />
+            <Parameter Name="Antecedentes" Mode="In" Type="String" />
+            <Parameter Name="Recomendaciones" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -677,6 +699,17 @@
           <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Antecedentes" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IdentificadorGUID" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerCitas_Result">
+          <Property Type="Int32" Name="CitaId" Nullable="true" />
+          <Property Type="Int32" Name="PacienteId" Nullable="true" />
+          <Property Type="String" Name="Antecedentes" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Recomendaciones" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="EstadoCita" Nullable="true" />
+          <Property Type="Int32" Name="Calificacion" Nullable="true" />
+          <Property Type="Int64" Name="SesionId" Nullable="true" />
+          <Property Type="String" Name="IdentificadorGUID" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -774,7 +807,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MantenimientoCita" FunctionName="ManejoCitasModel.Store.SP_MantenimientoCita" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerSesionesActivas" FunctionName="ManejoCitasModel.Store.SP_ObtenerSesionesActivas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerSesionesActivas_Result">
@@ -838,6 +870,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CrearCita" FunctionName="ManejoCitasModel.Store.SP_CrearCita" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerCitasPracticante" FunctionName="ManejoCitasModel.Store.SP_ObtenerCitasPracticante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerCitasPracticante_Result">
@@ -858,10 +891,25 @@
                 <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
                 <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
                 <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
+                <ScalarProperty Name="IdentificadorGUID" ColumnName="IdentificadorGUID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_CrearCita" FunctionName="ManejoCitasModel.Store.SP_CrearCita" />
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerCitas" FunctionName="ManejoCitasModel.Store.FUN_ObtenerCitas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerCitas_Result">
+                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
+                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
+                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="SesionId" ColumnName="SesionId" />
+                <ScalarProperty Name="IdentificadorGUID" ColumnName="IdentificadorGUID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoCita" FunctionName="ManejoCitasModel.Store.SP_MantenimientoCita" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -63,6 +63,7 @@ namespace Datos
 					cita.EstadoCivil = citaActual.EstadoCivil;
 					cita.Recomendaciones = citaActual.Recomendaciones;
 					cita.Antecedentes = citaActual.Antecedentes;
+                    cita.IdentificadorGUID = citaActual.IdentificadorGUID;
 					listaCitasPracticante.Add(cita);
 				}
 			}
@@ -104,6 +105,7 @@ namespace Datos
 				contexto.SP_MantenimientoCita(
 					citaModelo.Accion,
 					citaModelo.CitaId,
+                    citaModelo.Calificacion,
 					citaModelo.Antecedentes,
 					citaModelo.Recomendaciones,
 					resultado,

@@ -12,85 +12,87 @@ using WebSite.Models;
 
 namespace WebSite.Controllers
 {
-	public class PracticanteController : Controller
-	{
-		public ActionResult Index()
-		{
-			return View();
-		}
+    public class PracticanteController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-		public ActionResult Oferta()
-		{
-			return View();
-		}
+        public ActionResult Oferta()
+        {
+            return View();
+        }
 
-		public JsonResult MantenimientoOfertaHorario(OfertaHorarioModelo ofertaHorarioModelo)
-		{
-			Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoOfertaHorario(ofertaHorarioModelo);
-			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+        public JsonResult MantenimientoOfertaHorario(OfertaHorarioModelo ofertaHorarioModelo)
+        {
+            Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoOfertaHorario(ofertaHorarioModelo);
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public ActionResult CitasPracticante()
-		{
-			return View();
-		}
+        public ActionResult CitasPracticante()
+        {
+            return View();
+        }
 
-		public JsonResult ObtenerCitasPracticante(FiltroCitas filtroCitas)
-		{
+        public JsonResult ObtenerCitasPracticante(FiltroCitas filtroCitas)
+        {
 
-			List<CitaPracticanteModelo> listaCitasPracticante = new Negocios.NegociosPracticante().ObtenerCitasPracticante(filtroCitas);
-			JavaScriptSerializer seralizador = new JavaScriptSerializer();
-			seralizador.MaxJsonLength = Int32.MaxValue;
-			var datos = new JavaScriptSerializer().Serialize(listaCitasPracticante);
+            List<CitaPracticanteModelo> listaCitasPracticante = new Negocios.NegociosPracticante().ObtenerCitasPracticante(filtroCitas);
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = new JavaScriptSerializer().Serialize(listaCitasPracticante);
 
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult MantenimientoCita(CitaPracticanteModelo citaModelo)
-		{
-			Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
-			bool citaFueCerrada = citaModelo.Accion == "A" && mensajeRespuesta.Exito;
-			if (citaFueCerrada)
-			{
-                string asunto = ConfigurationManager.AppSettings["asuntoCita"];
+        public JsonResult MantenimientoCita(CitaPracticanteModelo citaModelo)
+        {
+            Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
+            bool citaFueCerrada = citaModelo.Accion == "A" && mensajeRespuesta.Exito;
+            if (citaFueCerrada)
+            {
+                string asunto = ConfigurationManager.AppSettings["asuntoCorreoCalificacion"];
                 ManejadorCorreos manejadorCorreos = new Models.ManejadorCorreos(citaModelo.CorreoElectronico, asunto);
-                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, "http://localhost:59186/Paciente/Paciente");
+                string domainName =
+                System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Paciente/Calificacion?" + "identificadorGUID=" + citaModelo.IdentificadorGUID;
+                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, domainName);
                 string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantillaCalificacion"];
                 manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
                 manejadorCorreos.EnviarCorreo();
             }
-			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerOfertaPracticante(FiltroCitas filtroCitas)
-		{
-			filtroCitas.UsuarioId = 1;//TODO
+        public JsonResult ObtenerOfertaPracticante(FiltroCitas filtroCitas)
+        {
+            filtroCitas.UsuarioId = 1;//TODO
 
-			List<OfertaPracticante> listaOfertaPracticante = new Negocios.NegociosPracticante().ObtenerOfertaPracticante(filtroCitas);
-			JavaScriptSerializer seralizador = new JavaScriptSerializer();
-			seralizador.MaxJsonLength = Int32.MaxValue;
-			var datos = new JavaScriptSerializer().Serialize(listaOfertaPracticante);
+            List<OfertaPracticante> listaOfertaPracticante = new Negocios.NegociosPracticante().ObtenerOfertaPracticante(filtroCitas);
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = new JavaScriptSerializer().Serialize(listaOfertaPracticante);
 
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ActualizarPaciente(PacienteModelo pacienteModelo)
-		{
-			Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().ActualizarPaciente(pacienteModelo);
-			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+        public JsonResult ActualizarPaciente(PacienteModelo pacienteModelo)
+        {
+            Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().ActualizarPaciente(pacienteModelo);
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerPacientes(int pacienteId)
-		{
-			PacienteModelo pacienteModelo = new Negocios.NegociosPaciente().ObtenerPacientes(pacienteId).FirstOrDefault();
-			JavaScriptSerializer seralizador = new JavaScriptSerializer();
-			seralizador.MaxJsonLength = Int32.MaxValue;
-			var datos = new JavaScriptSerializer().Serialize(pacienteModelo);
+        public JsonResult ObtenerPacientes(int pacienteId)
+        {
+            PacienteModelo pacienteModelo = new Negocios.NegociosPaciente().ObtenerPacientes(pacienteId).FirstOrDefault();
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = new JavaScriptSerializer().Serialize(pacienteModelo);
 
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
-	}
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

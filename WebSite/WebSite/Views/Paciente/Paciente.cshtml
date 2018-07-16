@@ -1,31 +1,34 @@
 ﻿
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Creative - Start Bootstrap Theme</title>
-	<!-- Bootstrap core CSS -->
-	<link href="~/TemplatePaciente/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Custom fonts for this template -->
-	<link href="~/TemplatePaciente/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-	<!-- Plugin CSS -->
-	<link href="~/TemplatePaciente/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-	<!-- Custom styles for this template -->
-	<link href="~/TemplatePaciente/css/creative.min.css" rel="stylesheet">
-	<link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
-	<link href="~/Content/Paciente.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Creative - Start Bootstrap Theme</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/TemplatePaciente/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="~/TemplatePaciente/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="~/TemplatePaciente/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="~/TemplatePaciente/css/creative.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
+    <link href="~/Content/Paciente.css" rel="stylesheet" />
 </head>
 <body id="page-top">
+    @*<input type="hidden" id="hdfIdentificadorGUID" value="@ViewBag["IdentificadorGUID"]" />*@
+
+    @Html.Hidden("hdfIdentificadorGUID", (object)ViewBag.IdentificadorGUID)
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
@@ -249,9 +252,23 @@
     <script src="~/Scripts/General/General.js"></script>
     <script src="~/Scripts/Paciente/crearCita.js"></script>
     @Html.Partial("~/Views/Paciente/_CalificacionEstrellas.cshtml")
+    <script src="~/Scripts/Paciente/calificarCita.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#popUpCalificacion').modal('show');
+
+            var identificadorGUID = $('#hdfIdentificadorGUID').val();
+            var citaNoExiste = identificadorGUID == 'NoExiste';
+            var citaFueCalificada = identificadorGUID == 'YaFueCalificada';
+
+            if (citaNoExiste) {
+                mostrarMensaje('Atención', 'La cita por calificar no existe', 'alerta');
+            }
+            else if (citaFueCalificada) {
+                mostrarMensaje('Atención', 'La cita ya fue previamente calificada', 'alerta');
+            }
+            else {
+                $('#popUpCalificacion').modal('show');
+            }
         });
     </script>
 </body>

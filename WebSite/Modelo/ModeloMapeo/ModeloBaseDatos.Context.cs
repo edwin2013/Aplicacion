@@ -232,27 +232,6 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerDiasOfertaMes_Result>("SP_ObtenerDiasOfertaMes", mesParameter, anioParameter);
         }
     
-        public virtual int SP_MantenimientoCita(string accion, Nullable<int> citaId, string antecedentes, string recomendaciones, ObjectParameter resultado, ObjectParameter mensaje)
-        {
-            var accionParameter = accion != null ?
-                new ObjectParameter("Accion", accion) :
-                new ObjectParameter("Accion", typeof(string));
-    
-            var citaIdParameter = citaId.HasValue ?
-                new ObjectParameter("CitaId", citaId) :
-                new ObjectParameter("CitaId", typeof(int));
-    
-            var antecedentesParameter = antecedentes != null ?
-                new ObjectParameter("Antecedentes", antecedentes) :
-                new ObjectParameter("Antecedentes", typeof(string));
-    
-            var recomendacionesParameter = recomendaciones != null ?
-                new ObjectParameter("Recomendaciones", recomendaciones) :
-                new ObjectParameter("Recomendaciones", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoCita", accionParameter, citaIdParameter, antecedentesParameter, recomendacionesParameter, resultado, mensaje);
-        }
-    
         public virtual ObjectResult<SP_ObtenerSesionesActivas_Result> SP_ObtenerSesionesActivas(string dia)
         {
             var diaParameter = dia != null ?
@@ -344,6 +323,27 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerPacientes_Result>("[ManejoCitasEntities].[FUN_ObtenerPacientes](@PacienteId)", pacienteIdParameter);
         }
     
+        public virtual int SP_CrearCita(Nullable<int> pacienteId, string dia, Nullable<int> hora, string identificadorGUID, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var pacienteIdParameter = pacienteId.HasValue ?
+                new ObjectParameter("PacienteId", pacienteId) :
+                new ObjectParameter("PacienteId", typeof(int));
+    
+            var diaParameter = dia != null ?
+                new ObjectParameter("Dia", dia) :
+                new ObjectParameter("Dia", typeof(string));
+    
+            var horaParameter = hora.HasValue ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(int));
+    
+            var identificadorGUIDParameter = identificadorGUID != null ?
+                new ObjectParameter("IdentificadorGUID", identificadorGUID) :
+                new ObjectParameter("IdentificadorGUID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CrearCita", pacienteIdParameter, diaParameter, horaParameter, identificadorGUIDParameter, resultado, mensaje);
+        }
+    
         public virtual ObjectResult<SP_ObtenerCitasPracticante_Result> SP_ObtenerCitasPracticante(Nullable<int> usuarioId, string fechaInicio, string fechaFin, string apellidos, string ideintificacion)
         {
             var usuarioIdParameter = usuarioId.HasValue ?
@@ -369,25 +369,39 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerCitasPracticante_Result>("SP_ObtenerCitasPracticante", usuarioIdParameter, fechaInicioParameter, fechaFinParameter, apellidosParameter, ideintificacionParameter);
         }
     
-        public virtual int SP_CrearCita(Nullable<int> pacienteId, string dia, Nullable<int> hora, string identificadorGUID, ObjectParameter resultado, ObjectParameter mensaje)
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerCitas")]
+        public virtual IQueryable<FUN_ObtenerCitas_Result> FUN_ObtenerCitas(string identificadorGUID)
         {
-            var pacienteIdParameter = pacienteId.HasValue ?
-                new ObjectParameter("PacienteId", pacienteId) :
-                new ObjectParameter("PacienteId", typeof(int));
-    
-            var diaParameter = dia != null ?
-                new ObjectParameter("Dia", dia) :
-                new ObjectParameter("Dia", typeof(string));
-    
-            var horaParameter = hora.HasValue ?
-                new ObjectParameter("Hora", hora) :
-                new ObjectParameter("Hora", typeof(int));
-    
             var identificadorGUIDParameter = identificadorGUID != null ?
                 new ObjectParameter("IdentificadorGUID", identificadorGUID) :
                 new ObjectParameter("IdentificadorGUID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CrearCita", pacienteIdParameter, diaParameter, horaParameter, identificadorGUIDParameter, resultado, mensaje);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerCitas_Result>("[ManejoCitasEntities].[FUN_ObtenerCitas](@IdentificadorGUID)", identificadorGUIDParameter);
+        }
+    
+        public virtual int SP_MantenimientoCita(string accion, Nullable<int> citaId, Nullable<int> calificacion, string antecedentes, string recomendaciones, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var accionParameter = accion != null ?
+                new ObjectParameter("Accion", accion) :
+                new ObjectParameter("Accion", typeof(string));
+    
+            var citaIdParameter = citaId.HasValue ?
+                new ObjectParameter("CitaId", citaId) :
+                new ObjectParameter("CitaId", typeof(int));
+    
+            var calificacionParameter = calificacion.HasValue ?
+                new ObjectParameter("Calificacion", calificacion) :
+                new ObjectParameter("Calificacion", typeof(int));
+    
+            var antecedentesParameter = antecedentes != null ?
+                new ObjectParameter("Antecedentes", antecedentes) :
+                new ObjectParameter("Antecedentes", typeof(string));
+    
+            var recomendacionesParameter = recomendaciones != null ?
+                new ObjectParameter("Recomendaciones", recomendaciones) :
+                new ObjectParameter("Recomendaciones", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoCita", accionParameter, citaIdParameter, calificacionParameter, antecedentesParameter, recomendacionesParameter, resultado, mensaje);
         }
     }
 }
