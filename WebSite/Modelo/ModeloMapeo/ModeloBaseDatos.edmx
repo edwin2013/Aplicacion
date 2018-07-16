@@ -150,6 +150,16 @@
         <Function Name="ConversionHoraEstandar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="Hora" Type="int" Mode="In" />
         </Function>
+        <Function Name="FUN_ObtenerCarreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CarreraId" Type="int" />
+                <Property Name="Nombre" Type="nvarchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FUN_ObtenerCitas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdentificadorGUID" Type="nvarchar" Mode="In" />
           <ReturnType>
@@ -186,6 +196,16 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="FUN_ObtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="RolId" Type="int" />
+                <Property Name="Descripcion" Type="nvarchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FUN_ObtenerSesionesActivas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dia" Type="varchar" Mode="In" />
           <ReturnType>
@@ -208,8 +228,8 @@
                 <Property Name="RolId" Type="int" />
                 <Property Name="Password" Type="nvarchar" MaxLength="200" />
                 <Property Name="CarreraId" Type="int" />
-                <Property Name="InicioPractica" Type="datetime" />
-                <Property Name="FinPractica" Type="datetime" />
+                <Property Name="InicioPractica" Type="varchar" MaxLength="10" />
+                <Property Name="FinPractica" Type="varchar" MaxLength="10" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -266,6 +286,20 @@
           <Parameter Name="HoraInicio" Type="int" Mode="In" />
           <Parameter Name="HoraFin" Type="int" Mode="In" />
           <Parameter Name="UsuarioId" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_MantenimientoUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Accion" Type="char" Mode="In" />
+          <Parameter Name="UsuarioId" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="RolId" Type="int" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="CarreraId" Type="int" Mode="In" />
+          <Parameter Name="InicioPractica" Type="varchar" Mode="In" />
+          <Parameter Name="FinPractica" Type="varchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
@@ -559,9 +593,6 @@
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
-          <Parameter Name="RolId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_ActualizarPaciente">
             <Parameter Name="PacienteId" Mode="In" Type="Int32" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
@@ -603,6 +634,25 @@
             <Parameter Name="Calificacion" Mode="In" Type="Int32" />
             <Parameter Name="Antecedentes" Mode="In" Type="String" />
             <Parameter Name="Recomendaciones" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerCarreras" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCarreras_Result)" />
+          <FunctionImport Name="FUN_ObtenerRoles" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerRoles_Result)" />
+          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
+          <Parameter Name="RolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MantenimientoUsuarios">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="RolId" Mode="In" Type="Int32" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="CarreraId" Mode="In" Type="Int32" />
+            <Parameter Name="InicioPractica" Mode="In" Type="String" />
+            <Parameter Name="FinPractica" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -658,17 +708,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="FUN_ObtenerUsuariosPorRol_Result">
-          <Property Type="Int32" Name="UsuarioId" Nullable="true" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="RolId" Nullable="true" />
-          <Property Type="String" Name="Password" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="CarreraId" Nullable="true" />
-          <Property Type="DateTime" Name="InicioPractica" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FinPractica" Nullable="true" Precision="23" />
-        </ComplexType>
         <ComplexType Name="FUN_ObtenerPacientes_Result">
           <Property Type="Int32" Name="PacienteId" Nullable="true" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
@@ -710,6 +749,25 @@
           <Property Type="Int32" Name="Calificacion" Nullable="true" />
           <Property Type="Int64" Name="SesionId" Nullable="true" />
           <Property Type="String" Name="IdentificadorGUID" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerCarreras_Result">
+          <Property Type="Int32" Name="CarreraId" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerRoles_Result">
+          <Property Type="Int32" Name="RolId" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerUsuariosPorRol_Result">
+          <Property Type="Int32" Name="UsuarioId" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RolId" Nullable="true" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="CarreraId" Nullable="true" />
+          <Property Type="String" Name="InicioPractica" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FinPractica" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -838,21 +896,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="FUN_ObtenerUsuariosPorRol" FunctionName="ManejoCitasModel.Store.FUN_ObtenerUsuariosPorRol">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result">
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="RolId" ColumnName="RolId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
-                <ScalarProperty Name="InicioPractica" ColumnName="InicioPractica" />
-                <ScalarProperty Name="FinPractica" ColumnName="FinPractica" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ActualizarPaciente" FunctionName="ManejoCitasModel.Store.SP_ActualizarPaciente" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerPacientes" FunctionName="ManejoCitasModel.Store.FUN_ObtenerPacientes">
             <ResultMapping>
@@ -910,6 +953,38 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_MantenimientoCita" FunctionName="ManejoCitasModel.Store.SP_MantenimientoCita" />
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerCarreras" FunctionName="ManejoCitasModel.Store.FUN_ObtenerCarreras">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerCarreras_Result">
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerRoles" FunctionName="ManejoCitasModel.Store.FUN_ObtenerRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerRoles_Result">
+                <ScalarProperty Name="RolId" ColumnName="RolId" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerUsuariosPorRol" FunctionName="ManejoCitasModel.Store.FUN_ObtenerUsuariosPorRol">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="RolId" ColumnName="RolId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="InicioPractica" ColumnName="InicioPractica" />
+                <ScalarProperty Name="FinPractica" ColumnName="FinPractica" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoUsuarios" FunctionName="ManejoCitasModel.Store.SP_MantenimientoUsuarios" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

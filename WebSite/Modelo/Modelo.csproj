@@ -63,10 +63,16 @@
     <Compile Include="ModeloMapeo\Cita.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerCarreras_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerCitas_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerPacientes_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerRoles_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerUsuariosPorRol_Result.cs">
@@ -129,6 +135,8 @@
     <Compile Include="Practicante\OfertaHorarioModelo.cs" />
     <Compile Include="Practicante\OfertaPracticante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuario\CarreraModelo.cs" />
+    <Compile Include="Usuario\RolModelo.cs" />
     <Compile Include="Usuario\UsuarioModelo.cs" />
   </ItemGroup>
   <ItemGroup>
