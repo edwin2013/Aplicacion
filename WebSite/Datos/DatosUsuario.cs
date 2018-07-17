@@ -55,6 +55,7 @@ namespace Datos
 					usuario.UsuarioId = usuarioActual.UsuarioId ?? default(int);
 					usuario.Nombre = usuarioActual.Nombre;
 					usuario.Apellidos = usuarioActual.Apellidos;
+					usuario.DescripcionRol = usuarioActual.DescripcionRol;
 					usuario.Identificacion = usuarioActual.Identificacion;
 					usuario.RolId = usuarioActual.RolId ?? default(int);
 					usuario.Password = usuarioActual.Password;

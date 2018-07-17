@@ -228,6 +228,7 @@
                 <Property Name="RolId" Type="int" />
                 <Property Name="Password" Type="nvarchar" MaxLength="200" />
                 <Property Name="CarreraId" Type="int" />
+                <Property Name="DescripcionRol" Type="varchar" MaxLength="200" />
                 <Property Name="InicioPractica" Type="varchar" MaxLength="10" />
                 <Property Name="FinPractica" Type="varchar" MaxLength="10" />
               </RowType>
@@ -639,9 +640,6 @@
           </FunctionImport>
           <FunctionImport Name="FUN_ObtenerCarreras" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCarreras_Result)" />
           <FunctionImport Name="FUN_ObtenerRoles" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerRoles_Result)" />
-          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
-          <Parameter Name="RolId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_MantenimientoUsuarios">
             <Parameter Name="Accion" Mode="In" Type="String" />
             <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
@@ -655,6 +653,9 @@
             <Parameter Name="FinPractica" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
+            <Parameter Name="RolId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -766,6 +767,7 @@
           <Property Type="Int32" Name="RolId" Nullable="true" />
           <Property Type="String" Name="Password" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="CarreraId" Nullable="true" />
+          <Property Type="String" Name="DescripcionRol" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="InicioPractica" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="FinPractica" Nullable="true" MaxLength="10" />
         </ComplexType>
@@ -969,6 +971,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoUsuarios" FunctionName="ManejoCitasModel.Store.SP_MantenimientoUsuarios" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerUsuariosPorRol" FunctionName="ManejoCitasModel.Store.FUN_ObtenerUsuariosPorRol">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result">
@@ -979,12 +982,12 @@
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="DescripcionRol" ColumnName="DescripcionRol" />
                 <ScalarProperty Name="InicioPractica" ColumnName="InicioPractica" />
                 <ScalarProperty Name="FinPractica" ColumnName="FinPractica" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MantenimientoUsuarios" FunctionName="ManejoCitasModel.Store.SP_MantenimientoUsuarios" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

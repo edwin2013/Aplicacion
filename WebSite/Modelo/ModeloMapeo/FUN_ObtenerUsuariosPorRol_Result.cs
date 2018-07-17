@@ -20,6 +20,7 @@ namespace Modelo.ModeloMapeo
         public Nullable<int> RolId { get; set; }
         public string Password { get; set; }
         public Nullable<int> CarreraId { get; set; }
+        public string DescripcionRol { get; set; }
         public string InicioPractica { get; set; }
         public string FinPractica { get; set; }
     }

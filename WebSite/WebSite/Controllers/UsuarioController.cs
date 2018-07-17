@@ -1,4 +1,5 @@
-﻿using Modelo.Usuario;
+﻿using Modelo.General;
+using Modelo.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -12,6 +13,13 @@ namespace WebSite.Controllers
 		public ActionResult Usuario()
 		{
 			return View();
+		}
+
+		public JsonResult MantenimientoUsuarios(UsuarioModelo usuario)
+		{
+			Mensaje mensajeRespuesta = new Negocios.NegociosUsuario().MantenimientoUsuarios(usuario);
+			var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+			return Json(datos, JsonRequestBehavior.AllowGet);
 		}
 
 		public JsonResult ObtenerUsuariosPorRol(int rolId)

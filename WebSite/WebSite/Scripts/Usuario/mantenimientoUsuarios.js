@@ -1,61 +1,106 @@
 ﻿$( document ).ready( function ()
 {
-	ObtenerUsuarios();
+	obtenerUsuarios();
+	obtenerRoles();
+	obtenerCarreras();
 } );
 
-function mostrarPopUpMantenimientoOferta()
+function mostrarMantenimientoUsuariosCrear()
 {
 	$( "#hdfAccion" ).val( 'I' );
-	$( "#hdfOfertaHorarioId" ).val( 0 );
-	$( "#txbDia" ).val( '' );
-	$( "#txbHoraInicio" ).val( '' );
-	$( "#txbHoraFin" ).val( '' );
-	$( '#popUpMantenimientoOfertaHorario' ).modal( 'show' );
+	$( "#hdfUsuarioId" ).val( 0 );
+	$( "#txbNombre" ).val( '' );
+	$( "#txbApellidos" ).val( '' );
+	$( "#txbPassword" ).val( 'PasswordDefault01' );
+	$( "#txbIdentificacion" ).val( '' );
+	$( "#ddlRol" ).val( '-1' );
+	$( "#ddlCarrera" ).val( '-1' );
+	$( "#txbFechaInicio" ).val( '' );
+	$( "#txbFechaFin" ).val( '' );
+	$( "#divFechas" ).hide();
+	$( "#lblTituloMantenimiento" ).html('Crear usuario');
+
+	$( '#popUpMantenimientoUsurios' ).modal( 'show' );
 }
 
-function mostrarPopUpEliminarOferta( OfertaHorarioId, fecha, horaInicio, horaFin, poseeCitas )
+function mostrarMantenimeintoUsuariosEditar( UsuarioId, nombre, apellidos, identificacion, rolId, password, carreraId, inicioPractica, finPractica )
 {
-	$( "#hdfAccion" ).val( 'E' );
-	$( "#hdfOfertaHorarioId" ).val( OfertaHorarioId );
-	$( "#txbDia" ).val( '' );
-	$( "#txbHoraInicio" ).val( '' );
-	$( "#txbHoraFin" ).val( '' );
+	$( "#hdfAccion" ).val( 'A' );
+	$( "#hdfUsuarioId" ).val( UsuarioId );
+	$( "#txbNombre" ).val( nombre );
+	$( "#txbApellidos" ).val( apellidos );
+	$( "#txbPassword" ).val( password );
+	$( "#txbIdentificacion" ).val( identificacion );
+	$( "#ddlRol" ).val( rolId );
+	$( "#ddlCarrera" ).val( carreraId );
+	$( "#lblTituloMantenimiento" ).html( 'Editar usuario' );
 
-	$( "#lblAEliminar" ).html( '¿Desea eliminar la oferta de horario Fecha: ' + fecha + ', Hora inicio: ' + horaInicio + ', Hora fin: ' + horaFin + '?' );
+	var esRolPracticante = rolId == '3';
 
-	if ( poseeCitas == 'true' )
+	if ( esRolPracticante )
 	{
-		$( "#lblTituloPopUp" ).html( 'Eliminar oferta <label style="color:red;">Precaución: la oferta posee citas asociadas</label>' );
+		$( "#txbFechaInicio" ).val( inicioPractica );
+		$( "#txbFechaFin" ).val( finPractica );
+		$( "#divFechas" ).show();
 	}
 	else
 	{
-		$( "#lblTituloPopUp" ).html( 'Eliminar oferta' );
+		$( "#txbFechaInicio" ).val( '' );
+		$( "#txbFechaFin" ).val( '' );
+		$( "#divFechas" ).hide();
 	}
 
-	$( '#popUpEliminarOferta' ).modal( 'show' );
+	$( '#popUpMantenimientoUsurios' ).modal( 'show' );
 }
 
-var OfertaHorario = function ()
+function mostrarPopUpEliminarUsuario( usuarioId, nombre, apellidos )
+{
+	$( "#hdfAccion" ).val( 'E' );
+	$( "#hdfUsuarioId" ).val( usuarioId );
+
+	$( "#txbNombre" ).val( '' );
+	$( "#txbApellidos" ).val( '' );
+	$( "#txbPassword" ).val( 'PasswordDefault01' );
+	$( "#txbIdentificacion" ).val( '' );
+	$( "#ddlRol" ).val( '-1' );
+	$( "#ddlCarrera" ).val( '-1' );
+	$( "#txbFechaInicio" ).val( '' );
+	$( "#txbFechaFin" ).val( '' );
+
+	$( "#lblAEliminar" ).html( '¿Desea eliminar el usuario: ' + nombre + ' ' + apellidos + '?' );
+
+	$( '#popUpEliminarUsuario' ).modal( 'show' );
+}
+
+var Usuario = function ()
 {
 	this.accion = $( '#hdfAccion' ).val();
-	this.ofertaHorarioId = $( '#hdfOfertaHorarioId' ).val();
-	this.dia = $( '#txbDia' ).val();
-	this.horaInicio = $( '#txbHoraInicio' ).val();
-	this.horaFin = $( '#txbHoraFin' ).val();
-	this.practicanteId = $( '#ddlPracticante' ).val();
+	this.usuarioId = $( '#hdfUsuarioId' ).val();
+	this.nombre = $( '#txbNombre' ).val();
+	this.apellidos = $( '#txbApellidos' ).val();
+	this.password = $( '#txbPassword' ).val();
+	this.identificacion = $( '#txbIdentificacion' ).val();
+	this.rolId = $( '#ddlRol' ).val();
+	this.carreraId = $( '#ddlCarrera' ).val();
+	this.fechaInicio = $( '#txbFechaInicio' ).val();
+	this.fechaFin = $( '#txbFechaFin' ).val();
+	this.esRolPracticante = this.rolId == '3';
+
+	var fechaActual = obtenerFechaActual();
 
 	this.obtenerDatos = function ()
 	{
-		var horaInicioMilitar = obtenerHoraMilitar( this.horaInicio );
-		var horaFinMilitar = obtenerHoraMilitar( this.horaFin );
-
 		var datos = JSON.stringify( {
 			Accion: this.accion,
-			OfertaHorarioId: this.ofertaHorarioId,
-			Dia: this.dia,
-			HoraInicio: horaInicioMilitar,
-			HoraFin: horaFinMilitar,
-			UsuarioId: this.practicanteId,
+			UsuarioId: this.usuarioId,
+			Nombre: this.nombre,
+			Apellidos: this.apellidos,
+			Password: this.password,
+			RolId: this.rolId,
+			CarreraId: this.carreraId,
+			Identificacion: this.identificacion,
+			InicioPractica: ( this.esRolPracticante ? this.fechaInicio : fechaActual ),
+			FinPractica: ( this.esRolPracticante ? this.fechaFin : fechaActual ),
 		} );
 
 		return datos;
@@ -72,21 +117,32 @@ var OfertaHorario = function ()
 	this.validarFormulario = function ()
 	{
 		var mensajeError = '';
-		var diaEsValido = this.dia != '';
-		var horaInicioEsValida = this.horaInicio != '';
-		var horaFinEsValida = this.horaFin != '';
-		var practicanteValido = this.practicanteId != '' && this.practicanteId != '-1';
+		var nombreEsValido = this.nombre != '';
+		var apellidosEsValido = this.apellidos != '';
+		var passwordEsValido = this.password != '';
+		var identificacionEsValida = this.identificacion != '';
+		var rolEsValido = this.rolId != '-1' && this.rolId != '';
+		var carreraEsValida = this.carreraId != '' && this.carreraId != '-1';
 
-		var horaInicioMilitar = obtenerHoraMilitar( this.horaInicio );
-		var horaFinMilitar = obtenerHoraMilitar( this.horaFin );
+		mensajeError = nombreEsValido ? mensajeError : ( mensajeError + '<p>Digite el nombre.</p>' );
+		mensajeError = apellidosEsValido ? mensajeError : ( mensajeError + '<p>Digite los apellidos.</p>' );
+		mensajeError = passwordEsValido ? mensajeError : ( mensajeError + '<p>Digite el password.</p>' );
+		mensajeError = identificacionEsValida ? mensajeError : ( mensajeError + '<p>Digite la identificación.</p>' );
+		mensajeError = rolEsValido ? mensajeError : ( mensajeError + '<p>Seleccione el rol.</p>' );
+		mensajeError = carreraEsValida ? mensajeError : ( mensajeError + '<p>Seleccione la carrera.</p>' );
 
-		var rangoHorasValido = horaFinMilitar > horaInicioMilitar;
 
-		mensajeError = diaEsValido ? mensajeError : ( mensajeError + '<p>Digite el dia.</p>' );
-		mensajeError = horaInicioEsValida ? mensajeError : ( mensajeError + '<p>Digite la hora de inicio.</p>' );
-		mensajeError = horaFinEsValida ? mensajeError : ( mensajeError + '<p>Digite la hora final.</p>' );
-		mensajeError = rangoHorasValido ? mensajeError : ( mensajeError + '<p>La hora inicial debe ser mayor a la hora final.</p>' );
-		mensajeError = practicanteValido ? mensajeError : ( mensajeError + '<p>Por favor seleccione un practicante.</p>' );
+
+		if ( this.esRolPracticante )
+		{
+			var fechaInicioEsValida = this.fechaInicio != '';
+			var fechaFinEsValida = this.fechaFin != '';
+			var rangoHorasValido = comprarFechasInicioFinal( this.fechaInicio, this.fechaFin );
+
+			mensajeError = fechaInicioEsValida ? mensajeError : ( mensajeError + '<p>Seleccione la fecha de incio.</p>' );
+			mensajeError = fechaFinEsValida ? mensajeError : ( mensajeError + '<p>Seleccione la fecha final.</p>' );
+			mensajeError = rangoHorasValido ? mensajeError : ( mensajeError + '<p>La fecha inicio debe ser mayor a la fecha fin.</p>' );
+		}
 
 		var formularioValido = mensajeError == '';
 
@@ -99,19 +155,19 @@ var OfertaHorario = function ()
 	}
 };
 
-function mantenimientoOfertaHorario()
+function mantenimientoUsuarios()
 {
-	ofertaHorario = new OfertaHorario();
-	var envioDatosEsValido = ofertaHorario.validarEnvioDatos();
+	usuario = new Usuario();
+	var envioDatosEsValido = usuario.validarEnvioDatos();
 
 	if ( envioDatosEsValido )
 	{
-		var datos = ofertaHorario.obtenerDatos()
+		var datos = usuario.obtenerDatos()
 		mostrarLoading();
 
 		$.ajax( {
 			type: "POST",
-			url: '/Practicante/MantenimientoOfertaHorario',
+			url: '/Usuario/MantenimientoUsuarios',
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			data: datos,
@@ -124,9 +180,9 @@ function mantenimientoOfertaHorario()
 				var mensaje = respuesta.Respuesta;
 				if ( exito )
 				{
-					obtenerOfertasPracticante();
-					$( '#popUpMantenimientoOfertaHorario' ).modal( 'hide' );
-					$( '#popUpEliminarOferta' ).modal( 'hide' );
+					obtenerUsuarios();
+					$( '#popUpMantenimientoUsurios' ).modal( 'hide' );
+					$( '#popUpEliminarUsuario' ).modal( 'hide' );
 					mostrarMensaje( 'Éxito', mensaje, 'exito' );
 				}
 				else
@@ -145,25 +201,21 @@ function mantenimientoOfertaHorario()
 	}
 }
 
-function obtenerUsuariosPorRol()
+function obtenerRoles()
 {
 	mostrarLoading();
-	var rolPacienteId = 3;
 
 	$.ajax( {
 		type: "POST",
-		url: '/Usuario/ObtenerUsuariosPorRol',
+		url: '/Usuario/ObtenerRoles',
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
-		data: JSON.stringify( { rolId: rolPacienteId } ),
+		data: '',
 		success: function ( data )
 		{
 			ocultarLoading();
-			var datos = $.parseJSON( data );
-			var listaUsuarios = datos.ListaUsuarios;
-			var esRolPracticante = datos.EsRolPracticante;
-			var usuarioId = datos.UsuarioId;
-			llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId );
+			var listaRoles = $.parseJSON( data );
+			llenarComboRoles( listaRoles );
 		},
 		error: function ( jqXHR, textStatus, errorThrown )
 		{
@@ -173,90 +225,99 @@ function obtenerUsuariosPorRol()
 			mostrarMensaje( 'Error', mensajeError, 'error' );
 		}
 	} );
-
 }
 
-function llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId )
+function llenarComboRoles( listaRoles )
 {
-	debugger
-	var combo = $( "#ddlUsuario" );
+	var combo = $( "#ddlRol" );
 	combo.empty();
 
-	var comboPracticante = $( "#ddlPracticante" );
-	comboPracticante.empty();
-
-	var poseeDatos = listaUsuarios.length > 0;
+	var poseeDatos = listaRoles.length > 0;
 
 	if ( poseeDatos )
 	{
 		combo.append( $( "<option />" ).val( '-1' ).text( 'Seleccione' ) );
-		comboPracticante.append( $( "<option />" ).val( '-1' ).text( 'Seleccione' ) );
 	}
 	else
 	{
 		combo.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
-		comboPracticante.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
 	}
 
-	$.each( listaUsuarios, function ( indice, elemento )
+	$.each( listaRoles, function ( indice, elemento )
 	{
-		var nombre = elemento.Nombre + ' ' + elemento.Apellidos;
-		var usuarioId = elemento.UsuarioId;
-		combo.append( $( "<option />" ).val( usuarioId ).text( nombre ) );
-		comboPracticante.append( $( "<option />" ).val( usuarioId ).text( nombre ) );
+		var descripcion = elemento.Descripcion;
+		var RolId = elemento.RolId;
+		combo.append( $( "<option />" ).val( RolId ).text( descripcion ) );
 	} );
+}
+
+
+function obtenerCarreras()
+{
+	mostrarLoading();
+
+	$.ajax( {
+		type: "POST",
+		url: '/Usuario/ObtenerCarreras',
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		data: '',
+		success: function ( data )
+		{
+			ocultarLoading();
+			var lista = $.parseJSON( data );
+			llenarComboCarreras( lista );
+		},
+		error: function ( jqXHR, textStatus, errorThrown )
+		{
+			ocultarLoading();
+			var responseText = jqXHR.responseText;
+			var mensajeError = obtenerMensajeError( responseText );
+			mostrarMensaje( 'Error', mensajeError, 'error' );
+		}
+	} );
+}
+
+function llenarComboCarreras( lista )
+{
+	var combo = $( "#ddlCarrera" );
+	combo.empty();
+
+	var poseeDatos = lista.length > 0;
+
+	if ( poseeDatos )
+	{
+		combo.append( $( "<option />" ).val( '-1' ).text( 'Seleccione' ) );
+	}
+	else
+	{
+		combo.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
+	}
+
+	$.each( lista, function ( indice, elemento )
+	{
+		var nombre = elemento.Nombre;
+		var carreraId = elemento.CarreraId;
+		combo.append( $( "<option />" ).val( carreraId ).text( nombre ) );
+	} );
+}
+
+function mostrarFechasPractica()
+{
+	var rolId = $( "#ddlRol" ).val();
+	var esRolPracticante = rolId == 3;
 
 	if ( esRolPracticante )
 	{
-		combo.val( usuarioId );
-		combo.prop( 'disabled', true );
-
-		comboPracticante.val( usuarioId );
-		comboPracticante.prop( 'disabled', true );
+		$( "#divFechas" ).show();
 	}
-
-	obtenerOfertasPracticante();
-}
-
-
-function obtenerDatosFiltro()
-{
-	var datos = JSON.stringify( {
-		FechaInicio: $( '#txbFechaInicio' ).val() != '' ? $( '#txbFechaInicio' ).val() : '-1',
-		FechaFin: $( '#txbFechaFin' ).val() != '' ? $( '#txbFechaFin' ).val() : '-1',
-		UsuarioId: $( '#ddlUsuario' ).val() != '' ? $( '#ddlUsuario' ).val() : '-1',
-		Apellidos: $( '#txbApellidos' ).val() != '' ? $( '#txbApellidos' ).val() : '-1',
-		Identificacion: $( '#txbIdentificacion' ).val() != '' ? $( '#txbIdentificacion' ).val() : '-1'
-	} );
-
-	return datos;
-}
-
-function validarConsulta()
-{
-	var fechaInicioValida = $( '#txbFechaInicio' ).val() != '' && $( '#txbFechaInicio' ).val() !== null;
-	var fechaFinValida = $( '#txbFechaFin' ).val() != '' && $( '#txbFechaFin' ).val() !== null;
-	var rangoFechasValido = comprarFechasInicioFinal( $( '#txbFechaInicio' ).val(), $( '#txbFechaFin' ).val() );
-
-	var mensajeError = '';
-
-	mensajeError = fechaInicioValida ? mensajeError : ( mensajeError + '<p>Digite la fecha inicial.</p>' );
-	mensajeError = fechaFinValida ? mensajeError : ( mensajeError + '<p>Digite la fecha final.</p>' );
-	mensajeError = rangoFechasValido ? mensajeError : ( mensajeError + '<p>La fecha final debe ser mayor a la fecha inicial.</p>' );
-
-	var formularioValido = mensajeError == '';
-
-	if ( !formularioValido )
+	else
 	{
-		mostrarMensaje( 'Campos requeridos para la consulta', mensajeError, 'alerta' );
+		$( "#divFechas" ).hide();
 	}
-
-	return formularioValido;
 }
 
-
-
-function ObtenerUsuarios()
+function obtenerUsuarios()
 {
 	$.ajax( {
 		type: "POST",
@@ -289,9 +350,10 @@ function crearGridUsuarios( lista )
                               '<thead>' +
                               '<tr>' +
 							  '<th></th>' +
+							  '<th></th>' +
 							  '<th>Nombre</th>' +
                               '<th>Apellidos</th>' +
-                              '<th>Identificacion</th>' +
+                              '<th>Rol</th>' +
                               '<th>Inicio practica</th>' +
                               '<th>Fin practica</th>' +
 
@@ -316,19 +378,33 @@ function crearGridUsuarios( lista )
 		var inicioPractica = "'" + item.InicioPractica + "'";
 		var finPractica = "'" + item.FinPractica + "'";
 
-		var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarOferta(' + item.usuarioId + ',' + nombre + ',' + apellidos + ');"></i>';
+		var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarUsuario(' +
+			item.UsuarioId + ',' +
+			nombre + ',' +
+			apellidos +
+			');"></i>';
 
-		var citasDetalle = item.PoseeCitas ? "<b style='color:red;'>Sí</b>" : "No";
+		var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarMantenimeintoUsuariosEditar(' +
+		  item.UsuarioId + ',' +
+		  nombre + ',' +
+		  apellidos + ',' +
+		  identificacion + ',' +
+		  rolId + ',' +
+		  password + ',' +
+		  carreraId + ',' +
+		  inicioPractica + ',' +
+		  finPractica + ',' +
+		  ');"></i>';
 
 		var fila =
         '<tr>' +
+		'<td>' + botonEditar + '</td>' +
 		'<td>' + botonEliminar + '</td>' +
-		 '<td>' + item.Nombre + '</td>' +
+		'<td>' + item.Nombre + '</td>' +
         '<td>' + item.Apellidos + '</td>' +
-        '<td>' + item.Identificacion + '</td>' +
+        '<td>' + item.DescripcionRol + '</td>' +
         '<td>' + item.InicioPractica + '</td>' +
         '<td>' + item.FinPractica + '</td>' +
-
         '</tr>';
 
 		tBody.append( fila );

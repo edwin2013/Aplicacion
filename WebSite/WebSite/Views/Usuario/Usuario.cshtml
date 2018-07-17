@@ -14,16 +14,12 @@
 	<link href="~/Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-	<input type="hidden" id="hdfCitaId" name="hdfCitaId">
+	<input type="hidden" id="hdfUsuarioId" name="hdfUsuarioId">
 	<input type="hidden" id="hdfAccion" name="hdfAccion">
-	<input type="hidden" id="hdfCorreoPaciente" name="hdfCorreoPaciente">
-	<input type="hidden" id="hdfNombrePaciente" name="hdfNombrePaciente">
-	<input type="hidden" id="hdfIdentificadorGUID" name="hdfIdentificadorGUID">
-	<input type="hidden" id="hdfPacienteId" name="hdfPacienteId">
 
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a href="#">Citas</a>
+			<a href="#">Usuarios</a>
 		</li>
 		<li class="breadcrumb-item active">Listado</li>
 	</ol>
@@ -36,7 +32,7 @@
 
 			</div>
 			<div class="col-md-2">
-				<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="mostrarMentenimeintoUsuarios();">Nuevo usuario</button>
+				<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="mostrarMantenimientoUsuariosCrear();">Nuevo usuario</button>
 			</div>
 		</div>
 	</div>
@@ -44,62 +40,7 @@
 	<!-- Example DataTables Card-->
 	<div class="card mb-3">
 		<div class="card-header">
-			<div class="container m-3">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Fecha inicio :</span>
-								<input type="text" class="form-control" id="txbFechaInicio" data-date-format="dd/mm/yyyy" name="txbFechaInicio" value="" readonly />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Fecha fin :</span>
-								<input type="text" class="form-control" id="txbFechaFin" data-date-format="dd/mm/yyyy" name="txbFechaFin" value="" readonly />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Practicante :</span>
-								<select id="ddlUsuario" name="ddlUsuario" class="form-control" onchange="obtenerPracticantes();"></select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Apellido :</span>
-								<input type="text" class="form-control" id="txbApellidos" name="txbApellidos" value="" />
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon">Identificación :</span>
-								<input type="text" class="form-control" id="txbIdentificacion" name="txbIdentificacion" value="" />
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"></span>
-								<button type="button" class="btn btn-primary btn-bloc" data-toggle="modal" onclick="obtenerCitasPracticante();">Buscar citas</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
+			@*AREA PARA FILTROS*@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -150,11 +91,11 @@
 	</div>
 
 
-	<div class="modal fade" id="popUpEliminarCita" role="dialog">
+	<div class="modal fade" id="popUpEliminarUsuario" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="lblTituloPopUp">Eliminar cita</h5>
+					<h5 class="modal-title" id="lblTituloPopUp">Eliminar usuario</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -170,17 +111,17 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" onclick="mantenimientoCita()">Eliminar</button>
+					<button type="button" class="btn btn-primary" onclick="mantenimientoUsuarios()">Eliminar</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="modal fade" id="popUpMostrarInformacionPaciente" role="dialog">
+	<div class="modal fade" id="popUpMantenimientoUsurios" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Información del paciente</h5>
+					<h5 class="modal-title" id="lblTituloMantenimiento">Información del usuario</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -190,67 +131,58 @@
 						<div class="form-row">
 							<div class="col-md-6">
 								<label>Nombre *</label>
-								<input id="txbNombrePaciente" name="txbNombrePaciente" class="form-control" value=""></input>
+								<input id="txbNombre" name="txbNombre" class="form-control" value=""></input>
 							</div>
 							<div class="col-md-6">
 								<label>Apellidos *</label>
-								<input type="text" class="form-control" name="txbApellidosPaciente" id="txbApellidosPaciente" value="" />
+								<input type="text" class="form-control" name="txbApellidos" id="txbApellidos" value="" />
 							</div>
 						</div>
 					</div>
+
 					<div class="form-group">
 						<div class="form-row">
 							<div class="col-md-6">
-								<label>Telefono *</label>
-								<input type="number" class="form-control" name="txbTelefonoPaciente" id="txbTelefonoPaciente" value="" />
+								<label>Password *</label>
+								<input type="text" class="form-control" name="txbPassword" id="txbPassword" value="" readonly/>
 							</div>
 							<div class="col-md-6">
-								<label>Correo electronico *</label>
-								<input type="text" class="form-control" name="txbCoreoElectronicoPaciente" id="txbCoreoElectronicoPaciente" value="" />
+								<label>Identificación *</label>
+								<input type="text" class="form-control" name="txbIdentificacion" id="txbIdentificacion" value="" />
 							</div>
 						</div>
 					</div>
+
 					<div class="form-group">
 						<div class="form-row">
 							<div class="col-md-6">
-								<label>Identificacion *</label>
-								<input type="number" class="form-control" name="txbIdentificadorPaciente" id="txbIdentificadorPaciente" value="" />
+								<label>Rol *</label>
+								<select id="ddlRol" class="form-control" onchange="mostrarFechasPractica();">
+								</select>
 							</div>
 							<div class="col-md-6">
-								<label>Estado civil *</label>
-								<select id="ddlEstadoCivilPaciente" class="form-control">
-									<option value="0">Seleccione</option>
-									<option value="1">Soltero (a)</option>
-									<option value="2">Union libre</option>
-									<option value="3">Casado (a)</option>
-									<option value="4">Divorciado (a)</option>
-									<option value="5">Viudo (a)</option>
+								<label>Carrera *</label>
+								<select id="ddlCarrera" class="form-control">
 								</select>
 							</div>
 						</div>
 					</div>
-
-					<div class="form-group">
+					<div class="form-group" id="divFechas" style="display:none;">
 						<div class="form-row">
 							<div class="col-md-6">
-								<label>Nacionalidad *</label>
-								<input type="text" class="form-control" name="txbNacionalidadPaciente" id="txbNacionalidadPaciente" value="" />
+								<label>Inicio practica *</label>
+								<input type="text" class="form-control" id="txbFechaInicio" data-date-format="dd/mm/yyyy" name="txbFechaInicio" value="" readonly />
 							</div>
-							<div class="col-md-3">
-								<label>Edad *</label>
-								<input type="number" class="form-control" name="txbEdadPaciente" id="txbEdadPaciente" value="" />
+							<div class="col-md-6">
+								<label>Fin practica *</label>
+								<input type="text" class="form-control" id="txbFechaFin" data-date-format="dd/mm/yyyy" name="txbFechaFin" value="" readonly />
 							</div>
-							<div class="col-md-3">
-								<label>Hijos *</label>
-								<input type="number" class="form-control" name="txbHijosPaciente" id="txbHijosPaciente" value="" />
-							</div>
-
 						</div>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" class="btn btn-primary" onclick="actualizarPaciente()">Guardar</button>
+						<button type="button" class="btn btn-primary" onclick="mantenimientoUsuarios()">Guardar</button>
 					</div>
 				</div>
 			</div>

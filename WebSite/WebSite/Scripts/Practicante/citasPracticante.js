@@ -229,8 +229,8 @@ function crearGridCitas(lista) {
             paciente + ',' +
             correo + ',' +
             identificadorGUID +
-
             ');"></i>';
+
         var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' + item.CitaId + ',' + fecha + ',' + hora + ',' + paciente + ',' + ');"></i>';
         var botonInformacion = '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
 

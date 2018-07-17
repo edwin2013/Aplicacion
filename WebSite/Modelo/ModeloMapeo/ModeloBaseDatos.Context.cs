@@ -406,16 +406,6 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerRoles_Result>("[ManejoCitasEntities].[FUN_ObtenerRoles]()");
         }
     
-        [DbFunction("ManejoCitasEntities", "FUN_ObtenerUsuariosPorRol")]
-        public virtual IQueryable<FUN_ObtenerUsuariosPorRol_Result> FUN_ObtenerUsuariosPorRol(Nullable<int> rolId)
-        {
-            var rolIdParameter = rolId.HasValue ?
-                new ObjectParameter("RolId", rolId) :
-                new ObjectParameter("RolId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerUsuariosPorRol_Result>("[ManejoCitasEntities].[FUN_ObtenerUsuariosPorRol](@RolId)", rolIdParameter);
-        }
-    
         public virtual int SP_MantenimientoUsuarios(string accion, Nullable<int> usuarioId, string nombre, string apellidos, string identificacion, Nullable<int> rolId, string password, Nullable<int> carreraId, string inicioPractica, string finPractica, ObjectParameter resultado, ObjectParameter mensaje)
         {
             var accionParameter = accion != null ?
@@ -459,6 +449,16 @@ namespace Modelo.ModeloMapeo
                 new ObjectParameter("FinPractica", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoUsuarios", accionParameter, usuarioIdParameter, nombreParameter, apellidosParameter, identificacionParameter, rolIdParameter, passwordParameter, carreraIdParameter, inicioPracticaParameter, finPracticaParameter, resultado, mensaje);
+        }
+    
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerUsuariosPorRol")]
+        public virtual IQueryable<FUN_ObtenerUsuariosPorRol_Result> FUN_ObtenerUsuariosPorRol(Nullable<int> rolId)
+        {
+            var rolIdParameter = rolId.HasValue ?
+                new ObjectParameter("RolId", rolId) :
+                new ObjectParameter("RolId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerUsuariosPorRol_Result>("[ManejoCitasEntities].[FUN_ObtenerUsuariosPorRol](@RolId)", rolIdParameter);
         }
     }
 }
