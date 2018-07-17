@@ -280,6 +280,13 @@
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="SP_MantenimientoImagenActividades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Accion" Type="char" Mode="In" />
+          <Parameter Name="ImagenId" Type="int" Mode="In" />
+          <Parameter Name="Datos" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="SP_MantenimientoOfertaHorario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Accion" Type="char" Mode="In" />
           <Parameter Name="OfertaHorarioId" Type="int" Mode="In" />
@@ -655,7 +662,14 @@
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
-            <Parameter Name="RolId" Mode="In" Type="Int32" />
+          <Parameter Name="RolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MantenimientoImagenActividades">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="ImagenId" Mode="In" Type="Int32" />
+            <Parameter Name="Datos" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -988,6 +1002,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoImagenActividades" FunctionName="ManejoCitasModel.Store.SP_MantenimientoImagenActividades" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

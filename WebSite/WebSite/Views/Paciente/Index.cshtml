@@ -38,9 +38,48 @@
 		</div>
 	</div>
 	<div role="tabpanel" class="tab-pane fade" id="testimonios">Testimonios</div>
-	<div role="tabpanel" class="tab-pane fade" id="proximasActividades">Próximas actividades</div>
+	<div role="tabpanel" class="tab-pane fade" id="proximasActividades">
+		Próximas actividades
+		<form id="upload" enctype="multipart/form-data" action="@Url.Action("Survey", "Mantenimiento")" method="POST">
+			<input type="file" name="fileUpload" id="fileUpload" size="23" /><br />
+			<button>Upload!</button>
+		</form>
+
+	</div>
 </div>
 
+<script type="text/javascript">
+
+	$( '#upload' ).submit( function ( e )
+	{
+		e.preventDefault(); // stop the standard form submission
+
+		var formdata = new FormData(); //FormData object
+		var fileInput = document.getElementById( 'fileUpload' );
+		//Iterating through each files selected in fileInput
+		for ( i = 0; i < fileInput.files.length; i++ )
+		{
+			formdata.append( fileInput.files[i].name, fileInput.files[i] );
+		}
+
+		$.ajax( {
+			url: this.action,
+			type: this.method,
+			data: formdata,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function ( data )
+			{
+				console.log( data.UploadedFileCount + ' file(s) uploaded successfully' );
+			},
+			error: function ( xhr, error, status )
+			{
+				console.log( error, status );
+			}
+		} );
+	} );
+</script>
 
 @section Scripts{
 	<script src="~/Scripts/bootstrap-datepicker.js"></script>

@@ -460,5 +460,22 @@ namespace Modelo.ModeloMapeo
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerUsuariosPorRol_Result>("[ManejoCitasEntities].[FUN_ObtenerUsuariosPorRol](@RolId)", rolIdParameter);
         }
+    
+        public virtual int SP_MantenimientoImagenActividades(string accion, Nullable<int> imagenId, string datos, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var accionParameter = accion != null ?
+                new ObjectParameter("Accion", accion) :
+                new ObjectParameter("Accion", typeof(string));
+    
+            var imagenIdParameter = imagenId.HasValue ?
+                new ObjectParameter("ImagenId", imagenId) :
+                new ObjectParameter("ImagenId", typeof(int));
+    
+            var datosParameter = datos != null ?
+                new ObjectParameter("Datos", datos) :
+                new ObjectParameter("Datos", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoImagenActividades", accionParameter, imagenIdParameter, datosParameter, resultado, mensaje);
+        }
     }
 }

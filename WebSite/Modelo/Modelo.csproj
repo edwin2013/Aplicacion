@@ -54,6 +54,7 @@
     <Compile Include="General\DatosCorreo.cs" />
     <Compile Include="General\DiasOfertaMes.cs" />
     <Compile Include="General\Mensaje.cs" />
+    <Compile Include="Mantenimiento\ImagenActividades.cs" />
     <Compile Include="ModeloMapeo\Actividad.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
