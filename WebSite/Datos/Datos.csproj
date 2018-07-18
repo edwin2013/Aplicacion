@@ -49,6 +49,7 @@
     <Compile Include="DatosPaciente.cs" />
     <Compile Include="DatosPracticante.cs" />
     <Compile Include="DatosUsuario.cs" />
+    <Compile Include="DatosMantenimiento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

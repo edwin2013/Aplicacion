@@ -45,6 +45,7 @@
     <Compile Include="GeneracionCodigo.cs" />
     <Compile Include="Notificaciones\Correo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolesPermisos.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\PlantillaCorreoCalificacion.html" />

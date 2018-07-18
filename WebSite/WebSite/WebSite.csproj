@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\PacienteController.cs" />
     <Compile Include="Controllers\PracticanteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -181,6 +182,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ManejadorCorreos.cs" />
+    <Compile Include="Models\Seguridad\FiltroPermiso.cs" />
+    <Compile Include="Models\Seguridad\FrontUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -220,6 +223,7 @@
     <Content Include="Scripts\Practicante\oferta.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Usuario\mantenimientoUsuarios.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="TemplatePaciente\css\creative.css" />
     <Content Include="TemplatePaciente\css\creative.min.css" />
@@ -488,10 +492,11 @@
     <Content Include="Views\Paciente\Paciente.cshtml" />
     <Content Include="Views\Practicante\CitasPracticante.cshtml" />
     <Content Include="Views\Paciente\_CalificacionEstrellas.cshtml" />
+    <Content Include="Views\Usuario\Usuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Usuario\" />
+    <Folder Include="Views\Mantenimiento\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

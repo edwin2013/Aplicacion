@@ -1,6 +1,7 @@
 ﻿using Modelo.General;
 using Modelo.Paciente;
 using Modelo.Practicante;
+using Modelo.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Utiles;
 using WebSite.Models;
+using WebSite.Models.Seguridad;
 
 namespace WebSite.Controllers
 {
@@ -19,7 +21,8 @@ namespace WebSite.Controllers
             return View();
         }
 
-        public ActionResult Oferta()
+		[FiltroPermiso(Permiso = RolesPermisos.Alumno_Puede_Visualizar_Un_Alumno)]
+		public ActionResult Oferta()
         {
             return View();
         }
@@ -55,9 +58,9 @@ namespace WebSite.Controllers
             {
                 string asunto = ConfigurationManager.AppSettings["asuntoCorreoCalificacion"];
                 ManejadorCorreos manejadorCorreos = new Models.ManejadorCorreos(citaModelo.CorreoElectronico, asunto);
-                string domainName =
-                System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Paciente/Calificacion?" + "identificadorGUID=" + citaModelo.IdentificadorGUID;
-                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, domainName);
+                string rutaPagina =
+                System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Paciente/Calificacion?identificadorGUID=" + citaModelo.IdentificadorGUID;
+                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, rutaPagina);
                 string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantillaCalificacion"];
                 manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
                 manejadorCorreos.EnviarCorreo();
@@ -68,7 +71,6 @@ namespace WebSite.Controllers
 
         public JsonResult ObtenerOfertaPracticante(FiltroCitas filtroCitas)
         {
-            filtroCitas.UsuarioId = 1;//TODO
 
             List<OfertaPracticante> listaOfertaPracticante = new Negocios.NegociosPracticante().ObtenerOfertaPracticante(filtroCitas);
             JavaScriptSerializer seralizador = new JavaScriptSerializer();
