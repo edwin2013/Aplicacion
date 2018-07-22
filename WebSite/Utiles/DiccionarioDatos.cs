@@ -1,4 +1,5 @@
 ﻿using Modelo.Paciente;
+using Modelo.Usuario;
 using System.Collections.Generic;
 
 namespace Utiles
@@ -25,6 +26,17 @@ namespace Utiles
             datosPaciente.Add("UrlPagina", urlpagina);
 
             return datosPaciente;
+        }
+
+        public Dictionary<string, string> CrearDiccionarioNuevoUsuario(UsuarioModelo usuario, string urlpagina)
+        {
+            Dictionary<string, string> datosUsuario = new Dictionary<string, string>();
+            datosUsuario.Add("NombreUsuario", usuario.Nombre + " " + usuario.Apellidos);
+            datosUsuario.Add("Corrreo", usuario.Correo);
+            datosUsuario.Add("Password", usuario.Password);
+            datosUsuario.Add("UrlPagina", urlpagina);
+
+            return datosUsuario;
         }
     }
 }

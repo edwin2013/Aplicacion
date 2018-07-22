@@ -17,6 +17,11 @@ namespace WebSite.Models
 			DatosCorreo = new DatosCorreo(correoEmisor, correoReceptor, smtpCliente, puertoCorreo, nombreRemitente, asunto, claveCorreo);
 		}
 
+        public void EstablecerCorreosConCopia(List<string> correosConCopia)
+        {
+            DatosCorreo.ListadoCorreosAEnviarConCopia = correosConCopia;
+        }
+
 		public void CrearCuerpoCorreo(string rutaPlantilla, Dictionary<string, string> diccionarioDatos)
 		{
 			DatosCorreo.CrearCuerpoCorreo(rutaPlantilla, diccionarioDatos);

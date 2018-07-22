@@ -1,4 +1,6 @@
-﻿function obtenerHoraMilitar( horaEstandar )
+﻿var ROLPACIENTE = '3';
+
+function obtenerHoraMilitar(horaEstandar)
 {
 	return parseInt( horaEstandar.split( ':' )[0] ) * 100;
 }

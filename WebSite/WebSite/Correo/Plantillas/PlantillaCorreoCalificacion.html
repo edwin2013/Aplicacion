@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		input[type=submit] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+			input[type=submit]:hover {
+				background-color: #45a049;
+			}
+
+		.container {
+			border-radius: 5px;
+			background-color: #f2f2f2;
+			padding: 20px;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		.button {
+			display: block;
+			width: 115px;
+			height: 17px;
+			background: #f05f40;
+			padding: 10px;
+			text-align: center;
+			border-radius: 5px;
+			color: white;
+			font-weight: bold;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container" style="margin: 0 auto;width: 85%;">
+		<div class="row">
+			<div class="col-sm-1">
+			</div>
+			<div class="col-sm-10">
+				<div class="card">
+					<div class="card-body">
+						<div>
+							<div class="container" style="background: #f05f40;color: white;padding: 10px;border-radius: 10px;">
+								<h2>Despacho de citas</h2>
+								<h4>
+									Sistema de de gestión de citas
+								</h4>
+							</div>
+						</div>
+						<div class="container">
+							<h3>
+								Estimado $$NombrePaciente$$, fue un gusto atenderlo en nuestras oficinas. Para seguir mejorando nuestra
+								atención seria tan amable de calificarnos.
+							</h3>
+							<div class="container">
+								<a href="$$UrlPagina$$" target="_blank" class="button">Calificar</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-1">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

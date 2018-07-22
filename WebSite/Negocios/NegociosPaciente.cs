@@ -8,6 +8,18 @@ namespace Negocios
 {
     public class NegociosPaciente
     {
+        public Mensaje ActualizarHorarioCita(CitaModelo citaModelo)
+        {
+            try
+            {
+                return new DatosPaciente().ActualizarHorarioCita(citaModelo);
+            }
+            catch (Exception excepcion)
+            {
+                throw new Exception(excepcion.Message);
+            }
+        }
+
         public List<CitaModelo> ObtenerCitas(string identificadorGUID)
         {
             try

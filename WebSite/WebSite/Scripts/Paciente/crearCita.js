@@ -256,7 +256,6 @@ function llenarComboDias(listaDiasOfertaMes) {
     });
 }
 
-
 function limpiarCampos()
 {
 	$( '#txbMes' ).val( '' );

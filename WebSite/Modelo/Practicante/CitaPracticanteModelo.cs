@@ -2,8 +2,9 @@
 {
     public class CitaPracticanteModelo
     {
-        public string Accion { set; get; }
+        public char Accion { set; get; }
         public string HoraCita { set; get; }
+        public int HoraEntero { set; get; }
         public int CitaId { set; get; }
         public int Calificacion { set; get; }
         public int PacienteId { set; get; }

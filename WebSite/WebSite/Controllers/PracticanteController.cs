@@ -21,10 +21,48 @@ namespace WebSite.Controllers
             return View();
         }
 
-		[FiltroPermiso(Permiso = RolesPermisos.Alumno_Puede_Visualizar_Un_Alumno)]
-		public ActionResult Oferta()
+        [FiltroPermiso(Permiso = RolesPermisos.Alumno_Puede_Visualizar_Un_Alumno)]
+        public ActionResult Oferta()
         {
             return View();
+        }
+
+        public JsonResult ActualizarHorarioCita(CitaModelo citaModelo)
+        {
+            Mensaje mensajeRespuesta = new Negocios.NegociosPaciente().ActualizarHorarioCita(citaModelo);
+
+            if (mensajeRespuesta.Exito)
+            {
+                PacienteModelo paciente = 
+                    new Negocios.NegociosPaciente().ObtenerPacientes(citaModelo.PacienteId).FirstOrDefault();
+
+                string rutaServer = Server.MapPath("~/");
+                string rutaPlantilla = rutaServer + ConfigurationManager.AppSettings["rutaPlantilla"];
+                string asunto = ConfigurationManager.AppSettings["asuntoCita"];
+
+
+                CrearCitaModelo crearCitaModelo = new CrearCitaModelo();
+                crearCitaModelo.PacienteModelo.Nombre = paciente.Nombre;
+                crearCitaModelo.PacienteModelo.Apellidos = paciente.Apellidos;
+                crearCitaModelo.PacienteModelo.CorreoElectronico = paciente.CorreoElectronico;
+                crearCitaModelo.PacienteModelo.Telefono = paciente.Telefono;
+                crearCitaModelo.PacienteModelo.Identificacion = paciente.Identificacion;
+                crearCitaModelo.CitaModelo.DetalleHora = citaModelo.DetalleHora;
+                crearCitaModelo.CitaModelo.Dia = citaModelo.Dia;
+
+                Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioDatosPaciente(crearCitaModelo);
+
+                ManejadorCorreos manejadorCorreos = new ManejadorCorreos(paciente.CorreoElectronico, asunto);
+                manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
+                int rolAdministrador = (int)Roles.Administrador;
+                List<string> listaCorreosConCopia =
+                new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolAdministrador).Select(item => item.Correo).ToList();
+                manejadorCorreos.EstablecerCorreosConCopia(listaCorreosConCopia);
+                manejadorCorreos.EnviarCorreo();
+            }
+
+            var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult MantenimientoOfertaHorario(OfertaHorarioModelo ofertaHorarioModelo)
@@ -53,7 +91,7 @@ namespace WebSite.Controllers
         public JsonResult MantenimientoCita(CitaPracticanteModelo citaModelo)
         {
             Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
-            bool citaFueCerrada = citaModelo.Accion == "A" && mensajeRespuesta.Exito;
+            bool citaFueCerrada = citaModelo.Accion == (char)Acciones.Actualizar && mensajeRespuesta.Exito;
             if (citaFueCerrada)
             {
                 string asunto = ConfigurationManager.AppSettings["asuntoCorreoCalificacion"];
@@ -61,8 +99,15 @@ namespace WebSite.Controllers
                 string rutaPagina =
                 System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Paciente/Calificacion?identificadorGUID=" + citaModelo.IdentificadorGUID;
                 Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioCorreoCalificacion(citaModelo.Paciente, rutaPagina);
-                string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantillaCalificacion"];
+                string rutaServer = Server.MapPath("~/");
+                string rutaPlantilla = rutaServer + ConfigurationManager.AppSettings["rutaPlantillaCalificacion"];
                 manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
+
+                int rolAdministrador = (int)Roles.Administrador;
+                List<string> listaCorreosConCopia =
+                new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolAdministrador).Select(item => item.Correo).ToList();
+
+                manejadorCorreos.EstablecerCorreosConCopia(listaCorreosConCopia);
                 manejadorCorreos.EnviarCorreo();
             }
             var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);

@@ -18,11 +18,12 @@ namespace Datos
 			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
 			{
 				contexto.SP_MantenimientoUsuarios(
-					usuario.Accion,
+					usuario.Accion.ToString(),
 					usuario.UsuarioId,
 					usuario.Nombre,
 					usuario.Apellidos,
 					usuario.Identificacion,
+                    usuario.Correo,
 					usuario.RolId,
 					usuario.Password,
 					usuario.CarreraId,
@@ -62,6 +63,7 @@ namespace Datos
 					usuario.CarreraId = usuarioActual.CarreraId ?? default(int);
 					usuario.InicioPractica = usuarioActual.InicioPractica;
 					usuario.FinPractica = usuarioActual.FinPractica;
+                    usuario.Correo = usuarioActual.Correo;
 					listaUsuarios.Add(usuario);
 				}
 			}

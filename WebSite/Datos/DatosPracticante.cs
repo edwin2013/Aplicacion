@@ -50,6 +50,7 @@ namespace Datos
 				{
 					CitaPracticanteModelo cita = new CitaPracticanteModelo();
 					cita.HoraCita = citaActual.HoraCita;
+                    cita.HoraEntero = citaActual.HoraEntero ?? default(int);
 					cita.CitaId = citaActual.CitaId;
 					cita.PacienteId = citaActual.PacienteId;
 					cita.EstadoCita = citaActual.EstadoCita;
@@ -103,7 +104,7 @@ namespace Datos
 			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
 			{
 				contexto.SP_MantenimientoCita(
-					citaModelo.Accion,
+					citaModelo.Accion.ToString(),
 					citaModelo.CitaId,
                     citaModelo.Calificacion,
 					citaModelo.Antecedentes,

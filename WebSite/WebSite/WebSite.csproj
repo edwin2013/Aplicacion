@@ -195,6 +195,9 @@
     <Content Include="Content\General.css" />
     <Content Include="Content\Paciente.css" />
     <Content Include="Content\ratingStart.css" />
+    <Content Include="Correo\Plantillas\PlantillaCorreo.html" />
+    <Content Include="Correo\Plantillas\PlantillaCorreoCalificacion.html" />
+    <Content Include="Correo\Plantillas\PlantillaCorreoNuevoUsuario.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -219,6 +222,7 @@
     <Content Include="Scripts\Paciente\ActualizarPaciente.js" />
     <Content Include="Scripts\Paciente\calificarCita.js" />
     <Content Include="Scripts\Paciente\crearCita.js" />
+    <Content Include="Scripts\Practicante\cambiarHorarioCita.js" />
     <Content Include="Scripts\Practicante\citasPracticante.js" />
     <Content Include="Scripts\Practicante\oferta.js" />
     <Content Include="Scripts\respond.js" />
@@ -493,6 +497,7 @@
     <Content Include="Views\Practicante\CitasPracticante.cshtml" />
     <Content Include="Views\Paciente\_CalificacionEstrellas.cshtml" />
     <Content Include="Views\Usuario\Usuario.cshtml" />
+    <Content Include="Views\Usuario\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

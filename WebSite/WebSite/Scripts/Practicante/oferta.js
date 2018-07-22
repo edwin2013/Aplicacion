@@ -182,7 +182,6 @@ function obtenerUsuariosPorRol()
 
 function llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId )
 {
-    debugger
 	var combo = $( "#ddlUsuario" );
 	combo.empty();
 

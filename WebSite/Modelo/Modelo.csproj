@@ -55,15 +55,6 @@
     <Compile Include="General\DiasOfertaMes.cs" />
     <Compile Include="General\Mensaje.cs" />
     <Compile Include="Mantenimiento\ImagenActividades.cs" />
-    <Compile Include="ModeloMapeo\Actividad.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\Carrera.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\Cita.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerCarreras_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
@@ -94,15 +85,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloBaseDatos.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ModeloMapeo\OfertaHorario.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\Paciente.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\Sesion.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
     <Compile Include="ModeloMapeo\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
@@ -119,12 +101,6 @@
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\SP_ObtenerSesionesActivas_Result.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\sysdiagrams.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModeloMapeo\Usuario.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="Paciente\CitaModelo.cs" />

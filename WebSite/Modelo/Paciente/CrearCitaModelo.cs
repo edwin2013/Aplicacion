@@ -8,7 +8,13 @@ namespace Modelo.Paciente
 {
 	public class CrearCitaModelo
 	{
-		public CitaModelo CitaModelo { set; get; }
+        public CrearCitaModelo()
+        {
+            CitaModelo = new CitaModelo();
+            PacienteModelo = new PacienteModelo();
+        }
+
+        public CitaModelo CitaModelo { set; get; }
 		public PacienteModelo PacienteModelo { set; get; }
 	}
 }

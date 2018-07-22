@@ -9,6 +9,30 @@ namespace Datos
 {
 	public class DatosPaciente
 	{
+        public Mensaje ActualizarHorarioCita(CitaModelo citaModelo)
+        {
+            ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
+            ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
+
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                contexto.SP_ActualizarHorarioCita(
+                    citaModelo.CitaId,
+                    citaModelo.Dia,
+                    citaModelo.Hora,
+                    resultado,
+                    mensaje
+                    );
+            }
+
+            Mensaje mensajeMantenimiento =
+                new Mensaje(
+                    Convert.ToBoolean(resultado.Value),
+                    Convert.ToString(mensaje.Value));
+
+            return mensajeMantenimiento;
+        }
+
 
         public List<CitaModelo> ObtenerCitas(string identificadorGUID)
         {

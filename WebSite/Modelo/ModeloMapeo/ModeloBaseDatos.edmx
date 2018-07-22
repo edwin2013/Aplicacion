@@ -4,146 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ManejoCitasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Actividad">
-          <Key>
-            <PropertyRef Name="ActividadId" />
-          </Key>
-          <Property Name="ActividadId" Type="int" Nullable="false" />
-          <Property Name="Fecha" Type="datetime" />
-          <Property Name="Titulo" Type="nvarchar" MaxLength="200" />
-          <Property Name="Cupo" Type="int" />
-          <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Activo" Type="tinyint" />
-        </EntityType>
-        <EntityType Name="Carrera">
-          <Key>
-            <PropertyRef Name="CarreraId" />
-          </Key>
-          <Property Name="CarreraId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="Cita">
-          <Key>
-            <PropertyRef Name="CitaId" />
-          </Key>
-          <Property Name="CitaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PacienteId" Type="int" />
-          <Property Name="Antecedentes" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Recomendaciones" Type="nvarchar" MaxLength="1000" />
-          <Property Name="EstadoCita" Type="int" />
-          <Property Name="Calificacion" Type="int" />
-          <Property Name="SesionId" Type="bigint" />
-          <Property Name="IdentificadorGUID" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="OfertaHorario">
-          <Key>
-            <PropertyRef Name="OfertaHorarioId" />
-          </Key>
-          <Property Name="OfertaHorarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Dia" Type="datetime" />
-          <Property Name="HoraInicio" Type="int" />
-          <Property Name="HoraFin" Type="int" />
-          <Property Name="UsuarioId" Type="int" />
-        </EntityType>
-        <EntityType Name="Paciente">
-          <Key>
-            <PropertyRef Name="PacienteId" />
-          </Key>
-          <Property Name="PacienteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="200" />
-          <Property Name="Apellidos" Type="varchar" MaxLength="200" />
-          <Property Name="CorreoElectronico" Type="varchar" MaxLength="200" />
-          <Property Name="Telefono" Type="varchar" MaxLength="200" />
-          <Property Name="Nacionalidad" Type="varchar" MaxLength="200" />
-          <Property Name="Identificacion" Type="varchar" MaxLength="200" />
-          <Property Name="EstadoCivil" Type="int" />
-          <Property Name="Edad" Type="int" />
-          <Property Name="CantidadHijos" Type="int" />
-        </EntityType>
-        <EntityType Name="Sesion">
-          <Key>
-            <PropertyRef Name="SesionId" />
-          </Key>
-          <Property Name="SesionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OfertaHorarioId" Type="int" />
-          <Property Name="Hora" Type="int" />
-          <Property Name="Ocupado" Type="bit" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="200" />
-          <Property Name="Apellidos" Type="varchar" MaxLength="200" />
-          <Property Name="Identificacion" Type="varchar" MaxLength="200" />
-          <Property Name="RolId" Type="int" />
-          <Property Name="Password" Type="nvarchar" MaxLength="200" />
-          <Property Name="CarreraId" Type="int" />
-          <Property Name="InicioPractica" Type="datetime" />
-          <Property Name="FinPractica" Type="datetime" />
-        </EntityType>
-        <Association Name="FK_Cita_Paciente">
-          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
-          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Paciente">
-              <PropertyRef Name="PacienteId" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="PacienteId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cita_Sesion">
-          <End Role="Sesion" Type="Self.Sesion" Multiplicity="0..1" />
-          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sesion">
-              <PropertyRef Name="SesionId" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="SesionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OfertaHorario_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="OfertaHorario" Type="Self.OfertaHorario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="OfertaHorario">
-              <PropertyRef Name="UsuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sesion_Sesion">
-          <End Role="OfertaHorario" Type="Self.OfertaHorario" Multiplicity="0..1" />
-          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OfertaHorario">
-              <PropertyRef Name="OfertaHorarioId" />
-            </Principal>
-            <Dependent Role="Sesion">
-              <PropertyRef Name="OfertaHorarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Usuario_Carrera">
-          <End Role="Carrera" Type="Self.Carrera" Multiplicity="0..1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Carrera">
-              <PropertyRef Name="CarreraId" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="CarreraId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+    <Schema Namespace="ManejoCitasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="ConversionFechaEstandar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="Fecha" Type="datetime" Mode="In" />
         </Function>
@@ -224,6 +85,7 @@
                 <Property Name="UsuarioId" Type="int" />
                 <Property Name="Nombre" Type="varchar" MaxLength="200" />
                 <Property Name="Apellidos" Type="varchar" MaxLength="200" />
+                <Property Name="Correo" Type="varchar" MaxLength="200" />
                 <Property Name="Identificacion" Type="varchar" MaxLength="200" />
                 <Property Name="RolId" Type="int" />
                 <Property Name="Password" Type="nvarchar" MaxLength="200" />
@@ -234,6 +96,13 @@
               </RowType>
             </CollectionType>
           </ReturnType>
+        </Function>
+        <Function Name="SP_ActualizarHorarioCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CitaId" Type="int" Mode="In" />
+          <Parameter Name="Dia" Type="varchar" Mode="In" />
+          <Parameter Name="Hora" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="SP_ActualizarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PacienteId" Type="int" Mode="In" />
@@ -283,7 +152,7 @@
         <Function Name="SP_MantenimientoImagenActividades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Accion" Type="char" Mode="In" />
           <Parameter Name="ImagenId" Type="int" Mode="In" />
-          <Parameter Name="Datos" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Datos" Type="varbinary(max)" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
@@ -303,6 +172,7 @@
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellidos" Type="varchar" Mode="In" />
           <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="RolId" Type="int" Mode="In" />
           <Parameter Name="Password" Type="nvarchar" Mode="In" />
           <Parameter Name="CarreraId" Type="int" Mode="In" />
@@ -330,203 +200,12 @@
         <Function Name="SP_ObtenerSesionesActivas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dia" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="ManejoCitasModelStoreContainer">
-          <EntitySet Name="Actividad" EntityType="Self.Actividad" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OfertaHorario" EntityType="Self.OfertaHorario" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sesion" EntityType="Self.Sesion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Cita_Paciente" Association="Self.FK_Cita_Paciente">
-            <End Role="Paciente" EntitySet="Paciente" />
-            <End Role="Cita" EntitySet="Cita" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cita_Sesion" Association="Self.FK_Cita_Sesion">
-            <End Role="Sesion" EntitySet="Sesion" />
-            <End Role="Cita" EntitySet="Cita" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OfertaHorario_Usuario" Association="Self.FK_OfertaHorario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="OfertaHorario" EntitySet="OfertaHorario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sesion_Sesion" Association="Self.FK_Sesion_Sesion">
-            <End Role="OfertaHorario" EntitySet="OfertaHorario" />
-            <End Role="Sesion" EntitySet="Sesion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Usuario_Carrera" Association="Self.FK_Usuario_Carrera">
-            <End Role="Carrera" EntitySet="Carrera" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-        </EntityContainer>
+        <EntityContainer Name="ManejoCitasModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ManejoCitasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Actividad">
-          <Key>
-            <PropertyRef Name="ActividadId" />
-          </Key>
-          <Property Name="ActividadId" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="Titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Cupo" Type="Int32" />
-          <Property Name="Descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Activo" Type="Byte" />
-        </EntityType>
-        <EntityType Name="Cita">
-          <Key>
-            <PropertyRef Name="CitaId" />
-          </Key>
-          <Property Name="CitaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PacienteId" Type="Int32" />
-          <Property Name="Antecedentes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Recomendaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="EstadoCita" Type="Int32" />
-          <Property Name="Calificacion" Type="Int32" />
-          <Property Name="SesionId" Type="Int64" />
-          <NavigationProperty Name="Paciente" Relationship="Self.FK_Cita_Paciente" FromRole="Cita" ToRole="Paciente" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_Cita_Sesion" FromRole="Cita" ToRole="Sesion" />
-          <Property Name="IdentificadorGUID" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OfertaHorario">
-          <Key>
-            <PropertyRef Name="OfertaHorarioId" />
-          </Key>
-          <Property Name="OfertaHorarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Dia" Type="DateTime" Precision="3" />
-          <Property Name="HoraInicio" Type="Int32" />
-          <Property Name="HoraFin" Type="Int32" />
-          <Property Name="UsuarioId" Type="Int32" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_OfertaHorario_Usuario" FromRole="OfertaHorario" ToRole="Usuario" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_Sesion_Sesion" FromRole="OfertaHorario" ToRole="Sesion" />
-        </EntityType>
-        <EntityType Name="Paciente">
-          <Key>
-            <PropertyRef Name="PacienteId" />
-          </Key>
-          <Property Name="PacienteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CorreoElectronico" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Nacionalidad" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Identificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoCivil" Type="Int32" />
-          <Property Name="Edad" Type="Int32" />
-          <Property Name="CantidadHijos" Type="Int32" />
-          <NavigationProperty Name="Cita" Relationship="Self.FK_Cita_Paciente" FromRole="Paciente" ToRole="Cita" />
-        </EntityType>
-        <EntityType Name="Sesion">
-          <Key>
-            <PropertyRef Name="SesionId" />
-          </Key>
-          <Property Name="SesionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OfertaHorarioId" Type="Int32" />
-          <Property Name="Hora" Type="Int32" />
-          <Property Name="Ocupado" Type="Boolean" />
-          <NavigationProperty Name="Cita" Relationship="Self.FK_Cita_Sesion" FromRole="Sesion" ToRole="Cita" />
-          <NavigationProperty Name="OfertaHorario" Relationship="Self.FK_Sesion_Sesion" FromRole="Sesion" ToRole="OfertaHorario" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Identificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="RolId" Type="Int32" />
-          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Carrera" Type="Int32" />
-          <Property Name="InicioPractica" Type="DateTime" Precision="3" />
-          <Property Name="FinPractica" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="OfertaHorario" Relationship="Self.FK_OfertaHorario_Usuario" FromRole="Usuario" ToRole="OfertaHorario" />
-          <Property Name="CarreraId" Type="Int32" />
-          <NavigationProperty Name="Carrera1" Relationship="ManejoCitasModel.FK_Usuario_Carrera" FromRole="Usuario" ToRole="Carrera" />
-        </EntityType>
-        <Association Name="FK_Cita_Paciente">
-          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
-          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Paciente">
-              <PropertyRef Name="PacienteId" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="PacienteId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cita_Sesion">
-          <End Role="Sesion" Type="Self.Sesion" Multiplicity="0..1" />
-          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sesion">
-              <PropertyRef Name="SesionId" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="SesionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OfertaHorario_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="OfertaHorario" Type="Self.OfertaHorario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="OfertaHorario">
-              <PropertyRef Name="UsuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sesion_Sesion">
-          <End Role="OfertaHorario" Type="Self.OfertaHorario" Multiplicity="0..1" />
-          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OfertaHorario">
-              <PropertyRef Name="OfertaHorarioId" />
-            </Principal>
-            <Dependent Role="Sesion">
-              <PropertyRef Name="OfertaHorarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ManejoCitasEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Actividad" EntityType="Self.Actividad" />
-          <EntitySet Name="Cita" EntityType="Self.Cita" />
-          <EntitySet Name="OfertaHorario" EntityType="Self.OfertaHorario" />
-          <EntitySet Name="Paciente" EntityType="Self.Paciente" />
-          <EntitySet Name="Sesion" EntityType="Self.Sesion" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK_Cita_Paciente" Association="Self.FK_Cita_Paciente">
-            <End Role="Paciente" EntitySet="Paciente" />
-            <End Role="Cita" EntitySet="Cita" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cita_Sesion" Association="Self.FK_Cita_Sesion">
-            <End Role="Sesion" EntitySet="Sesion" />
-            <End Role="Cita" EntitySet="Cita" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OfertaHorario_Usuario" Association="Self.FK_OfertaHorario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="OfertaHorario" EntitySet="OfertaHorario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sesion_Sesion" Association="Self.FK_Sesion_Sesion">
-            <End Role="OfertaHorario" EntitySet="OfertaHorario" />
-            <End Role="Sesion" EntitySet="Sesion" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -596,11 +275,6 @@
             <Parameter Name="FechaInicio" Mode="In" Type="String" />
             <Parameter Name="FechaFin" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Carrera" EntityType="ManejoCitasModel.Carrera" />
-          <AssociationSet Name="FK_Usuario_Carrera" Association="ManejoCitasModel.FK_Usuario_Carrera">
-            <End Role="Carrera" EntitySet="Carrera" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
           <FunctionImport Name="SP_ActualizarPaciente">
             <Parameter Name="PacienteId" Mode="In" Type="Int32" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
@@ -626,13 +300,6 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerCitasPracticante" ReturnType="Collection(ManejoCitasModel.SP_ObtenerCitasPracticante_Result)">
-            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
-            <Parameter Name="FechaInicio" Mode="In" Type="String" />
-            <Parameter Name="FechaFin" Mode="In" Type="String" />
-            <Parameter Name="Apellidos" Mode="In" Type="String" />
-            <Parameter Name="Ideintificacion" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="FUN_ObtenerCitas" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCitas_Result)">
           <Parameter Name="IdentificadorGUID" Mode="In" Type="String" />
           </FunctionImport>
@@ -647,12 +314,23 @@
           </FunctionImport>
           <FunctionImport Name="FUN_ObtenerCarreras" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCarreras_Result)" />
           <FunctionImport Name="FUN_ObtenerRoles" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerRoles_Result)" />
+          <FunctionImport Name="SP_MantenimientoImagenActividades">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="ImagenId" Mode="In" Type="Int32" />
+            <Parameter Name="Datos" Mode="In" Type="Binary" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
+          <Parameter Name="RolId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_MantenimientoUsuarios">
             <Parameter Name="Accion" Mode="In" Type="String" />
             <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellidos" Mode="In" Type="String" />
             <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="RolId" Mode="In" Type="Int32" />
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="CarreraId" Mode="In" Type="Int32" />
@@ -661,13 +339,17 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
-          <Parameter Name="RolId" Mode="In" Type="Int32" />
+          <FunctionImport Name="SP_ObtenerCitasPracticante" ReturnType="Collection(ManejoCitasModel.SP_ObtenerCitasPracticante_Result)">
+            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="String" />
+            <Parameter Name="FechaFin" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="Ideintificacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_MantenimientoImagenActividades">
-            <Parameter Name="Accion" Mode="In" Type="String" />
-            <Parameter Name="ImagenId" Mode="In" Type="Int32" />
-            <Parameter Name="Datos" Mode="In" Type="String" />
+          <FunctionImport Name="SP_ActualizarHorarioCita">
+            <Parameter Name="CitaId" Mode="In" Type="Int32" />
+            <Parameter Name="Dia" Mode="In" Type="String" />
+            <Parameter Name="Hora" Mode="In" Type="Int32" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -703,26 +385,6 @@
           <Property Type="String" Name="Carrera" Nullable="true" MaxLength="200" />
           <Property Type="Boolean" Name="PoseeCitas" Nullable="true" />
         </ComplexType>
-        <EntityType Name="Carrera">
-          <Key>
-            <PropertyRef Name="CarreraId" />
-          </Key>
-          <Property Name="CarreraId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Usuario" Relationship="ManejoCitasModel.FK_Usuario_Carrera" FromRole="Carrera" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="FK_Usuario_Carrera">
-          <End Type="ManejoCitasModel.Carrera" Role="Carrera" Multiplicity="0..1" />
-          <End Type="ManejoCitasModel.Usuario" Role="Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Carrera">
-              <PropertyRef Name="CarreraId" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="CarreraId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="FUN_ObtenerPacientes_Result">
           <Property Type="Int32" Name="PacienteId" Nullable="true" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
@@ -734,26 +396,6 @@
           <Property Type="Int32" Name="EstadoCivil" Nullable="true" />
           <Property Type="Int32" Name="Edad" Nullable="true" />
           <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_ObtenerCitasPracticante_Result">
-          <Property Type="String" Name="HoraCita" Nullable="true" />
-          <Property Type="Int32" Name="CitaId" Nullable="false" />
-          <Property Type="String" Name="EstadoCita" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="FechaCita" Nullable="true" />
-          <Property Type="String" Name="Practicante" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="Paciente" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="PacienteId" Nullable="false" />
-          <Property Type="Int32" Name="Edad" Nullable="true" />
-          <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
-          <Property Type="String" Name="EstadoCivil" Nullable="true" MaxLength="14" />
-          <Property Type="Int32" Name="EstadoCivilId" Nullable="true" />
-          <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="Antecedentes" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="IdentificadorGUID" Nullable="false" MaxLength="500" />
         </ComplexType>
         <ComplexType Name="FUN_ObtenerCitas_Result">
           <Property Type="Int32" Name="CitaId" Nullable="true" />
@@ -777,6 +419,7 @@
           <Property Type="Int32" Name="UsuarioId" Nullable="true" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Correo" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="RolId" Nullable="true" />
           <Property Type="String" Name="Password" Nullable="true" MaxLength="200" />
@@ -785,90 +428,33 @@
           <Property Type="String" Name="InicioPractica" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="FinPractica" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="SP_ObtenerCitasPracticante_Result">
+          <Property Type="String" Name="HoraCita" Nullable="true" />
+          <Property Type="Int32" Name="HoraEntero" Nullable="true" />
+          <Property Type="Int32" Name="CitaId" Nullable="false" />
+          <Property Type="String" Name="EstadoCita" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="FechaCita" Nullable="true" />
+          <Property Type="String" Name="Practicante" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="Paciente" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="Identificacion" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PacienteId" Nullable="false" />
+          <Property Type="Int32" Name="Edad" Nullable="true" />
+          <Property Type="Int32" Name="CantidadHijos" Nullable="true" />
+          <Property Type="String" Name="EstadoCivil" Nullable="true" MaxLength="14" />
+          <Property Type="Int32" Name="EstadoCivilId" Nullable="true" />
+          <Property Type="String" Name="Nacionalidad" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Antecedentes" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IdentificadorGUID" Nullable="false" MaxLength="500" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ManejoCitasModelStoreContainer" CdmEntityContainer="ManejoCitasEntities">
-          <EntitySetMapping Name="Actividad">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Actividad">
-              <MappingFragment StoreEntitySet="Actividad">
-                <ScalarProperty Name="ActividadId" ColumnName="ActividadId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-                <ScalarProperty Name="Cupo" ColumnName="Cupo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cita">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Cita">
-              <MappingFragment StoreEntitySet="Cita">
-                <ScalarProperty Name="IdentificadorGUID" ColumnName="IdentificadorGUID" />
-                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
-                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
-                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
-                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
-                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
-                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
-                <ScalarProperty Name="SesionId" ColumnName="SesionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OfertaHorario">
-            <EntityTypeMapping TypeName="ManejoCitasModel.OfertaHorario">
-              <MappingFragment StoreEntitySet="OfertaHorario">
-                <ScalarProperty Name="OfertaHorarioId" ColumnName="OfertaHorarioId" />
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
-                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
-                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Paciente">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Paciente">
-              <MappingFragment StoreEntitySet="Paciente">
-                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sesion">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Sesion">
-              <MappingFragment StoreEntitySet="Sesion">
-                <ScalarProperty Name="SesionId" ColumnName="SesionId" />
-                <ScalarProperty Name="OfertaHorarioId" ColumnName="OfertaHorarioId" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Ocupado" ColumnName="Ocupado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="RolId" ColumnName="RolId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="InicioPractica" ColumnName="InicioPractica" />
-                <ScalarProperty Name="FinPractica" ColumnName="FinPractica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_MantenimientoOfertaHorario" FunctionName="ManejoCitasModel.Store.SP_MantenimientoOfertaHorario" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerSesionesActivas" FunctionName="ManejoCitasModel.Store.FUN_ObtenerSesionesActivas" />
           <FunctionImportMapping FunctionImportName="SP_CrearPaciente" FunctionName="ManejoCitasModel.Store.SP_CrearPaciente" />
@@ -904,14 +490,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Carrera">
-            <EntityTypeMapping TypeName="ManejoCitasModel.Carrera">
-              <MappingFragment StoreEntitySet="Carrera">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_ActualizarPaciente" FunctionName="ManejoCitasModel.Store.SP_ActualizarPaciente" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerPacientes" FunctionName="ManejoCitasModel.Store.FUN_ObtenerPacientes">
             <ResultMapping>
@@ -930,30 +508,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_CrearCita" FunctionName="ManejoCitasModel.Store.SP_CrearCita" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerCitasPracticante" FunctionName="ManejoCitasModel.Store.SP_ObtenerCitasPracticante">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerCitasPracticante_Result">
-                <ScalarProperty Name="HoraCita" ColumnName="HoraCita" />
-                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
-                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
-                <ScalarProperty Name="FechaCita" ColumnName="FechaCita" />
-                <ScalarProperty Name="Practicante" ColumnName="Practicante" />
-                <ScalarProperty Name="Paciente" ColumnName="Paciente" />
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
-                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="EstadoCivilId" ColumnName="EstadoCivilId" />
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
-                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
-                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
-                <ScalarProperty Name="IdentificadorGUID" ColumnName="IdentificadorGUID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FUN_ObtenerCitas" FunctionName="ManejoCitasModel.Store.FUN_ObtenerCitas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerCitas_Result">
@@ -985,13 +539,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MantenimientoUsuarios" FunctionName="ManejoCitasModel.Store.SP_MantenimientoUsuarios" />
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoImagenActividades" FunctionName="ManejoCitasModel.Store.SP_MantenimientoImagenActividades" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerUsuariosPorRol" FunctionName="ManejoCitasModel.Store.FUN_ObtenerUsuariosPorRol">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result">
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1002,7 +557,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MantenimientoImagenActividades" FunctionName="ManejoCitasModel.Store.SP_MantenimientoImagenActividades" />
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoUsuarios" FunctionName="ManejoCitasModel.Store.SP_MantenimientoUsuarios" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCitasPracticante" FunctionName="ManejoCitasModel.Store.SP_ObtenerCitasPracticante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerCitasPracticante_Result">
+                <ScalarProperty Name="HoraCita" ColumnName="HoraCita" />
+                <ScalarProperty Name="HoraEntero" ColumnName="HoraEntero" />
+                <ScalarProperty Name="CitaId" ColumnName="CitaId" />
+                <ScalarProperty Name="EstadoCita" ColumnName="EstadoCita" />
+                <ScalarProperty Name="FechaCita" ColumnName="FechaCita" />
+                <ScalarProperty Name="Practicante" ColumnName="Practicante" />
+                <ScalarProperty Name="Paciente" ColumnName="Paciente" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="CantidadHijos" ColumnName="CantidadHijos" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="EstadoCivilId" ColumnName="EstadoCivilId" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
+                <ScalarProperty Name="Recomendaciones" ColumnName="Recomendaciones" />
+                <ScalarProperty Name="IdentificadorGUID" ColumnName="IdentificadorGUID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ActualizarHorarioCita" FunctionName="ManejoCitasModel.Store.SP_ActualizarHorarioCita" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

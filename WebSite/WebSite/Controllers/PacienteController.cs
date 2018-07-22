@@ -55,7 +55,7 @@ namespace WebSite.Controllers
             new Negocios.NegociosPaciente().ObtenerCitas(citaModelo.IdentificadorGUID).FirstOrDefault();
 
             citaModelo.CitaId = cita.CitaId;
-            citaModelo.Accion = "A";//ACCION DE ACTUALIZAR
+            citaModelo.Accion = (char)Acciones.Actualizar;//ACCION DE ACTUALIZAR
             citaModelo.Antecedentes = cita.Antecedentes;
             citaModelo.Recomendaciones = cita.Recomendaciones;
             Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
@@ -72,11 +72,17 @@ namespace WebSite.Controllers
 
             if (mensajeRespuesta.Exito)
             {
+                string rutaServer = Server.MapPath("~/");
+                string rutaPlantilla = rutaServer + ConfigurationManager.AppSettings["rutaPlantilla"];
                 string asunto = ConfigurationManager.AppSettings["asuntoCita"];
-                ManejadorCorreos manejadorCorreos = new ManejadorCorreos(crearCitaModelo.PacienteModelo.CorreoElectronico, asunto);
                 Dictionary<string, string> datosPaciente = new DiccionarioDatos().CrearDiccionarioDatosPaciente(crearCitaModelo);
-                string rutaPlantilla = ConfigurationManager.AppSettings["rutaPlantilla"];
+
+                ManejadorCorreos manejadorCorreos = new ManejadorCorreos(crearCitaModelo.PacienteModelo.CorreoElectronico, asunto);
                 manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosPaciente);
+                int rolAdministrador = (int)Roles.Administrador;
+                List<string> listaCorreosConCopia = 
+                new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolAdministrador).Select(item => item.Correo).ToList();
+                manejadorCorreos.EstablecerCorreosConCopia(listaCorreosConCopia);
                 manejadorCorreos.EnviarCorreo();
             }
 

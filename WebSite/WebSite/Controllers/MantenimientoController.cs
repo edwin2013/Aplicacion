@@ -1,6 +1,7 @@
 ﻿using Modelo.General;
 using Modelo.Mantenimiento;
 using Negocios;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -21,8 +22,8 @@ namespace WebSite.Controllers
 
 			for (int i = 0; i < Request.Files.Count; i++)
 			{
-				HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-															//Use the following properties to get file's name, size and MIMEType
+				HttpPostedFileBase file = Request.Files[i]; 
+															
 				int fileSize = file.ContentLength;
 				string fileName = file.FileName;
 				string mimeType = file.ContentType;
@@ -34,25 +35,31 @@ namespace WebSite.Controllers
 
 			ImagenActividades imagen = new ImagenActividades();
 			imagen.Accion = "I";
-			imagen.Datos = Encoding.UTF8.GetString(data); ;
-			//byte[] theBytes = Encoding.UTF8.GetBytes(theString);
+			imagen.Datos = data; 
 			Mensaje mensaje = new NegociosMantenimiento().MantenimientoImagenActividades(imagen);
 
-			return Json(new { Mensaje = mensaje });
+            using (MemoryStream ms = new MemoryStream(imagen.Datos))
+            {
+                System.Drawing.Image image = Image.FromStream(ms);
+                string ruta = Server.MapPath("~/");
+                image.Save( ruta + "UserPhoto.jpg");
+            }
+
+            return Json(new { Mensaje = mensaje });
 		}
 
 		public JsonResult Upload()
 		{
 			for (int i = 0; i < Request.Files.Count; i++)
 			{
-				HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-															//Use the following properties to get file's name, size and MIMEType
+				HttpPostedFileBase file = Request.Files[i]; 
+															
 				int fileSize = file.ContentLength;
 				string fileName = file.FileName;
 				string mimeType = file.ContentType;
 				System.IO.Stream fileContent = file.InputStream;
-				//To save file, use SaveAs method
-				file.SaveAs(Server.MapPath("~/") + fileName); //File will be saved in application root
+				
+				file.SaveAs(Server.MapPath("~/") + fileName);
 			}
 			return Json("Uploaded " + Request.Files.Count + " files");
 		}

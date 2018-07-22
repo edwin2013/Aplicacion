@@ -194,6 +194,7 @@ function crearGridCitas(lista) {
         '<th></th>' +
         '<th></th>' +
         '<th></th>' +
+        '<th></th>' +
         '<th>Paciente</th>' +
         '<th>Fecha</th>' +
         '<th>Hora</th>' +
@@ -212,9 +213,12 @@ function crearGridCitas(lista) {
     var tBody = divContenedor.children();
 
     $.each(lista, function (index, item) {
+        debugger;
         var fecha = "'" + item.FechaCita + "'";
         var hora = "'" + item.HoraCita + "'";
+        var horaEntero = "'" + item.HoraEntero + "'";
         var paciente = "'" + item.Paciente + "'";
+        var pacienteId = "'" + item.PacienteId + "'";
         var identificacion = "'" + item.Identificacion + "'";
         var telefono = "'" + item.Telefono + "'";
         var correo = "'" + item.CorreoElectronico + "'";
@@ -231,13 +235,30 @@ function crearGridCitas(lista) {
             identificadorGUID +
             ');"></i>';
 
-        var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' + item.CitaId + ',' + fecha + ',' + hora + ',' + paciente + ',' + ');"></i>';
-        var botonInformacion = '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
+        var botonEliminar =
+            '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' +
+            item.CitaId + ',' +
+            fecha + ',' +
+            hora + ',' +
+            paciente + ');"></i>';
+
+        //LA FUNCION mostrarPopUpCambiarHorarioCita SE ENCUENTRA EN EL ARCHIVO cambiarHorarioCita.jsm
+        var botonCambiarHorarioCita =
+            '<i class="fa fa-clock-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpCambiarHorarioCita(' +
+            item.CitaId + ',' +
+            fecha + ',' +
+            hora + ',' +
+            paciente + ',' +
+            pacienteId + ');"></i>';
+
+        var botonInformacion =
+            '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
 
         var fila =
             '<tr>' +
             '<td>' + botonInformacion + '</td>' +
             '<td>' + botonEditar + '</td>' +
+            '<td>' + botonCambiarHorarioCita + '</td>' +
             '<td>' + botonEliminar + '</td>' +
             '<td>' + item.Paciente + '</td>' +
             '<td>' + item.FechaCita + '</td>' +
