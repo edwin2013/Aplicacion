@@ -4,118 +4,150 @@ using Modelo.Practicante;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
-
+using System.Linq;
 
 namespace Datos
 {
-	public class DatosPracticante
-	{
-		public List<OfertaPracticante> ObtenerOfertaPracticante(FiltroCitas filtroCitas)
-		{
-			List<OfertaPracticante> listaOfertaPracticante = new List<OfertaPracticante>();
+    public class DatosPracticante
+    {
+        public CitaPracticanteModelo ObtenerCitasPorId(int citaId)
+        {
+            CitaPracticanteModelo citaRetornar = new CitaPracticanteModelo();
 
-			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
-			{
-				var listaOfertas = contexto.SP_ObtenerOfertaPracticante(filtroCitas.UsuarioId, filtroCitas.FechaInicio, filtroCitas.FechaFin);
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var citaActual = contexto.SP_ObtenerCitasPorId(citaId).FirstOrDefault();
 
-				foreach (SP_ObtenerOfertaPracticante_Result ofertaActual in listaOfertas)
-				{
-					OfertaPracticante oferta = new OfertaPracticante();
-					oferta.OfertaHorarioId = ofertaActual.OfertaHorarioId;
-					oferta.DiaOferta = ofertaActual.DiaOferta;
-					oferta.HoraInicio = ofertaActual.HoraInicio;
-					oferta.HoraFin = ofertaActual.HoraFin;
-					oferta.Practicante = ofertaActual.Practicante;
-					oferta.InicioPractica = ofertaActual.InicioPractica;
-					oferta.FinPractica = ofertaActual.FinPractica;
-					oferta.Carrera = ofertaActual.Carrera;
-					oferta.PoseeCitas = ofertaActual.PoseeCitas ?? default(bool);
+                bool existeCita = citaActual != null;
 
-					listaOfertaPracticante.Add(oferta);
-				}
-			}
+                if (existeCita) { 
+                citaRetornar.HoraCita = citaActual.HoraCita;
+                citaRetornar.HoraEntero = citaActual.HoraEntero ?? default(int);
+                citaRetornar.CitaId = citaActual.CitaId;
+                citaRetornar.PacienteId = citaActual.PacienteId;
+                citaRetornar.FechaCita = citaActual.FechaCita;
+                citaRetornar.Practicante = citaActual.Practicante;
+                citaRetornar.Paciente = citaActual.Paciente;
+                citaRetornar.Identificacion = citaActual.Identificacion;
+                citaRetornar.Telefono = citaActual.Telefono;
+                citaRetornar.CorreoElectronico = citaActual.CorreoElectronico;
+                citaRetornar.CantidadHijos = citaActual.CantidadHijos ?? default(int);
+                citaRetornar.Recomendaciones = citaActual.Recomendaciones;
+                citaRetornar.Antecedentes = citaActual.Antecedentes;
+                citaRetornar.IdentificadorGUID = citaActual.IdentificadorGUID;
+                    }
+            }
 
-			return listaOfertaPracticante;
-		}
+            return citaRetornar;
+        }
 
-		public List<CitaPracticanteModelo> ObtenerCitasPracticante(FiltroCitas filtroCitas)
-		{
-			List<CitaPracticanteModelo> listaCitasPracticante = new List<CitaPracticanteModelo>();
 
-			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
-			{
-				var listaCitas = contexto.SP_ObtenerCitasPracticante(filtroCitas.UsuarioId, filtroCitas.FechaInicio, filtroCitas.FechaFin, filtroCitas.Apellidos, filtroCitas.Identificacion);
+        public List<OfertaPracticante> ObtenerOfertaPracticante(FiltroCitas filtroCitas)
+        {
+            List<OfertaPracticante> listaOfertaPracticante = new List<OfertaPracticante>();
 
-				foreach (SP_ObtenerCitasPracticante_Result citaActual in listaCitas)
-				{
-					CitaPracticanteModelo cita = new CitaPracticanteModelo();
-					cita.HoraCita = citaActual.HoraCita;
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var listaOfertas = contexto.SP_ObtenerOfertaPracticante(filtroCitas.UsuarioId, filtroCitas.FechaInicio, filtroCitas.FechaFin);
+
+                foreach (SP_ObtenerOfertaPracticante_Result ofertaActual in listaOfertas)
+                {
+                    OfertaPracticante oferta = new OfertaPracticante();
+                    oferta.OfertaHorarioId = ofertaActual.OfertaHorarioId;
+                    oferta.DiaOferta = ofertaActual.DiaOferta;
+                    oferta.HoraInicio = ofertaActual.HoraInicio;
+                    oferta.HoraFin = ofertaActual.HoraFin;
+                    oferta.Practicante = ofertaActual.Practicante;
+                    oferta.InicioPractica = ofertaActual.InicioPractica;
+                    oferta.FinPractica = ofertaActual.FinPractica;
+                    oferta.Carrera = ofertaActual.Carrera;
+                    oferta.PoseeCitas = ofertaActual.PoseeCitas ?? default(bool);
+
+                    listaOfertaPracticante.Add(oferta);
+                }
+            }
+
+            return listaOfertaPracticante;
+        }
+
+        public List<CitaPracticanteModelo> ObtenerCitasPracticante(FiltroCitas filtroCitas)
+        {
+            List<CitaPracticanteModelo> listaCitasPracticante = new List<CitaPracticanteModelo>();
+
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var listaCitas = contexto.SP_ObtenerCitasPracticante(filtroCitas.UsuarioId, filtroCitas.FechaInicio, filtroCitas.FechaFin, filtroCitas.Apellidos, filtroCitas.Identificacion);
+
+                foreach (SP_ObtenerCitasPracticante_Result citaActual in listaCitas)
+                {
+                    CitaPracticanteModelo cita = new CitaPracticanteModelo();
+                    cita.HoraCita = citaActual.HoraCita;
                     cita.HoraEntero = citaActual.HoraEntero ?? default(int);
-					cita.CitaId = citaActual.CitaId;
-					cita.PacienteId = citaActual.PacienteId;
-					cita.EstadoCita = citaActual.EstadoCita;
-					cita.FechaCita = citaActual.FechaCita;
-					cita.Practicante = citaActual.Practicante;
-					cita.Paciente = citaActual.Paciente;
-					cita.Identificacion = citaActual.Identificacion;
-					cita.Telefono = citaActual.Telefono;
-					cita.CorreoElectronico = citaActual.CorreoElectronico;
-					cita.CantidadHijos = citaActual.CantidadHijos ?? default(int);
-					cita.EstadoCivil = citaActual.EstadoCivil;
-					cita.Recomendaciones = citaActual.Recomendaciones;
-					cita.Antecedentes = citaActual.Antecedentes;
+                    cita.CitaId = citaActual.CitaId;
+                    cita.PacienteId = citaActual.PacienteId;
+                    cita.EstadoCita = citaActual.EstadoCita;
+                    cita.FechaCita = citaActual.FechaCita;
+                    cita.Practicante = citaActual.Practicante;
+                    cita.Paciente = citaActual.Paciente;
+                    cita.Identificacion = citaActual.Identificacion;
+                    cita.Telefono = citaActual.Telefono;
+                    cita.CorreoElectronico = citaActual.CorreoElectronico;
+                    cita.CantidadHijos = citaActual.CantidadHijos ?? default(int);
+                    cita.EstadoCivil = citaActual.EstadoCivil;
+                    cita.Recomendaciones = citaActual.Recomendaciones;
+                    cita.Antecedentes = citaActual.Antecedentes;
                     cita.IdentificadorGUID = citaActual.IdentificadorGUID;
-					listaCitasPracticante.Add(cita);
-				}
-			}
+                    listaCitasPracticante.Add(cita);
+                }
+            }
 
-			return listaCitasPracticante;
-		}
+            return listaCitasPracticante;
+        }
 
-		public Mensaje MantenimientoOfertaHorario(OfertaHorarioModelo ofertaHorario)
-		{
+        public Mensaje MantenimientoOfertaHorario(OfertaHorarioModelo ofertaHorario)
+        {
 
-			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
-			ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
+            ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
+            ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
 
-			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
-			{
-				contexto.SP_MantenimientoOfertaHorario(
-					ofertaHorario.Accion,
-					ofertaHorario.OfertaHorarioId,
-					ofertaHorario.Dia,
-					ofertaHorario.HoraInicio,
-					ofertaHorario.HoraFin,
-					ofertaHorario.UsuarioId,
-					resultado,
-					mensaje
-					);
-			}
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                contexto.SP_MantenimientoOfertaHorario(
+                    ofertaHorario.Accion,
+                    ofertaHorario.OfertaHorarioId,
+                    ofertaHorario.Dia,
+                    ofertaHorario.HoraInicio,
+                    ofertaHorario.HoraFin,
+                    ofertaHorario.UsuarioId,
+                    resultado,
+                    mensaje
+                    );
+            }
 
-			Mensaje mensajeMantenimiento = new Mensaje(Convert.ToBoolean(resultado.Value), Convert.ToString(mensaje.Value));
-			return mensajeMantenimiento;
-		}
+            Mensaje mensajeMantenimiento = new Mensaje(Convert.ToBoolean(resultado.Value), Convert.ToString(mensaje.Value));
+            return mensajeMantenimiento;
+        }
 
-		public Mensaje MantenimientoCita(CitaPracticanteModelo citaModelo)
-		{
-			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
-			ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
+        public Mensaje MantenimientoCita(CitaPracticanteModelo citaModelo)
+        {
+            ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
+            ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
 
-			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
-			{
-				contexto.SP_MantenimientoCita(
-					citaModelo.Accion.ToString(),
-					citaModelo.CitaId,
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                contexto.SP_MantenimientoCita(
+                    citaModelo.Accion.ToString(),
+                    citaModelo.CitaId,
                     citaModelo.Calificacion,
-					citaModelo.Antecedentes,
-					citaModelo.Recomendaciones,
-					resultado,
-					mensaje
-					);
-			}
+                    citaModelo.Antecedentes,
+                    citaModelo.Recomendaciones,
+                    resultado,
+                    mensaje
+                    );
+            }
 
-			Mensaje mensajeMantenimiento = new Mensaje(Convert.ToBoolean(resultado.Value), Convert.ToString(mensaje.Value));
-			return mensajeMantenimiento;
-		}
-	}
+            Mensaje mensajeMantenimiento = new Mensaje(Convert.ToBoolean(resultado.Value), Convert.ToString(mensaje.Value));
+            return mensajeMantenimiento;
+        }
+    }
 }

@@ -17,5 +17,6 @@ namespace Modelo.Usuario
 		public string FinPractica { set; get; }
         public string Correo { set; get; }
 		public bool Permiso { set; get; }
+        public bool SolicitarCambioPassword { set; get; }
 	}
 }

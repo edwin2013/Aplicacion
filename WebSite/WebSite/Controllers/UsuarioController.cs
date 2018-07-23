@@ -3,6 +3,7 @@ using Modelo.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Utiles;
@@ -10,21 +11,42 @@ using WebSite.Models;
 
 namespace WebSite.Controllers
 {
-	public class UsuarioController : Controller
-	{
-		// GET: Usuario
-		public ActionResult Usuario()
-		{
-			return View();
-		}
+    public class UsuarioController : Controller
+    {
+        // GET: Usuario
+        public ActionResult Usuario()
+        {
+            return View();
+        }
 
         public ActionResult Login()
         {
             return View();
         }
 
+        public JsonResult ValidarCredenciales(string correo, string password)
+        {
+            Mensaje mensajeRespuesta = new Mensaje();
+            UsuarioModelo usuario =
+            new Negocios.NegociosUsuario().ObtenerUsuariosPorCredenciales(correo, password).FirstOrDefault();
+            bool existeUsuario = usuario != null;
+            mensajeRespuesta.Exito = existeUsuario;
+            mensajeRespuesta.SolicitarCambioPassword = existeUsuario ? usuario.SolicitarCambioPassword : false;
+            mensajeRespuesta.Respuesta = existeUsuario ? "Usuario autenticado exitosamente" : "Correo o passward inválido";
+
+            if (mensajeRespuesta.Exito)
+            {
+                Session["usuario"] = usuario;
+            }
+
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = seralizador.Serialize(mensajeRespuesta);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult MantenimientoUsuarios(UsuarioModelo usuario)
-		{
+        {
             bool esAccionCrear = usuario.Accion == (char)Acciones.Ingreasar;
             usuario.Password = esAccionCrear ? new GeneracionCodigo().GenerarCodigoUnico() : usuario.Password;
             Mensaje mensajeRespuesta = new Negocios.NegociosUsuario().MantenimientoUsuarios(usuario);
@@ -42,18 +64,19 @@ namespace WebSite.Controllers
                 manejadorCorreos.EnviarCorreo();
             }
             var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerUsuariosPorRol(int rolId)
-		{
-			List<UsuarioModelo> listaUsuarios = new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolId);
-			
+        public JsonResult ObtenerUsuariosPorRol(int rolId)
+        {
+            List<UsuarioModelo> listaUsuarios = new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolId);
+
 
             bool esRolPracticante = false;//TODO depende del usuario logueado
             int usuarioId = 1;//TODO depende del usuario logueado
 
-            var data = new {
+            var data = new
+            {
                 ListaUsuarios = listaUsuarios,
                 EsRolPracticante = esRolPracticante,
                 UsuarioId = usuarioId
@@ -62,25 +85,25 @@ namespace WebSite.Controllers
             JavaScriptSerializer seralizador = new JavaScriptSerializer();
             seralizador.MaxJsonLength = Int32.MaxValue;
             var datos = seralizador.Serialize(data);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerCarreras()
-		{
-			List<CarreraModelo> listaUsuarios = new Negocios.NegociosUsuario().ObtenerCarreras();
-			JavaScriptSerializer seralizador = new JavaScriptSerializer();
-			seralizador.MaxJsonLength = Int32.MaxValue;
-			var datos = new JavaScriptSerializer().Serialize(listaUsuarios);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
+        public JsonResult ObtenerCarreras()
+        {
+            List<CarreraModelo> listaUsuarios = new Negocios.NegociosUsuario().ObtenerCarreras();
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = new JavaScriptSerializer().Serialize(listaUsuarios);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
 
-		public JsonResult ObtenerRoles()
-		{
-			List<RolModelo> listaRoles = new Negocios.NegociosUsuario().ObtenerRoles();
-			JavaScriptSerializer seralizador = new JavaScriptSerializer();
-			seralizador.MaxJsonLength = Int32.MaxValue;
-			var datos = new JavaScriptSerializer().Serialize(listaRoles);
-			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
-	}
+        public JsonResult ObtenerRoles()
+        {
+            List<RolModelo> listaRoles = new Negocios.NegociosUsuario().ObtenerRoles();
+            JavaScriptSerializer seralizador = new JavaScriptSerializer();
+            seralizador.MaxJsonLength = Int32.MaxValue;
+            var datos = new JavaScriptSerializer().Serialize(listaRoles);
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

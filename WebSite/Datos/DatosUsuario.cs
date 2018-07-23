@@ -9,8 +9,37 @@ namespace Datos
 {
 	public class DatosUsuario
 	{
+        public List<UsuarioModelo> ObtenerUsuariosPorCredenciales(string correo, string password)
+        {
+            List<UsuarioModelo> listaUsuarios = new List<UsuarioModelo>();
 
-		public Mensaje MantenimientoUsuarios(UsuarioModelo usuario)
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var listaDiasConsulta = contexto.FUN_ObtenerUsuariosPorCredenciales(correo,password);
+
+                foreach (FUN_ObtenerUsuariosPorCredenciales_Result usuarioActual in listaDiasConsulta)
+                {
+                    UsuarioModelo usuario = new UsuarioModelo();
+                    usuario.UsuarioId = usuarioActual.UsuarioId ?? default(int);
+                    usuario.Nombre = usuarioActual.Nombre;
+                    usuario.Apellidos = usuarioActual.Apellidos;
+                    usuario.DescripcionRol = usuarioActual.DescripcionRol;
+                    usuario.Identificacion = usuarioActual.Identificacion;
+                    usuario.RolId = usuarioActual.RolId ?? default(int);
+                    usuario.Password = usuarioActual.Password;
+                    usuario.CarreraId = usuarioActual.CarreraId ?? default(int);
+                    usuario.InicioPractica = usuarioActual.InicioPractica;
+                    usuario.FinPractica = usuarioActual.FinPractica;
+                    usuario.Correo = usuarioActual.Correo;
+                    usuario.SolicitarCambioPassword = usuarioActual.SolicitarCambioPassword ?? default(bool);
+                    listaUsuarios.Add(usuario);
+                }
+            }
+
+            return listaUsuarios;
+        }
+
+        public Mensaje MantenimientoUsuarios(UsuarioModelo usuario)
 		{
 			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
 			ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));

@@ -9,6 +9,7 @@ namespace Modelo.Paciente
 	public class PacienteModelo
 	{
 		public int PacienteId { set; get; }
+        public int CitaId { set; get; }
 		public string Nombre { set; get; }
 		public string Apellidos { set; get; }
 		public string CorreoElectronico { set; get; }

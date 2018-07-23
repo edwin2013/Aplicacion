@@ -1,4 +1,5 @@
 ﻿using Modelo.Paciente;
+using Modelo.Practicante;
 using Modelo.Usuario;
 using System.Collections.Generic;
 
@@ -18,6 +19,18 @@ namespace Utiles
 
 			return datosPaciente;
 		}
+
+        public Dictionary<string, string> CrearDiccionarioCitaCalificada(CitaPracticanteModelo cita)
+        {
+            Dictionary<string, string> datos = new Dictionary<string, string>();
+            datos.Add("NombrePaciente", cita.Paciente);
+            datos.Add("FechaCita", cita.FechaCita);
+            datos.Add("HoraCita", cita.HoraCita);
+            datos.Add("NombrePracticante", cita.Practicante);
+            datos.Add("Calificacion", cita.Calificacion.ToString());
+
+            return datos;
+        }
 
         public Dictionary<string, string> CrearDiccionarioCorreoCalificacion(string nombrePaciente, string urlpagina)
         {

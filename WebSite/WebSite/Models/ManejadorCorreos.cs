@@ -17,6 +17,12 @@ namespace WebSite.Models
 			DatosCorreo = new DatosCorreo(correoEmisor, correoReceptor, smtpCliente, puertoCorreo, nombreRemitente, asunto, claveCorreo);
 		}
 
+        public void EstablecerMultiplesDestinatarios(List<string> correosConCopia)
+        {
+            DatosCorreo.MultiplesDestinatarios = correosConCopia;
+            DatosCorreo.EsCorreoMultiDestinatario = true;
+        }
+
         public void EstablecerCorreosConCopia(List<string> correosConCopia)
         {
             DatosCorreo.ListadoCorreosAEnviarConCopia = correosConCopia;

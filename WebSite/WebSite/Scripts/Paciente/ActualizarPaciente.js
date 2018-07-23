@@ -1,5 +1,4 @@
 ﻿
-//test
 function actualizarPaciente()
 {
 	paciente = new PacienteModelo();
@@ -23,7 +22,8 @@ function actualizarPaciente()
 				var exito = respuesta.Exito;
 				var mensaje = respuesta.Respuesta;
 				if ( exito )
-				{
+                {
+                    obtenerCitasPracticante();
 					$( '#popUpMostrarInformacionPaciente' ).modal( 'hide' );
 					mostrarMensaje( 'Éxito', mensaje, 'exito' );
 				}
@@ -46,6 +46,7 @@ function actualizarPaciente()
 var PacienteModelo = function ()
 {
 	this.pacienteId = $( '#hdfPacienteId' ).val();
+	this.citaId = $( '#hdfCitaId' ).val();
 	this.nombre = $( '#txbNombrePaciente' ).val();
 	this.apellidos = $( '#txbApellidosPaciente' ).val();
 	this.telefono = $( '#txbTelefonoPaciente' ).val();
@@ -59,7 +60,8 @@ var PacienteModelo = function ()
 	this.obtenerDatos = function ()
 	{
 		var datos = JSON.stringify( {
-			PacienteId: this.pacienteId,
+            PacienteId: this.pacienteId,
+            CitaId: this.citaId,
 			Nombre: this.nombre,
 			Apellidos: this.apellidos,
 			CorreoElectronico: this.correoElectronico,

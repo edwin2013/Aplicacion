@@ -250,51 +250,6 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerOfertaPracticante_Result>("SP_ObtenerOfertaPracticante", usuarioIdParameter, fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual int SP_ActualizarPaciente(Nullable<int> pacienteId, string nombre, string apellidos, string correoElectronico, string telefono, string nacionalidad, string identificacion, Nullable<int> estadoCivil, Nullable<int> edad, Nullable<int> cantidadHijos, ObjectParameter resultado, ObjectParameter mensaje)
-        {
-            var pacienteIdParameter = pacienteId.HasValue ?
-                new ObjectParameter("PacienteId", pacienteId) :
-                new ObjectParameter("PacienteId", typeof(int));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var apellidosParameter = apellidos != null ?
-                new ObjectParameter("Apellidos", apellidos) :
-                new ObjectParameter("Apellidos", typeof(string));
-    
-            var correoElectronicoParameter = correoElectronico != null ?
-                new ObjectParameter("CorreoElectronico", correoElectronico) :
-                new ObjectParameter("CorreoElectronico", typeof(string));
-    
-            var telefonoParameter = telefono != null ?
-                new ObjectParameter("Telefono", telefono) :
-                new ObjectParameter("Telefono", typeof(string));
-    
-            var nacionalidadParameter = nacionalidad != null ?
-                new ObjectParameter("Nacionalidad", nacionalidad) :
-                new ObjectParameter("Nacionalidad", typeof(string));
-    
-            var identificacionParameter = identificacion != null ?
-                new ObjectParameter("Identificacion", identificacion) :
-                new ObjectParameter("Identificacion", typeof(string));
-    
-            var estadoCivilParameter = estadoCivil.HasValue ?
-                new ObjectParameter("EstadoCivil", estadoCivil) :
-                new ObjectParameter("EstadoCivil", typeof(int));
-    
-            var edadParameter = edad.HasValue ?
-                new ObjectParameter("Edad", edad) :
-                new ObjectParameter("Edad", typeof(int));
-    
-            var cantidadHijosParameter = cantidadHijos.HasValue ?
-                new ObjectParameter("CantidadHijos", cantidadHijos) :
-                new ObjectParameter("CantidadHijos", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ActualizarPaciente", pacienteIdParameter, nombreParameter, apellidosParameter, correoElectronicoParameter, telefonoParameter, nacionalidadParameter, identificacionParameter, estadoCivilParameter, edadParameter, cantidadHijosParameter, resultado, mensaje);
-        }
-    
         [DbFunction("ManejoCitasEntities", "FUN_ObtenerPacientes")]
         public virtual IQueryable<FUN_ObtenerPacientes_Result> FUN_ObtenerPacientes(Nullable<int> pacienteId)
         {
@@ -400,6 +355,48 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerUsuariosPorRol_Result>("[ManejoCitasEntities].[FUN_ObtenerUsuariosPorRol](@RolId)", rolIdParameter);
         }
     
+        public virtual ObjectResult<SP_ObtenerCitasPracticante_Result> SP_ObtenerCitasPracticante(Nullable<int> usuarioId, string fechaInicio, string fechaFin, string apellidos, string ideintificacion)
+        {
+            var usuarioIdParameter = usuarioId.HasValue ?
+                new ObjectParameter("UsuarioId", usuarioId) :
+                new ObjectParameter("UsuarioId", typeof(int));
+    
+            var fechaInicioParameter = fechaInicio != null ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(string));
+    
+            var fechaFinParameter = fechaFin != null ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("Apellidos", apellidos) :
+                new ObjectParameter("Apellidos", typeof(string));
+    
+            var ideintificacionParameter = ideintificacion != null ?
+                new ObjectParameter("Ideintificacion", ideintificacion) :
+                new ObjectParameter("Ideintificacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerCitasPracticante_Result>("SP_ObtenerCitasPracticante", usuarioIdParameter, fechaInicioParameter, fechaFinParameter, apellidosParameter, ideintificacionParameter);
+        }
+    
+        public virtual int SP_ActualizarHorarioCita(Nullable<int> citaId, string dia, Nullable<int> hora, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var citaIdParameter = citaId.HasValue ?
+                new ObjectParameter("CitaId", citaId) :
+                new ObjectParameter("CitaId", typeof(int));
+    
+            var diaParameter = dia != null ?
+                new ObjectParameter("Dia", dia) :
+                new ObjectParameter("Dia", typeof(string));
+    
+            var horaParameter = hora.HasValue ?
+                new ObjectParameter("Hora", hora) :
+                new ObjectParameter("Hora", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ActualizarHorarioCita", citaIdParameter, diaParameter, horaParameter, resultado, mensaje);
+        }
+    
         public virtual int SP_MantenimientoUsuarios(string accion, Nullable<int> usuarioId, string nombre, string apellidos, string identificacion, string correo, Nullable<int> rolId, string password, Nullable<int> carreraId, string inicioPractica, string finPractica, ObjectParameter resultado, ObjectParameter mensaje)
         {
             var accionParameter = accion != null ?
@@ -449,46 +446,115 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoUsuarios", accionParameter, usuarioIdParameter, nombreParameter, apellidosParameter, identificacionParameter, correoParameter, rolIdParameter, passwordParameter, carreraIdParameter, inicioPracticaParameter, finPracticaParameter, resultado, mensaje);
         }
     
-        public virtual ObjectResult<SP_ObtenerCitasPracticante_Result> SP_ObtenerCitasPracticante(Nullable<int> usuarioId, string fechaInicio, string fechaFin, string apellidos, string ideintificacion)
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerUsuariosPorCredenciales")]
+        public virtual IQueryable<FUN_ObtenerUsuariosPorCredenciales_Result> FUN_ObtenerUsuariosPorCredenciales(string correo, string password)
         {
-            var usuarioIdParameter = usuarioId.HasValue ?
-                new ObjectParameter("UsuarioId", usuarioId) :
-                new ObjectParameter("UsuarioId", typeof(int));
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
     
-            var fechaInicioParameter = fechaInicio != null ?
-                new ObjectParameter("FechaInicio", fechaInicio) :
-                new ObjectParameter("FechaInicio", typeof(string));
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
     
-            var fechaFinParameter = fechaFin != null ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(string));
-    
-            var apellidosParameter = apellidos != null ?
-                new ObjectParameter("Apellidos", apellidos) :
-                new ObjectParameter("Apellidos", typeof(string));
-    
-            var ideintificacionParameter = ideintificacion != null ?
-                new ObjectParameter("Ideintificacion", ideintificacion) :
-                new ObjectParameter("Ideintificacion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerCitasPracticante_Result>("SP_ObtenerCitasPracticante", usuarioIdParameter, fechaInicioParameter, fechaFinParameter, apellidosParameter, ideintificacionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerUsuariosPorCredenciales_Result>("[ManejoCitasEntities].[FUN_ObtenerUsuariosPorCredenciales](@Correo, @Password)", correoParameter, passwordParameter);
         }
     
-        public virtual int SP_ActualizarHorarioCita(Nullable<int> citaId, string dia, Nullable<int> hora, ObjectParameter resultado, ObjectParameter mensaje)
+        public virtual ObjectResult<SP_ObtenerCitasPorId_Result> SP_ObtenerCitasPorId(Nullable<int> citaId)
         {
             var citaIdParameter = citaId.HasValue ?
                 new ObjectParameter("CitaId", citaId) :
                 new ObjectParameter("CitaId", typeof(int));
     
-            var diaParameter = dia != null ?
-                new ObjectParameter("Dia", dia) :
-                new ObjectParameter("Dia", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerCitasPorId_Result>("SP_ObtenerCitasPorId", citaIdParameter);
+        }
     
-            var horaParameter = hora.HasValue ?
-                new ObjectParameter("Hora", hora) :
-                new ObjectParameter("Hora", typeof(int));
+        public virtual int SP_MantenimientoActividades(string accion, Nullable<int> actividadId, string fecha, string titulo, Nullable<int> cupo, string descripcion, Nullable<bool> activo, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var accionParameter = accion != null ?
+                new ObjectParameter("Accion", accion) :
+                new ObjectParameter("Accion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ActualizarHorarioCita", citaIdParameter, diaParameter, horaParameter, resultado, mensaje);
+            var actividadIdParameter = actividadId.HasValue ?
+                new ObjectParameter("ActividadId", actividadId) :
+                new ObjectParameter("ActividadId", typeof(int));
+    
+            var fechaParameter = fecha != null ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(string));
+    
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("Titulo", titulo) :
+                new ObjectParameter("Titulo", typeof(string));
+    
+            var cupoParameter = cupo.HasValue ?
+                new ObjectParameter("Cupo", cupo) :
+                new ObjectParameter("Cupo", typeof(int));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoActividades", accionParameter, actividadIdParameter, fechaParameter, tituloParameter, cupoParameter, descripcionParameter, activoParameter, resultado, mensaje);
+        }
+    
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerActividades")]
+        public virtual IQueryable<FUN_ObtenerActividades_Result> FUN_ObtenerActividades()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerActividades_Result>("[ManejoCitasEntities].[FUN_ObtenerActividades]()");
+        }
+    
+        public virtual int SP_ActualizarPaciente(Nullable<int> pacienteId, Nullable<int> citaId, string nombre, string apellidos, string correoElectronico, string telefono, string nacionalidad, string identificacion, Nullable<int> estadoCivil, Nullable<int> edad, Nullable<int> cantidadHijos, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var pacienteIdParameter = pacienteId.HasValue ?
+                new ObjectParameter("PacienteId", pacienteId) :
+                new ObjectParameter("PacienteId", typeof(int));
+    
+            var citaIdParameter = citaId.HasValue ?
+                new ObjectParameter("CitaId", citaId) :
+                new ObjectParameter("CitaId", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("Apellidos", apellidos) :
+                new ObjectParameter("Apellidos", typeof(string));
+    
+            var correoElectronicoParameter = correoElectronico != null ?
+                new ObjectParameter("CorreoElectronico", correoElectronico) :
+                new ObjectParameter("CorreoElectronico", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var nacionalidadParameter = nacionalidad != null ?
+                new ObjectParameter("Nacionalidad", nacionalidad) :
+                new ObjectParameter("Nacionalidad", typeof(string));
+    
+            var identificacionParameter = identificacion != null ?
+                new ObjectParameter("Identificacion", identificacion) :
+                new ObjectParameter("Identificacion", typeof(string));
+    
+            var estadoCivilParameter = estadoCivil.HasValue ?
+                new ObjectParameter("EstadoCivil", estadoCivil) :
+                new ObjectParameter("EstadoCivil", typeof(int));
+    
+            var edadParameter = edad.HasValue ?
+                new ObjectParameter("Edad", edad) :
+                new ObjectParameter("Edad", typeof(int));
+    
+            var cantidadHijosParameter = cantidadHijos.HasValue ?
+                new ObjectParameter("CantidadHijos", cantidadHijos) :
+                new ObjectParameter("CantidadHijos", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ActualizarPaciente", pacienteIdParameter, citaIdParameter, nombreParameter, apellidosParameter, correoElectronicoParameter, telefonoParameter, nacionalidadParameter, identificacionParameter, estadoCivilParameter, edadParameter, cantidadHijosParameter, resultado, mensaje);
         }
     }
 }

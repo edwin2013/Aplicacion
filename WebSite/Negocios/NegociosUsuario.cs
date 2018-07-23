@@ -8,7 +8,19 @@ namespace Negocios
 {
 	public class NegociosUsuario
 	{
-		public Mensaje MantenimientoUsuarios(UsuarioModelo usuario)
+        public List<UsuarioModelo> ObtenerUsuariosPorCredenciales(string correo, string password)
+        {
+            try
+            {
+                return new DatosUsuario().ObtenerUsuariosPorCredenciales(correo, password);
+            }
+            catch (Exception excepcion)
+            {
+                throw new Exception(excepcion.Message);
+            }
+        }
+
+        public Mensaje MantenimientoUsuarios(UsuarioModelo usuario)
 		{
 			try
 			{

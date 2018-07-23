@@ -21,6 +21,11 @@ namespace WebSite.Controllers
             return View();
         }
 
+        public ActionResult CitasPracticante()
+        {
+            return View();
+        }
+
         [FiltroPermiso(Permiso = RolesPermisos.Alumno_Puede_Visualizar_Un_Alumno)]
         public ActionResult Oferta()
         {
@@ -70,11 +75,6 @@ namespace WebSite.Controllers
             Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoOfertaHorario(ofertaHorarioModelo);
             var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
             return Json(datos, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult CitasPracticante()
-        {
-            return View();
         }
 
         public JsonResult ObtenerCitasPracticante(FiltroCitas filtroCitas)

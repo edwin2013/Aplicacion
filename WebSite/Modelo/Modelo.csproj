@@ -54,7 +54,11 @@
     <Compile Include="General\DatosCorreo.cs" />
     <Compile Include="General\DiasOfertaMes.cs" />
     <Compile Include="General\Mensaje.cs" />
+    <Compile Include="Mantenimiento\ActividadModelo.cs" />
     <Compile Include="Mantenimiento\ImagenActividades.cs" />
+    <Compile Include="ModeloMapeo\FUN_ObtenerActividades_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerCarreras_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
@@ -65,6 +69,9 @@
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerRoles_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerUsuariosPorCredenciales_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerUsuariosPorRol_Result.cs">
@@ -89,6 +96,9 @@
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\sp_helpdiagrams_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloMapeo\SP_ObtenerCitasPorId_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\SP_ObtenerCitasPracticante_Result.cs">

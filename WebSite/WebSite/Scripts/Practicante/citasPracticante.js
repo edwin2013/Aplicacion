@@ -30,12 +30,12 @@ function mostrarPopUpEliminarCita(citaId, fecha, hora, paciente) {
     $('#popUpEliminarCita').modal('show');
 }
 
-function mostrarPopUpInformacionPaciente(pacienteId) {
+function mostrarPopUpInformacionPaciente(pacienteId, citaId) {
+    $('#hdfCitaId').val(citaId);
     obtenerPaciente(pacienteId);//ESTA FUNCION SE ENCUENTRA EN EL ARCHIVO ACTUALIZARPACIENTE.JS
 }
 
-
-var CitaModelo = function () {
+var CitaMantenimientoModelo = function () {
     this.accion = $('#hdfAccion').val();
     this.citaId = $('#hdfCitaId').val();
     this.correo = $('#hdfCorreoPaciente').val();
@@ -84,11 +84,11 @@ var CitaModelo = function () {
 };
 
 function mantenimientoCita() {
-    citaModelo = new CitaModelo();
-    var envioDatosEsValido = citaModelo.validarEnvioDatos();
+    citaMantenimientoModelo = new CitaMantenimientoModelo();
+    var envioDatosEsValido = citaMantenimientoModelo.validarEnvioDatos();
 
     if (envioDatosEsValido) {
-        var datos = citaModelo.obtenerDatos()
+        var datos = citaMantenimientoModelo.obtenerDatos()
         mostrarLoading();
 
         $.ajax({
@@ -196,6 +196,7 @@ function crearGridCitas(lista) {
         '<th></th>' +
         '<th></th>' +
         '<th>Paciente</th>' +
+        '<th>Practicante</th>' +
         '<th>Fecha</th>' +
         '<th>Hora</th>' +
         '<th>Identificacion</th>' +
@@ -213,12 +214,14 @@ function crearGridCitas(lista) {
     var tBody = divContenedor.children();
 
     $.each(lista, function (index, item) {
-        debugger;
+       
         var fecha = "'" + item.FechaCita + "'";
         var hora = "'" + item.HoraCita + "'";
         var horaEntero = "'" + item.HoraEntero + "'";
         var paciente = "'" + item.Paciente + "'";
+        var practicante = "'" + item.Practicante + "'";
         var pacienteId = "'" + item.PacienteId + "'";
+        var citaId = "'" + item.CitaId + "'";
         var identificacion = "'" + item.Identificacion + "'";
         var telefono = "'" + item.Telefono + "'";
         var correo = "'" + item.CorreoElectronico + "'";
@@ -252,7 +255,10 @@ function crearGridCitas(lista) {
             pacienteId + ');"></i>';
 
         var botonInformacion =
-            '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' + item.PacienteId + ');"></i>';
+            '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' +
+            item.PacienteId + ',' +
+            citaId +
+            ');"></i>';
 
         var fila =
             '<tr>' +
@@ -261,6 +267,7 @@ function crearGridCitas(lista) {
             '<td>' + botonCambiarHorarioCita + '</td>' +
             '<td>' + botonEliminar + '</td>' +
             '<td>' + item.Paciente + '</td>' +
+            '<td>' + item.Practicante + '</td>' +
             '<td>' + item.FechaCita + '</td>' +
             '<td>' + item.HoraCita + '</td>' +
             '<td>' + item.Identificacion + '</td>' +

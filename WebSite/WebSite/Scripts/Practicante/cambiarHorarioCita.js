@@ -54,15 +54,15 @@ var CitaModelo = function () {
     }
 };
 
-function mostrarPopUpCambiarHorarioCita(citaId, fecha, hora, paciente, pacienteId) {
+function mostrarPopUpCambiarHorarioCita(citaId, fechaSeleccinada, hora, paciente, pacienteId) {
     $('#hdfCitaId').val(citaId);
     $('#hdfPacienteId').val(pacienteId);
-    var arreglofecha = fecha.split('/');
+    var arreglofecha = fechaSeleccinada.split('/');
     var mes = arreglofecha[1] + '/' + arreglofecha[2];
     $('#txbMes').val(mes);
-    obtenerDiasOfertaMes(fecha);
+    obtenerDiasOfertaMes(fechaSeleccinada);
 
-    $('#lblTituloPopUpCambiarHorario').html('Cambiar cita de ' + paciente + ' el dia ' + fecha + ', ' + hora);
+    $('#lblTituloPopUpCambiarHorario').html('Cambiar cita de ' + paciente + ' el dia ' + fechaSeleccinada + ', ' + hora);
     $('#popUpCambiarHorarioCita').modal('show');
 }
 
@@ -104,7 +104,7 @@ function actualizarHorarioCita() {
     }
 }
 
-function obtenerDiasOfertaMes(fecha) {
+function obtenerDiasOfertaMes(fechaSeleccinada) {
     var dia = $('#txbMes').val();
 
     var diaValido = dia != '';
@@ -125,7 +125,7 @@ function obtenerDiasOfertaMes(fecha) {
             success: function (data) {
                 ocultarLoading();
                 var listaDiasOfertaMes = $.parseJSON(data);
-                llenarComboDias(listaDiasOfertaMes, fecha);
+                llenarComboDias(listaDiasOfertaMes, fechaSeleccinada);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 ocultarLoading();
@@ -137,7 +137,7 @@ function obtenerDiasOfertaMes(fecha) {
     }
 }
 
-function llenarComboDias(listaDiasOfertaMes, fecha) {
+function llenarComboDias(listaDiasOfertaMes, fechaSeleccinada) {
     var comboDias = $("#ddlDias");
     comboDias.empty();
 
@@ -150,16 +150,23 @@ function llenarComboDias(listaDiasOfertaMes, fecha) {
     if (poseeDiasOfertaMes) {
         comboDias.append($("<option />").val('-1').text('Seleccione'));
 
+        var existeFechaEnLista = false;
         $.each(listaDiasOfertaMes, function () {
             var diaOferta = this.DiaOferta;
             var detalleDiaOferta = this.DetalleDiaOferta;
             var fechaDiaOferta = this.FechaDiaOferta;
+            var existefecha = fechaDiaOferta == fechaSeleccinada;
+
+            if (existefecha) {
+                existeFechaEnLista = true;
+            }
+
             comboDias.append($("<option />").val(fechaDiaOferta).text(detalleDiaOferta + ', ' + diaOferta));
         });
 
-        var existeFecha = fecha != '-1';
-        if (existeFecha) {
-            comboDias.val(fecha);
+        var existeFecha = fechaSeleccinada != '-1';
+        if (existeFecha && existeFechaEnLista) {
+            comboDias.val(fechaSeleccinada);
             obtenerSesionesActivas();
         }
     }

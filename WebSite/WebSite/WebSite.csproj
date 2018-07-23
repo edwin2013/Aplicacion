@@ -228,6 +228,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Usuario\mantenimientoUsuarios.js" />
+    <Content Include="Scripts\Usuario\validarCredenciales.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="TemplatePaciente\css\creative.css" />
     <Content Include="TemplatePaciente\css\creative.min.css" />

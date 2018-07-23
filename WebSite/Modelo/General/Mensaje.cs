@@ -17,6 +17,7 @@
 		}
 
 		public bool Exito { set; get; }
+        public bool SolicitarCambioPassword { set; get; }
 		public string Respuesta { set; get; }
 		public int EntidadId { set; get; }
 

@@ -98,6 +98,7 @@ namespace Datos
 			{
 				contexto.SP_ActualizarPaciente(
 					pacienteModelo.PacienteId,
+                    pacienteModelo.CitaId,
 					pacienteModelo.Nombre,
 					pacienteModelo.Apellidos,
 					pacienteModelo.CorreoElectronico,

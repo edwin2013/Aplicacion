@@ -14,6 +14,7 @@
     <link href="~/Template/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Template/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="~/Template/css/sb-admin.css" rel="stylesheet">
+    <link href="~/Content/General.css" rel="stylesheet" />
 </head>
 <body class="bg-dark">
     <div class="container">
@@ -22,31 +23,55 @@
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <label>Correo electrónico</label>
+                        <input class="form-control" id="txbCorreo" type="email" placeholder="Correo electrónico">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                        <label>Password</label>
+                        <input class="form-control" id="txbPassword" type="password" placeholder="Password">
                     </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox"> Remember Password
-                            </label>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary btn-block" href="index.html">Login</a>
+                    
+                    <a class="btn btn-primary btn-block" onclick="validarCredenciales()">Entrar</a>
                 </form>
                 <div class="text-center">
-                    <a class="d-block small mt-3" href="register.html">Register an Account</a>
-                    <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+                    <a class="d-block small" href="forgot-password.html">Recuperar password</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="popUpMensaje" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="headerPopUp" class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body" id="divMensajePopUp">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal_loading" style="display:none;">
+        <img src="~/Imagenes/img_cargando.gif" />
+    </div>
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
+
     <script src="~/Template/vendor/jquery/jquery.min.js"></script>
     <script src="~/Template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/Template/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Scripts/General/General.js"></script>
+    <script src="~/Scripts/Usuario/validarCredenciales.js"></script>
+
 </body>
 </html>

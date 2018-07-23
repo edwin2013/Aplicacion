@@ -59,6 +59,23 @@ namespace WebSite.Controllers
             citaModelo.Antecedentes = cita.Antecedentes;
             citaModelo.Recomendaciones = cita.Recomendaciones;
             Mensaje mensajeRespuesta = new Negocios.NegociosPracticante().MantenimientoCita(citaModelo);
+            if (mensajeRespuesta.Exito)
+            {
+                CitaPracticanteModelo citaPracticanteModelo = new Negocios.NegociosPracticante().ObtenerCitasPorId(cita.CitaId);
+                string rutaServer = Server.MapPath("~/");
+                string rutaPlantilla = rutaServer + ConfigurationManager.AppSettings["rutaPlantillaCitaCalificada"];
+                string asunto = ConfigurationManager.AppSettings["asuntoCorreoCitaCalificada"];
+                citaPracticanteModelo.Calificacion = citaModelo.Calificacion;
+                Dictionary<string, string> datosCorreo = new DiccionarioDatos().CrearDiccionarioCitaCalificada(citaPracticanteModelo);
+
+                ManejadorCorreos manejadorCorreos = new ManejadorCorreos("", asunto);
+                manejadorCorreos.CrearCuerpoCorreo(rutaPlantilla, datosCorreo);
+                int rolAdministrador = (int)Roles.Administrador;
+                List<string> listaCorreosConCopia =
+                new Negocios.NegociosUsuario().ObtenerUsuariosPorRol(rolAdministrador).Select(item => item.Correo).ToList();
+                manejadorCorreos.EstablecerMultiplesDestinatarios(listaCorreosConCopia);
+                manejadorCorreos.EnviarCorreo();
+            }
 
             var datos = new JavaScriptSerializer().Serialize(mensajeRespuesta);
             return Json(datos, JsonRequestBehavior.AllowGet);
