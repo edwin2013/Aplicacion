@@ -208,6 +208,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\ManejoCitas.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\General\General.js" />
     <Content Include="Scripts\General\ratingStart.js" />
@@ -218,6 +219,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Mantenimiento\actividad.js" />
+    <Content Include="Scripts\Mantenimiento\multimedia.js" />
+    <Content Include="Scripts\Mantenimiento\sobreOrganizacion.js" />
+    <Content Include="Scripts\Mantenimiento\testimonios.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Paciente\ActualizarPaciente.js" />
     <Content Include="Scripts\Paciente\calificarCita.js" />
@@ -228,6 +233,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Usuario\mantenimientoUsuarios.js" />
+    <Content Include="Scripts\Usuario\recuperarPassword.js" />
     <Content Include="Scripts\Usuario\validarCredenciales.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="TemplatePaciente\css\creative.css" />
@@ -499,10 +505,12 @@
     <Content Include="Views\Paciente\_CalificacionEstrellas.cshtml" />
     <Content Include="Views\Usuario\Usuario.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
+    <Content Include="Views\Mantenimiento\_ActividadesMantenimiento.cshtml" />
+    <Content Include="Views\Mantenimiento\_TestimoniosMantenimiento.cshtml" />
+    <Content Include="Views\Mantenimiento\_SobreOrganizacionMantenimiento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Mantenimiento\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

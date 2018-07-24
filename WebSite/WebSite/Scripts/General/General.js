@@ -1,6 +1,171 @@
 ﻿var ROLPACIENTE = '3';
 
-function obtenerHoraMilitar(horaEstandar)
+$( document ).ready( function ()
+{
+	usuario = new UsuarioSesion();
+	usuario.consultarDatosUsuario();
+
+	//Inicio Control Upload
+	$( document ).on( 'change', '.btn-file :file', function ()
+	{
+		var input = $( this ),
+			label = input.val().replace( /\\/g, '/' ).replace( /.*\//, '' );
+		input.trigger( 'fileselect', [label] );
+	} );
+
+	$( '.btn-file :file' ).on( 'fileselect', function ( event, label )
+	{
+
+		var input = $( this ).parents( '.input-group' ).find( ':text' ),
+			log = label;
+
+		if ( input.length )
+		{
+			input.val( log );
+		} else
+		{
+			if ( log ) alert( log );
+		}
+
+	} );
+
+	function readURL( input )
+	{
+		if ( input.files && input.files[0] )
+		{
+			var reader = new FileReader();
+
+			reader.onload = function ( e )
+			{
+				$( '#img-upload' ).attr( 'src', e.target.result );
+			}
+
+			reader.readAsDataURL( input.files[0] );
+		}
+	}
+
+	$( "#imgInp" ).change( function ()
+	{
+		readURL( this );
+	} );
+
+	//Fin Control Upload
+} );
+
+var UsuarioSesion = function ()
+{
+	this.password = $( '#txbPasswordCambio' ).val();
+	this.passwordConfirmacion = $( '#txbConfirmarPasswordCambio' ).val();
+
+	this.obtenerDatos = function ()
+	{
+		var datos = JSON.stringify( {
+			Password: this.password,
+		} );
+
+		return datos;
+	}
+
+	this.validarFormulario = function ()
+	{
+		var mensajeError = '';
+
+		var passwordNoEsVacio = this.password != '';
+		var passwordEsValido = this.password.length >= 8;
+		var passwordConfirmado = this.password == this.passwordConfirmacion;
+
+		mensajeError = passwordNoEsVacio ? mensajeError : ( mensajeError + '<p>Digite el password.</p>' );
+		mensajeError = passwordEsValido ? mensajeError : ( mensajeError + '<p>El password debe ser de al menos 8 caracteres.</p>' );
+		mensajeError = passwordConfirmado ? mensajeError : ( mensajeError + '<p>La confirmación del password no coincide.</p>' );
+
+		var formularioValido = mensajeError == '';
+
+		if ( !formularioValido )
+		{
+			mostrarMensaje( 'Campos requeridos con *', mensajeError, 'alerta' );
+		}
+
+		return formularioValido;
+	}
+
+	this.consultarDatosUsuario = function ()
+	{
+		$.ajax( {
+			type: "POST",
+			url: '/Usuario/ConsultarUsuarioSesion',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: '',
+			success: function ( data )
+			{
+				var usuario = $.parseJSON( data );
+
+				if ( usuario.SolicitarCambioPassword )
+				{
+					$( '#popUpCambioPassword' ).modal( 'show' );
+				}
+			},
+			error: function ( jqXHR, textStatus, errorThrown )
+			{
+				ocultarLoading();
+				var responseText = jqXHR.responseText;
+				var mensajeError = obtenerMensajeError(responseText);
+				mostrarMensaje( 'Error', mensajeError, 'error' );
+			}
+		} );
+	}
+
+	this.actualizarPassword = function ()
+	{
+		var envioDatosEsValido = this.validarFormulario();
+
+		if ( envioDatosEsValido )
+		{
+			var datos = this.obtenerDatos()
+			mostrarLoading();
+
+			$.ajax( {
+				type: "POST",
+				url: '/Usuario/ActualizarPassword',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				data: datos,
+				success: function ( data )
+				{
+					ocultarLoading();
+					var respuesta = $.parseJSON( data );
+					var exito = respuesta.Exito;
+					var mensaje = respuesta.Respuesta;
+					if ( exito )
+					{
+						$( '#popUpCambioPassword' ).modal( 'hide' );
+						mostrarMensaje( 'Éxito', mensaje, 'exito' );
+					}
+					else
+					{
+						mostrarMensaje( 'Error', mensaje, 'error' );
+					}
+				},
+				error: function ( jqXHR, textStatus, errorThrown )
+				{
+					ocultarLoading();
+					var responseText = jqXHR.responseText;
+					var mensajeError = obtenerMensajeError(responseText);
+					mostrarMensaje( 'Error', mensajeError, 'error' );
+				}
+			} );
+		}
+	}
+};
+
+function actualizarPassword()
+{
+	usuario = new UsuarioSesion();
+	usuario.actualizarPassword();
+}
+
+
+function obtenerHoraMilitar( horaEstandar )
 {
 	return parseInt( horaEstandar.split( ':' )[0] ) * 100;
 }
@@ -127,3 +292,5 @@ function convertirValorADate( fechaValor )
 
 	return fecha;
 }
+
+

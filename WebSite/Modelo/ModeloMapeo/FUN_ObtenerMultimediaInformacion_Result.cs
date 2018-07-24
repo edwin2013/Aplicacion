@@ -11,12 +11,12 @@ namespace Modelo.ModeloMapeo
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class FUN_ObtenerMultimediaInformacion_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public Nullable<long> MultimediaInformacionId { get; set; }
+        public byte[] Datos { get; set; }
+        public string Ruta { get; set; }
+        public Nullable<int> InformacionId { get; set; }
+        public Nullable<int> Tipo { get; set; }
     }
 }

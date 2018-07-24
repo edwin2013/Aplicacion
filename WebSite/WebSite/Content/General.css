@@ -2,6 +2,12 @@
 	padding: 20px;
 }
 
+.areaTexto {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+}
 
 /*<<====================== CSS Loading=============>>*/
 
@@ -48,3 +54,93 @@
 .popover {
 	left: 35% !important;
 }
+
+
+/*INICIO CHECK BOX ESTILO*/
+.containerCheck {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+	.containerCheck input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+}
+
+.containerCheck:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+.containerCheck input:checked ~ .checkmark {
+	background-color: #2196F3;
+}
+
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.containerCheck input:checked ~ .checkmark:after {
+	display: block;
+}
+
+.containerCheck .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+/*FIN CHECK BOX ESTILO*/
+
+/*INICIO ESTILO FILE UPLOAD*/
+
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+	.btn-file input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		min-width: 100%;
+		min-height: 100%;
+		font-size: 100px;
+		text-align: right;
+		filter: alpha(opacity=0);
+		opacity: 0;
+		outline: none;
+		background: white;
+		cursor: inherit;
+		display: block;
+	}
+
+#img-upload {
+	width: 100%;
+}
+/*INICIO ESTILO FILE UPLOAD INICIO*/

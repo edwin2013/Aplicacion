@@ -9,6 +9,9 @@
 	<link href="~/Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
 </head>
 
+<input type="hidden" id="hdfInformacionId">
+<input type="hidden" id="hdfAccion" name="hdfAccion">
+
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
 		<a href="#">Paciente</a>
@@ -39,47 +42,59 @@
 	</div>
 	<div role="tabpanel" class="tab-pane fade" id="testimonios">Testimonios</div>
 	<div role="tabpanel" class="tab-pane fade" id="proximasActividades">
-		Próximas actividades
-		<form id="upload" style="display:none;" enctype="multipart/form-data" action="@Url.Action("Survey", "Mantenimiento")" method="POST">
-			<input type="file" name="fileUpload" id="fileUpload" size="23" /><br />
-			<button>Upload!</button>
-		</form>
-
+		@Html.Partial("~/Views/Mantenimiento/_ActividadesMantenimiento.cshtml")
 	</div>
 </div>
 
-<script type="text/javascript">
-
-	$( '#upload' ).submit( function ( e )
-	{
-		e.preventDefault(); // stop the standard form submission
-
-		var formdata = new FormData(); //FormData object
-		var fileInput = document.getElementById( 'fileUpload' );
-		//Iterating through each files selected in fileInput
-		for ( i = 0; i < fileInput.files.length; i++ )
-		{
-			formdata.append( fileInput.files[i].name, fileInput.files[i] );
-		}
-
-		$.ajax( {
-			url: this.action,
-			type: this.method,
-			data: formdata,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function ( data )
-			{
-				console.log( data.UploadedFileCount + ' file(s) uploaded successfully' );
-			},
-			error: function ( xhr, error, status )
-			{
-				console.log( error, status );
-			}
-		} );
-	} );
-</script>
+<div class="modal fade" id="popUpMultimedia" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="lblTituloPopUp">Agregar multimedia</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<div class="form-row">
+						<div class="col-md-12">
+							<label>Tipo de archivo *</label>
+							<select id="ddlTipoArchivo" class="form-control" onclick="mostrarTipoArchivo();">
+								<option value="-1">Seleccione</option>
+								<option value="1">Imagen</option>
+								<option value="2">Video Youtube</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div id="divImagen" class="form-group" style="display:none;">
+					<div class="input-group">
+						<span class="input-group-btn">
+							<span class="btn btn-default btn-file">
+								Seleccione imagen… <input type="file" id="imgInp">
+							</span>
+						</span>
+						<input type="text" id="txbImagen" class="form-control" readonly>
+					</div>
+					<img id='img-upload' />
+				</div>
+				<div id="divVideo" class="form-group" style="display:none;">
+					<div class="form-row">
+						<div class="col-md-12">
+							<label>Url video *</label>
+							<input id="txbUrlVideo" class="form-control" value="" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" onclick="mantenimientoMultimedia()">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section Scripts{
 	<script src="~/Scripts/bootstrap-datepicker.js"></script>

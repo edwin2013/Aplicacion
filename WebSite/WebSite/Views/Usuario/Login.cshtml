@@ -34,30 +34,59 @@
                     <a class="btn btn-primary btn-block" onclick="validarCredenciales()">Entrar</a>
                 </form>
                 <div class="text-center">
-                    <a class="d-block small" href="forgot-password.html">Recuperar password</a>
+                    <a class="d-block small" href="#" onclick="mostrarPopUpRecuperarPassword();">Recuperar password</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="popUpMensaje" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="headerPopUp" class="modal-title"></h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	<div class="modal fade" id="popUpRecuperarPassword" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Recuperar password</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="form-row">
+							<div class="col-md-12">
+								<label>Correo electrónico *</label>
+								<input id="txbCorreoRecuperar" type="email" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-primary" onclick="recuperarPassword()">Recuperar password</button>
 
-                </div>
-                <div class="modal-body" id="divMensajePopUp">
-                    <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+					<p>Debe tener 8 caracteres como mínimo *</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="popUpMensaje" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="headerPopUp" class="modal-title"></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				</div>
+				<div class="modal-body" id="divMensajePopUp">
+					<p>Some text in the modal.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <div class="modal_loading" style="display:none;">
         <img src="~/Imagenes/img_cargando.gif" />
@@ -72,6 +101,6 @@
     <script src="~/Template/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/Scripts/General/General.js"></script>
     <script src="~/Scripts/Usuario/validarCredenciales.js"></script>
-
+	<script src="~/Scripts/Usuario/recuperarPassword.js"></script>
 </body>
 </html>

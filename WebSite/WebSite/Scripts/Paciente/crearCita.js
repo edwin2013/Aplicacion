@@ -1,18 +1,21 @@
-﻿$(document).ready(function () {
-    $("#txbMes").datepicker({
-        format: "mm/yyyy",
-        autoclose: true,
-        minViewMode: 1,
-    }).on('changeDate', function (ev) {
-        var dia = $('#txbMes').val();
-        var diaValido = dia != '';
-        if (diaValido) {
-            obtenerDiasOfertaMes();
-        }
-    });
+﻿$( document ).ready( function ()
+{
+	$( "#txbMes" ).datepicker( {
+		format: "mm/yyyy",
+		autoclose: true,
+		minViewMode: 1,
+	} ).on( 'changeDate', function ( ev )
+	{
+		var dia = $( '#txbMes' ).val();
+		var diaValido = dia != '';
+		if ( diaValido )
+		{
+			obtenerDiasOfertaMes();
+		}
+	} );
 
-    limpiarCampos();
-});
+	limpiarCampos();
+} );
 
 
 var ModeloCrearCita = function ()
@@ -146,114 +149,136 @@ function crearCita()
 	}
 }
 
-function obtenerSesionesActivas() {
-    mostrarLoading();
+function obtenerSesionesActivas()
+{
+	mostrarLoading();
+	var fechaDia = $( '#ddlDias' ).val();
+	var diaValido = fechaDia != '-1';
 
-    var fechaDia = $('#ddlDias').val();
-    var datos = JSON.stringify({
-        fechaDia: fechaDia
-    });
+	if ( diaValido )
+	{
+		var datos = JSON.stringify( {
+			fechaDia: fechaDia
+		} );
 
-    var diaValido = fechaDia != '-1';
-
-    if (diaValido) {
-        $.ajax({
-            type: "POST",
-            url: '/Paciente/ObtenerSesionesActivas',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: datos,
-            success: function (data) {
-                ocultarLoading();
-                var listaSesionesActivas = $.parseJSON(data);
-                llenarComboHoras(listaSesionesActivas);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                ocultarLoading();
-                var responseText = jqXHR.responseText;
-                var mensajeError = obtenerMensajeError(responseText);
-                mostrarMensaje('Error', mensajeError, 'error');
-            }
-        });
-    }
+		$.ajax( {
+			type: "POST",
+			url: '/Paciente/ObtenerSesionesActivas',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: datos,
+			success: function ( data )
+			{
+				ocultarLoading();
+				var listaSesionesActivas = $.parseJSON( data );
+				llenarComboHoras( listaSesionesActivas );
+			},
+			error: function ( jqXHR, textStatus, errorThrown )
+			{
+				ocultarLoading();
+				var responseText = jqXHR.responseText;
+				var mensajeError = obtenerMensajeError( responseText );
+				mostrarMensaje( 'Error', mensajeError, 'error' );
+			}
+		} );
+	}
+	else
+	{
+		ocultarLoading();
+		var combo = $( "#ddlHoras" );
+		combo.empty();
+		combo.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
+	}
 }
 
-function llenarComboHoras(listaSesionesActivas) {
-    var combo = $("#ddlHoras");
-    combo.empty();
+function llenarComboHoras( listaSesionesActivas )
+{
+	var combo = $( "#ddlHoras" );
+	combo.empty();
 
-    var poseeSesionesActivas = listaSesionesActivas.length > 0;
+	var poseeSesionesActivas = listaSesionesActivas.length > 0;
 
-    if (poseeSesionesActivas) {
-        combo.append($("<option />").val('-1').text('Seleccione'));
-    }
-    else {
-        combo.append($("<option />").val('-1').text('Sin datos'));
-    }
+	if ( poseeSesionesActivas )
+	{
+		combo.append( $( "<option />" ).val( '-1' ).text( 'Seleccione' ) );
 
-    $.each(listaSesionesActivas, function () {
-        var horaOfeta = this.Hora;
-        var detalleHora = this.DetalleHora;
-        combo.append($("<option />").val(horaOfeta).text(detalleHora));
-    });
+		$.each( listaSesionesActivas, function ()
+		{
+			var horaOfeta = this.Hora;
+			var detalleHora = this.DetalleHora;
+			combo.append( $( "<option />" ).val( horaOfeta ).text( detalleHora ) );
+		} );
+	}
+	else
+	{
+		combo.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
+	}
 }
 
-function obtenerDiasOfertaMes() {
-    var dia = $('#txbMes').val();
+function obtenerDiasOfertaMes()
+{
+	var dia = $( '#txbMes' ).val();
 
-    var diaValido = dia != '';
-    if (diaValido) {
+	var diaValido = dia != '';
+	if ( diaValido )
+	{
 
-        mostrarLoading();
+		mostrarLoading();
 
-        var datos = JSON.stringify({
-            fechaOferta: $('#txbMes').val()
-        });
+		var datos = JSON.stringify( {
+			fechaOferta: $( '#txbMes' ).val()
+		} );
 
-        $.ajax({
-            type: "POST",
-            url: '/Paciente/ObtenerDiasOfertaMes',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: datos,
-            success: function (data) {
-                ocultarLoading();
-                var listaDiasOfertaMes = $.parseJSON(data);
-                llenarComboDias(listaDiasOfertaMes);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                ocultarLoading();
-                var responseText = jqXHR.responseText;
-                var mensajeError = obtenerMensajeError(responseText);
-                mostrarMensaje('Error', mensajeError, 'error');
-            }
-        });
-    }
+		$.ajax( {
+			type: "POST",
+			url: '/Paciente/ObtenerDiasOfertaMes',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: datos,
+			success: function ( data )
+			{
+				ocultarLoading();
+				var listaDiasOfertaMes = $.parseJSON( data );
+				llenarComboDias( listaDiasOfertaMes );
+			},
+			error: function ( jqXHR, textStatus, errorThrown )
+			{
+				ocultarLoading();
+				var responseText = jqXHR.responseText;
+				var mensajeError = obtenerMensajeError( responseText );
+				mostrarMensaje( 'Error', mensajeError, 'error' );
+			}
+		} );
+	}
 }
 
-function llenarComboDias(listaDiasOfertaMes) {
-    var comboDias = $("#ddlDias");
-    comboDias.empty();
+function llenarComboDias( listaDiasOfertaMes )
+{
+	var comboDias = $( "#ddlDias" );
+	comboDias.empty();
 
-    var comboSesiones = $("#ddlHoras");
-    comboSesiones.empty();
-    comboSesiones.append($("<option />").val('-1').text('Sin datos'));
+	var comboSesiones = $( "#ddlHoras" );
+	comboSesiones.empty();
+	comboSesiones.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
 
-    var poseeDiasOfertaMes = listaDiasOfertaMes.length > 0;
+	var poseeDiasOfertaMes = listaDiasOfertaMes.length > 0;
 
-    if (poseeDiasOfertaMes) {
-        comboDias.append($("<option />").val('-1').text('Seleccione'));
-    }
-    else {
-        comboDias.append($("<option />").val('-1').text('Sin datos'));
-    }
+	if ( poseeDiasOfertaMes )
+	{
+		comboDias.append( $( "<option />" ).val( '-1' ).text( 'Seleccione' ) );
+	}
+	else
+	{
+		comboDias.append( $( "<option />" ).val( '-1' ).text( 'Sin datos' ) );
+	}
 
-    $.each(listaDiasOfertaMes, function () {
-        var diaOferta = this.DiaOferta;
-        var detalleDiaOferta = this.DetalleDiaOferta;
-        var fechaDiaOferta = this.FechaDiaOferta;
-        comboDias.append($("<option />").val(fechaDiaOferta).text(detalleDiaOferta + ', ' + diaOferta));
-    });
+	$.each( listaDiasOfertaMes, function ()
+	{
+		var diaOferta = this.DiaOferta;
+		var detalleDiaOferta = this.DetalleDiaOferta;
+		var fechaDiaOferta = this.FechaDiaOferta;
+		comboDias.append( $( "<option />" ).val( fechaDiaOferta ).text( detalleDiaOferta + ', ' + diaOferta ) );
+	} );
 }
 
 function limpiarCampos()

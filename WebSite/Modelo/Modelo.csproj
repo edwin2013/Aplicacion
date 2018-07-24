@@ -54,15 +54,18 @@
     <Compile Include="General\DatosCorreo.cs" />
     <Compile Include="General\DiasOfertaMes.cs" />
     <Compile Include="General\Mensaje.cs" />
-    <Compile Include="Mantenimiento\ActividadModelo.cs" />
-    <Compile Include="Mantenimiento\ImagenActividades.cs" />
-    <Compile Include="ModeloMapeo\FUN_ObtenerActividades_Result.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Mantenimiento\MultimediaInformacionModelo.cs" />
+    <Compile Include="Mantenimiento\InformacionModelo.cs" />
     <Compile Include="ModeloMapeo\FUN_ObtenerCarreras_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerCitas_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerInformacion_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerMultimediaInformacion_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerPacientes_Result.cs">

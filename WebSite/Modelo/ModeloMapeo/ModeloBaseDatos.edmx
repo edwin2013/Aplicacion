@@ -11,20 +11,6 @@
         <Function Name="ConversionHoraEstandar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="Hora" Type="int" Mode="In" />
         </Function>
-        <Function Name="FUN_ObtenerActividades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ActividadId" Type="int" />
-                <Property Name="Fecha" Type="varchar" MaxLength="10" />
-                <Property Name="Titulo" Type="nvarchar" MaxLength="200" />
-                <Property Name="Cupo" Type="int" />
-                <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
-                <Property Name="Activo" Type="bit" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <Function Name="FUN_ObtenerCarreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -48,6 +34,37 @@
                 <Property Name="Calificacion" Type="int" />
                 <Property Name="SesionId" Type="bigint" />
                 <Property Name="IdentificadorGUID" Type="nvarchar" MaxLength="500" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FUN_ObtenerInformacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Tipo" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="InformacionId" Type="int" />
+                <Property Name="Fecha" Type="varchar" MaxLength="10" />
+                <Property Name="Titulo" Type="nvarchar" MaxLength="200" />
+                <Property Name="Cupo" Type="int" />
+                <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
+                <Property Name="Activo" Type="bit" />
+                <Property Name="Tipo" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FUN_ObtenerMultimediaInformacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="InformacionId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MultimediaInformacionId" Type="bigint" />
+                <Property Name="Datos" Type="varbinary(max)" />
+                <Property Name="Ruta" Type="nvarchar(max)" />
+                <Property Name="InformacionId" Type="int" />
+                <Property Name="Tipo" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -155,6 +172,13 @@
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="SP_ActualizarPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioId" Type="int" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="SolicitarCambioPassword" Type="bit" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="SP_CrearCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PacienteId" Type="int" Mode="In" />
           <Parameter Name="Dia" Type="varchar" Mode="In" />
@@ -197,10 +221,25 @@
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
-        <Function Name="SP_MantenimientoImagenActividades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SP_MantenimientoInformacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Accion" Type="char" Mode="In" />
-          <Parameter Name="ImagenId" Type="int" Mode="In" />
-          <Parameter Name="Datos" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="InformacionId" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="varchar" Mode="In" />
+          <Parameter Name="Titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cupo" Type="int" Mode="In" />
+          <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+          <Parameter Name="Tipo" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+          <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_MantenimientoMultimediaInformacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Accion" Type="char" Mode="In" />
+          <Parameter Name="MultimediaInformacionId" Type="bigint" Mode="In" />
+          <Parameter Name="Datos" Type="varbinary" Mode="In" />
+          <Parameter Name="Ruta" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="InformacionId" Type="int" Mode="In" />
+          <Parameter Name="Tipo" Type="int" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
@@ -351,13 +390,6 @@
           </FunctionImport>
           <FunctionImport Name="FUN_ObtenerCarreras" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerCarreras_Result)" />
           <FunctionImport Name="FUN_ObtenerRoles" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerRoles_Result)" />
-          <FunctionImport Name="SP_MantenimientoImagenActividades">
-            <Parameter Name="Accion" Mode="In" Type="String" />
-            <Parameter Name="ImagenId" Mode="In" Type="Int32" />
-            <Parameter Name="Datos" Mode="In" Type="Binary" />
-            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
-            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="FUN_ObtenerUsuariosPorRol" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result)">
           <Parameter Name="RolId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -408,7 +440,6 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="FUN_ObtenerActividades" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerActividades_Result)" />
           <FunctionImport Name="SP_ActualizarPaciente">
             <Parameter Name="PacienteId" Mode="In" Type="Int32" />
             <Parameter Name="CitaId" Mode="In" Type="Int32" />
@@ -423,6 +454,42 @@
             <Parameter Name="CantidadHijos" Mode="In" Type="Int32" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ActualizarPassword">
+            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="SolicitarCambioPassword" Mode="In" Type="Boolean" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MantenimientoInformacion">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="InformacionId" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="String" />
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="Cupo" Mode="In" Type="Int32" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+            <Parameter Name="Tipo" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MantenimientoMultimediaInformacion">
+            <Parameter Name="Accion" Mode="In" Type="String" />
+            <Parameter Name="MultimediaInformacionId" Mode="In" Type="Int64" />
+            <Parameter Name="Datos" Mode="In" Type="Binary" />
+            <Parameter Name="Ruta" Mode="In" Type="String" />
+            <Parameter Name="InformacionId" Mode="In" Type="Int32" />
+            <Parameter Name="Tipo" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+            <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerMultimediaInformacion" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerMultimediaInformacion_Result)">
+          <Parameter Name="InformacionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FUN_ObtenerInformacion" IsComposable="true" ReturnType="Collection(ManejoCitasModel.FUN_ObtenerInformacion_Result)">
+            <Parameter Name="Tipo" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -553,13 +620,21 @@
           <Property Type="String" Name="Recomendaciones" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="IdentificadorGUID" Nullable="false" MaxLength="500" />
         </ComplexType>
-        <ComplexType Name="FUN_ObtenerActividades_Result">
-          <Property Type="Int32" Name="ActividadId" Nullable="true" />
+        <ComplexType Name="FUN_ObtenerMultimediaInformacion_Result">
+          <Property Type="Int64" Name="MultimediaInformacionId" Nullable="true" />
+          <Property Type="Binary" Name="Datos" Nullable="true" />
+          <Property Type="String" Name="Ruta" Nullable="true" />
+          <Property Type="Int32" Name="InformacionId" Nullable="true" />
+          <Property Type="Int32" Name="Tipo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FUN_ObtenerInformacion_Result">
+          <Property Type="Int32" Name="InformacionId" Nullable="true" />
           <Property Type="String" Name="Fecha" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="Titulo" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="Cupo" Nullable="true" />
           <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="1000" />
           <Property Type="Boolean" Name="Activo" Nullable="true" />
+          <Property Type="Int32" Name="Tipo" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -650,7 +725,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MantenimientoImagenActividades" FunctionName="ManejoCitasModel.Store.SP_MantenimientoImagenActividades" />
           <FunctionImportMapping FunctionImportName="FUN_ObtenerUsuariosPorRol" FunctionName="ManejoCitasModel.Store.FUN_ObtenerUsuariosPorRol">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerUsuariosPorRol_Result">
@@ -737,19 +811,34 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_MantenimientoActividades" FunctionName="ManejoCitasModel.Store.SP_MantenimientoActividades" />
-          <FunctionImportMapping FunctionImportName="FUN_ObtenerActividades" FunctionName="ManejoCitasModel.Store.FUN_ObtenerActividades">
+          <FunctionImportMapping FunctionImportName="SP_ActualizarPaciente" FunctionName="ManejoCitasModel.Store.SP_ActualizarPaciente" />
+          <FunctionImportMapping FunctionImportName="SP_ActualizarPassword" FunctionName="ManejoCitasModel.Store.SP_ActualizarPassword" />
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoInformacion" FunctionName="ManejoCitasModel.Store.SP_MantenimientoInformacion" />
+          <FunctionImportMapping FunctionImportName="SP_MantenimientoMultimediaInformacion" FunctionName="ManejoCitasModel.Store.SP_MantenimientoMultimediaInformacion" />
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerMultimediaInformacion" FunctionName="ManejoCitasModel.Store.FUN_ObtenerMultimediaInformacion">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerActividades_Result">
-                <ScalarProperty Name="ActividadId" ColumnName="ActividadId" />
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerMultimediaInformacion_Result">
+                <ScalarProperty Name="MultimediaInformacionId" ColumnName="MultimediaInformacionId" />
+                <ScalarProperty Name="Datos" ColumnName="Datos" />
+                <ScalarProperty Name="Ruta" ColumnName="Ruta" />
+                <ScalarProperty Name="InformacionId" ColumnName="InformacionId" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FUN_ObtenerInformacion" FunctionName="ManejoCitasModel.Store.FUN_ObtenerInformacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.FUN_ObtenerInformacion_Result">
+                <ScalarProperty Name="InformacionId" ColumnName="InformacionId" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Cupo" ColumnName="Cupo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ActualizarPaciente" FunctionName="ManejoCitasModel.Store.SP_ActualizarPaciente" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

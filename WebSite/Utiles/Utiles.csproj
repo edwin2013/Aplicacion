@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acciones.cs" />
+    <Compile Include="Archivos.cs" />
     <Compile Include="DiccionarioDatos.cs" />
     <Compile Include="GeneracionCodigo.cs" />
     <Compile Include="Notificaciones\Correo.cs" />

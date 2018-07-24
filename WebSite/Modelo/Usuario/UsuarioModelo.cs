@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace Modelo.Usuario
+﻿namespace Modelo.Usuario
 {
 	public class UsuarioModelo
 	{
+
 		public int UsuarioId { set; get; }
 		public char Accion { set; get; }
 		public string Nombre { set; get; }
@@ -15,8 +14,8 @@ namespace Modelo.Usuario
 		public int? CarreraId { set; get; }
 		public string InicioPractica { set; get; }
 		public string FinPractica { set; get; }
-        public string Correo { set; get; }
+		public string Correo { set; get; }
 		public bool Permiso { set; get; }
-        public bool SolicitarCambioPassword { set; get; }
+		public bool SolicitarCambioPassword { set; get; }
 	}
 }
