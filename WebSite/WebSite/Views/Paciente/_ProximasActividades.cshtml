@@ -1,0 +1,59 @@
+﻿@model List<Modelo.Mantenimiento.InformacionModelo>
+
+@{
+	int contador = 0;
+}
+
+<div class="container-fluid">
+	<h1 class="text-center mb-3">Actividades</h1>
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<div class="carouselActividades carousel-inner row w-100 mx-auto">
+			@foreach (var item in Model.ToList())
+			{
+				bool esPrimerIteracion = contador == 0;
+				contador++;
+				string activo = esPrimerIteracion ? "active" : "";
+
+				<div class="carousel-item col-md-4 @activo">
+					<div class="card">
+						<a href="#" onclick="mostrarMultimediaActividades('@item.InformacionId'); return false;">
+
+							@{
+								bool existeMultimedia = item.Multimedia.MultimediaInformacionId != 0;
+
+								if (existeMultimedia)
+								{
+									bool esTipoImagen = item.Multimedia.Tipo == (int)Utiles.Archivos.Imagen;
+
+									if (esTipoImagen)
+									{
+										<img class="card-img-top img-fluid" src="@item.Multimedia.ConversionImagen" alt="Card image cap">
+									}
+									else
+									{
+										<img class="card-img-top img-fluid" src="~/Imagenes/default.png" alt="Card image cap">
+									}
+								}
+							}
+						</a>
+						<div class="card-body">
+							<h4 class="card-title">@item.Titulo</h4>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Cupo: @item.Cupo</li>
+							<li class="list-group-item">Fecha: @item.Fecha</li>
+						</ul>
+					</div>
+				</div>
+			}
+		</div>
+		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+</div>

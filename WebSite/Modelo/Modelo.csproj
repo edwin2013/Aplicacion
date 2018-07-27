@@ -62,6 +62,9 @@
     <Compile Include="ModeloMapeo\FUN_ObtenerCitas_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloMapeo\FUN_ObtenerInformacionPorId_Result.cs">
+      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModeloMapeo\FUN_ObtenerInformacion_Result.cs">
       <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
     </Compile>

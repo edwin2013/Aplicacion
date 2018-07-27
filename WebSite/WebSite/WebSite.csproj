@@ -192,7 +192,16 @@
     <Content Include="Content\bootstrap-datepicke.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\carousel.css" />
     <Content Include="Content\General.css" />
+    <Content Include="Content\JssorSlider\img\001.jpg" />
+    <Content Include="Content\JssorSlider\img\002.jpg" />
+    <Content Include="Content\JssorSlider\img\003.jpg" />
+    <Content Include="Content\JssorSlider\img\004.jpg" />
+    <Content Include="Content\JssorSlider\img\005.jpg" />
+    <Content Include="Content\JssorSlider\img\006.jpg" />
+    <Content Include="Content\JssorSlider\img\007.jpg" />
+    <Content Include="Content\JssorSlider\img\008.jpg" />
     <Content Include="Content\Paciente.css" />
     <Content Include="Content\ratingStart.css" />
     <Content Include="Correo\Plantillas\PlantillaCorreo.html" />
@@ -202,6 +211,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\default.png" />
     <Content Include="Imagenes\img_cargando.gif" />
     <Content Include="Scripts\bootstrap-clockpicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -210,8 +220,11 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\ManejoCitas.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\General\carousel.js" />
     <Content Include="Scripts\General\General.js" />
+    <Content Include="Scripts\General\jssor.slider.min.js" />
     <Content Include="Scripts\General\ratingStart.js" />
+    <Content Include="Scripts\General\sliderActividades.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -508,6 +521,10 @@
     <Content Include="Views\Mantenimiento\_ActividadesMantenimiento.cshtml" />
     <Content Include="Views\Mantenimiento\_TestimoniosMantenimiento.cshtml" />
     <Content Include="Views\Mantenimiento\_SobreOrganizacionMantenimiento.cshtml" />
+    <Content Include="Views\Paciente\_ProximasActividades.cshtml" />
+    <Content Include="Views\Paciente\_CarouselActividades.cshtml" />
+    <Content Include="Views\Paciente\_SobreOrganizacion.cshtml" />
+    <Content Include="Views\Paciente\_Testimonios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,67 @@
 ﻿
+
+$( document ).ready( function ()
+{
+	//Inicio Control Upload
+	$( document ).on( 'change', '.btn-file :file', function ()
+	{
+		var input = $( this ), label = input.val().replace( /\\/g, '/' ).replace( /.*\//, '' );
+		input.trigger( 'fileselect', [label] );
+
+	} );
+
+	$( '.btn-file :file' ).on( 'fileselect', function ( event, label )
+	{
+		var input = $( this ).parents( '.input-group' ).find( ':text' ),
+			log = label;
+
+		if ( input.length )
+		{
+			input.val( log );
+		}
+
+		var extensionInvalida = !( validarExtensionImagen() );
+		if ( extensionInvalida )
+		{
+			$( '#txbImagen' ).val( '' );
+			var $image = $( '#img-upload' );
+			$image.removeAttr( 'src' ).replaceWith( $image.clone() );
+			mostrarMensaje( 'Error', 'Profavor seleccione una imagen valida (jpg, jpeg, png o gif)', 'error' );
+		}
+	} );
+
+	function readURL( input )
+	{
+		if ( input.files && input.files[0] )
+		{
+			var reader = new FileReader();
+
+			reader.onload = function ( e )
+			{
+				$( '#img-upload' ).attr( 'src', e.target.result );
+			}
+
+			reader.readAsDataURL( input.files[0] );
+		}
+	}
+
+	$( "#imgInp" ).change( function ()
+	{
+		readURL( this );
+	} );
+
+	//Fin Control Upload
+} );
+
+
+function validarExtensionImagen()
+{
+	var ext = $( '#txbImagen' ).val().split( '.' ).pop().toLowerCase();
+	var extensionValida = $.inArray( ext, ['gif', 'png', 'jpg', 'jpeg'] ) != -1;
+
+	return extensionValida;
+}
+
 function mostrarPopUpMultimedia( informacionId )
 {
 	$( "#hdfAccion" ).val( 'I' );
@@ -39,7 +102,7 @@ var Multimedia = function ()
 			Datos: '',
 			Ruta: this.rutaVideo,
 			InformacionId: this.informacionId,
-			Tipo: this.tipoArchivo,
+			Tipo: this.tipoArchivo
 		} );
 
 		return datos;
@@ -137,13 +200,14 @@ function mostrarTipoArchivo()
 {
 	var tipoArchivo = $( '#ddlTipoArchivo' ).val();
 	var esTipoImagen = tipoArchivo == '1';
+	var esTipoVideo = tipoArchivo == '2';
 
 	if ( esTipoImagen )
 	{
 		$( "#divImagen" ).show();
 		$( "#divVideo" ).hide();
 	}
-	else
+	else if ( esTipoVideo )
 	{
 		$( "#divImagen" ).hide();
 		$( "#divVideo" ).show();

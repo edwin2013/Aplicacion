@@ -9,7 +9,7 @@ function mantenimientoActividad()
 	actividad.mantenimientoActividad();
 }
 
-function mostrarMantenimientoUsuariosCrear()
+function mostrarMantenimientoActividadCrear()
 {
 	$( "#hdfAccion" ).val( 'I' );
 	$( "#hdfActividadId" ).val( 0 );

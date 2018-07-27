@@ -2,6 +2,11 @@
 {
 	public class InformacionModelo
 	{
+		public InformacionModelo()
+		{
+			Multimedia = new MultimediaInformacionModelo();
+		}
+
 		public string Accion { set; get; }
 		public int InformacionId { set; get; }
 		public string Fecha { set; get; }
@@ -10,5 +15,6 @@
 		public string Titulo { set; get; }
 		public bool Activo { set; get; }
 		public int Tipo { set; get; }
+		public MultimediaInformacionModelo Multimedia { set; get; }
 	}
 }

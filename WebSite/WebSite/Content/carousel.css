@@ -1,0 +1,157 @@
+﻿
+.alineacionSlider {
+	position: absolute;
+	top: 50px;
+	left: 72px;
+	width: 450px;
+	height: 62px;
+	z-index: 0;
+	font-size: 16px;
+	color: #000000;
+	line-height: 24px;
+	text-align: left;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+
+/* show 3 items */
+.carousel-inner .active,
+.carousel-inner .active + .carousel-item,
+.carousel-inner .active + .carousel-item + .carousel-item {
+	display: block;
+}
+
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+	transition: none;
+}
+
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+	position: relative;
+	transform: translate3d(0, 0, 0);
+}
+
+.carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+	position: absolute;
+	top: 0;
+	right: -33.3333%;
+	z-index: -1;
+	display: block;
+	visibility: visible;
+}
+
+/* left or forward direction */
+.active.carousel-item-left + .carousel-item-next.carousel-item-left,
+.carousel-item-next.carousel-item-left + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+	position: relative;
+	transform: translate3d(-100%, 0, 0);
+	visibility: visible;
+}
+
+/* farthest right hidden item must be abso position for animations */
+.carousel-inner .carousel-item-prev.carousel-item-right {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	display: block;
+	visibility: visible;
+}
+
+/* right or prev direction */
+.active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+.carousel-item-prev.carousel-item-right + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+	position: relative;
+	transform: translate3d(100%, 0, 0);
+	visibility: visible;
+	display: block;
+	visibility: visible;
+}
+
+
+
+
+/* jssor slider loading skin spin css */
+.jssorl-009-spin img {
+	animation-name: jssorl-009-spin;
+	animation-duration: 1.6s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes jssorl-009-spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+
+.jssorb072 .i {
+	position: absolute;
+	color: #000;
+	font-family: "Helvetica neue",Helvetica,Arial,sans-serif;
+	text-align: center;
+	cursor: pointer;
+	z-index: 0;
+}
+
+	.jssorb072 .i .b {
+		fill: #fff;
+		opacity: .3;
+	}
+
+	.jssorb072 .i:hover {
+		opacity: .7;
+	}
+
+.jssorb072 .iav {
+	color: #fff;
+}
+
+	.jssorb072 .iav .b {
+		fill: #000;
+		opacity: .5;
+	}
+
+.jssorb072 .i.idn {
+	opacity: .3;
+}
+
+.jssora073 {
+	display: block;
+	position: absolute;
+	cursor: pointer;
+}
+
+	.jssora073 .a {
+		fill: #ddd;
+		fill-opacity: .7;
+		stroke: #000;
+		stroke-width: 160;
+		stroke-miterlimit: 10;
+		stroke-opacity: .7;
+	}
+
+	.jssora073:hover {
+		opacity: .8;
+	}
+
+	.jssora073.jssora073dn {
+		opacity: .4;
+	}
+
+	.jssora073.jssora073ds {
+		opacity: .3;
+		pointer-events: none;
+	}

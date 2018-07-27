@@ -551,6 +551,77 @@ namespace Modelo.ModeloMapeo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ActualizarPassword", usuarioIdParameter, passwordParameter, solicitarCambioPasswordParameter, resultado, mensaje);
         }
     
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerInformacion")]
+        public virtual IQueryable<FUN_ObtenerInformacion_Result> FUN_ObtenerInformacion(Nullable<int> tipo, Nullable<int> activo)
+        {
+            var tipoParameter = tipo.HasValue ?
+                new ObjectParameter("Tipo", tipo) :
+                new ObjectParameter("Tipo", typeof(int));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerInformacion_Result>("[ManejoCitasEntities].[FUN_ObtenerInformacion](@Tipo, @Activo)", tipoParameter, activoParameter);
+        }
+    
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerMultimediaInformacion")]
+        public virtual IQueryable<FUN_ObtenerMultimediaInformacion_Result> FUN_ObtenerMultimediaInformacion(Nullable<int> informacionId)
+        {
+            var informacionIdParameter = informacionId.HasValue ?
+                new ObjectParameter("InformacionId", informacionId) :
+                new ObjectParameter("InformacionId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerMultimediaInformacion_Result>("[ManejoCitasEntities].[FUN_ObtenerMultimediaInformacion](@InformacionId)", informacionIdParameter);
+        }
+    
+        public virtual int SP_MantenimientoMultimediaInformacion(string accion, Nullable<long> multimediaInformacionId, byte[] datos, string ruta, string nombre, string contentType, Nullable<int> informacionId, Nullable<int> tipo, ObjectParameter resultado, ObjectParameter mensaje)
+        {
+            var accionParameter = accion != null ?
+                new ObjectParameter("Accion", accion) :
+                new ObjectParameter("Accion", typeof(string));
+    
+            var multimediaInformacionIdParameter = multimediaInformacionId.HasValue ?
+                new ObjectParameter("MultimediaInformacionId", multimediaInformacionId) :
+                new ObjectParameter("MultimediaInformacionId", typeof(long));
+    
+            var datosParameter = datos != null ?
+                new ObjectParameter("Datos", datos) :
+                new ObjectParameter("Datos", typeof(byte[]));
+    
+            var rutaParameter = ruta != null ?
+                new ObjectParameter("Ruta", ruta) :
+                new ObjectParameter("Ruta", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var contentTypeParameter = contentType != null ?
+                new ObjectParameter("ContentType", contentType) :
+                new ObjectParameter("ContentType", typeof(string));
+    
+            var informacionIdParameter = informacionId.HasValue ?
+                new ObjectParameter("InformacionId", informacionId) :
+                new ObjectParameter("InformacionId", typeof(int));
+    
+            var tipoParameter = tipo.HasValue ?
+                new ObjectParameter("Tipo", tipo) :
+                new ObjectParameter("Tipo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoMultimediaInformacion", accionParameter, multimediaInformacionIdParameter, datosParameter, rutaParameter, nombreParameter, contentTypeParameter, informacionIdParameter, tipoParameter, resultado, mensaje);
+        }
+    
+        [DbFunction("ManejoCitasEntities", "FUN_ObtenerInformacionPorId")]
+        public virtual IQueryable<FUN_ObtenerInformacionPorId_Result> FUN_ObtenerInformacionPorId(Nullable<int> informacionId)
+        {
+            var informacionIdParameter = informacionId.HasValue ?
+                new ObjectParameter("InformacionId", informacionId) :
+                new ObjectParameter("InformacionId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerInformacionPorId_Result>("[ManejoCitasEntities].[FUN_ObtenerInformacionPorId](@InformacionId)", informacionIdParameter);
+        }
+    
         public virtual int SP_MantenimientoInformacion(string accion, Nullable<int> informacionId, string fecha, string titulo, Nullable<int> cupo, string descripcion, Nullable<bool> activo, Nullable<int> tipo, ObjectParameter resultado, ObjectParameter mensaje)
         {
             var accionParameter = accion != null ?
@@ -586,59 +657,6 @@ namespace Modelo.ModeloMapeo
                 new ObjectParameter("Tipo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoInformacion", accionParameter, informacionIdParameter, fechaParameter, tituloParameter, cupoParameter, descripcionParameter, activoParameter, tipoParameter, resultado, mensaje);
-        }
-    
-        public virtual int SP_MantenimientoMultimediaInformacion(string accion, Nullable<long> multimediaInformacionId, byte[] datos, string ruta, Nullable<int> informacionId, Nullable<int> tipo, ObjectParameter resultado, ObjectParameter mensaje)
-        {
-            var accionParameter = accion != null ?
-                new ObjectParameter("Accion", accion) :
-                new ObjectParameter("Accion", typeof(string));
-    
-            var multimediaInformacionIdParameter = multimediaInformacionId.HasValue ?
-                new ObjectParameter("MultimediaInformacionId", multimediaInformacionId) :
-                new ObjectParameter("MultimediaInformacionId", typeof(long));
-    
-            var datosParameter = datos != null ?
-                new ObjectParameter("Datos", datos) :
-                new ObjectParameter("Datos", typeof(byte[]));
-    
-            var rutaParameter = ruta != null ?
-                new ObjectParameter("Ruta", ruta) :
-                new ObjectParameter("Ruta", typeof(string));
-    
-            var informacionIdParameter = informacionId.HasValue ?
-                new ObjectParameter("InformacionId", informacionId) :
-                new ObjectParameter("InformacionId", typeof(int));
-    
-            var tipoParameter = tipo.HasValue ?
-                new ObjectParameter("Tipo", tipo) :
-                new ObjectParameter("Tipo", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MantenimientoMultimediaInformacion", accionParameter, multimediaInformacionIdParameter, datosParameter, rutaParameter, informacionIdParameter, tipoParameter, resultado, mensaje);
-        }
-    
-        [DbFunction("ManejoCitasEntities", "FUN_ObtenerMultimediaInformacion")]
-        public virtual IQueryable<FUN_ObtenerMultimediaInformacion_Result> FUN_ObtenerMultimediaInformacion(Nullable<int> informacionId)
-        {
-            var informacionIdParameter = informacionId.HasValue ?
-                new ObjectParameter("InformacionId", informacionId) :
-                new ObjectParameter("InformacionId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerMultimediaInformacion_Result>("[ManejoCitasEntities].[FUN_ObtenerMultimediaInformacion](@InformacionId)", informacionIdParameter);
-        }
-    
-        [DbFunction("ManejoCitasEntities", "FUN_ObtenerInformacion")]
-        public virtual IQueryable<FUN_ObtenerInformacion_Result> FUN_ObtenerInformacion(Nullable<int> tipo, Nullable<int> activo)
-        {
-            var tipoParameter = tipo.HasValue ?
-                new ObjectParameter("Tipo", tipo) :
-                new ObjectParameter("Tipo", typeof(int));
-    
-            var activoParameter = activo.HasValue ?
-                new ObjectParameter("Activo", activo) :
-                new ObjectParameter("Activo", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FUN_ObtenerInformacion_Result>("[ManejoCitasEntities].[FUN_ObtenerInformacion](@Tipo, @Activo)", tipoParameter, activoParameter);
         }
     }
 }

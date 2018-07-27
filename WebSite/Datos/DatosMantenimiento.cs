@@ -9,6 +9,31 @@ namespace Datos
 {
 	public class DatosMantenimiento
 	{
+		public List<InformacionModelo> ObtenerInformacionPorId(int informacionId)
+		{
+			List<InformacionModelo> listaRetornar = new List<InformacionModelo>();
+
+			using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+			{
+				var lista = contexto.FUN_ObtenerInformacionPorId(informacionId);
+
+				foreach (FUN_ObtenerInformacionPorId_Result item in lista)
+				{
+					InformacionModelo entidad = new InformacionModelo();
+					entidad.InformacionId = item.InformacionId ?? default(int);
+					entidad.Fecha = item.Fecha;
+					entidad.Titulo = item.Titulo;
+					entidad.Cupo = item.Cupo ?? default(int);
+					entidad.Descripcion = item.Descripcion;
+					entidad.Activo = item.Activo ?? default(bool); ;
+					entidad.Tipo = item.Tipo ?? default(int);
+					listaRetornar.Add(entidad);
+				}
+			}
+
+			return listaRetornar;
+		}
+
 		public Mensaje MantenimientoInformacion(InformacionModelo informacion)
 		{
 			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
@@ -50,6 +75,8 @@ namespace Datos
 					multimedia.MultimediaInformacionId,
 					multimedia.Datos,
 					multimedia.Ruta,
+					multimedia.Nombre,
+					multimedia.ContentType,
 					multimedia.InformacionId,
 					multimedia.Tipo,
 					resultado,
@@ -79,6 +106,8 @@ namespace Datos
 					entidad.MultimediaInformacionId = item.MultimediaInformacionId ?? default(Int64);
 					entidad.Datos = item.Datos;
 					entidad.Ruta = item.Ruta;
+					entidad.Nombre = item.Nombre;
+					entidad.ContentType = item.ContentType;
 					entidad.InformacionId = item.InformacionId ?? default(int);
 					entidad.Tipo = item.Tipo ?? default(int);
 					listaRetornar.Add(entidad);

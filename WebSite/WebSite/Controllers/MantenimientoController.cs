@@ -1,9 +1,7 @@
 ﻿using Modelo.General;
 using Modelo.Mantenimiento;
-using Negocios;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -32,15 +30,14 @@ namespace WebSite.Controllers
 
 			if (esTipoImagen)
 			{
-				byte[] data = null;
 				HttpPostedFileBase file = Request.Files[0];
 				int fileSize = file.ContentLength;
-				string fileName = file.FileName;
-				string mimeType = file.ContentType;
+				multimedia.Nombre = file.FileName;
+				multimedia.ContentType = file.ContentType;
 				System.IO.Stream fileContent = file.InputStream;
 				long numBytes = fileContent.Length;
 				BinaryReader br = new BinaryReader(fileContent);
-				data = br.ReadBytes((int)numBytes);
+				byte[] data = br.ReadBytes((int)numBytes);
 				multimedia.Datos = data;
 			}
 
@@ -65,34 +62,6 @@ namespace WebSite.Controllers
 			seralizador.MaxJsonLength = Int32.MaxValue;
 			var datos = new JavaScriptSerializer().Serialize(listaRetornar);
 			return Json(datos, JsonRequestBehavior.AllowGet);
-		}
-
-		public JsonResult Survey(MultimediaInformacionModelo multimedia)
-		{
-			byte[] data = null;
-			HttpPostedFileBase file = Request.Files[0];
-			int fileSize = file.ContentLength;
-			string fileName = file.FileName;
-			string mimeType = file.ContentType;
-			System.IO.Stream fileContent = file.InputStream;
-			long numBytes = fileContent.Length;
-			BinaryReader br = new BinaryReader(fileContent);
-			data = br.ReadBytes((int)numBytes);
-
-
-			MultimediaInformacionModelo imagen = new MultimediaInformacionModelo();
-			imagen.Accion = "I";
-			imagen.Datos = data;
-			Mensaje mensaje = new NegociosMantenimiento().MantenimientoMultimediaInformacion(imagen);
-
-			using (MemoryStream ms = new MemoryStream(imagen.Datos))
-			{
-				System.Drawing.Image image = Image.FromStream(ms);
-				string ruta = Server.MapPath("~/");
-				image.Save(ruta + "UserPhoto.jpg");
-			}
-
-			return Json(new { Mensaje = mensaje });
 		}
 	}
 }

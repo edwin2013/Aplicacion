@@ -18,5 +18,7 @@ namespace Modelo.ModeloMapeo
         public string Ruta { get; set; }
         public Nullable<int> InformacionId { get; set; }
         public Nullable<int> Tipo { get; set; }
+        public string Nombre { get; set; }
+        public string ContentType { get; set; }
     }
 }
