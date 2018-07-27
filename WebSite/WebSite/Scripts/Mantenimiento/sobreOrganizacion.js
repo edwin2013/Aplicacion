@@ -160,7 +160,7 @@ function obtenerInformacionOrganizacion()
 		url: '/Mantenimiento/ObtenerInformacion',
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
-		data: JSON.stringify( { tipo: 1, activo: -1 } ),// 3 SON LOS REGISTROS DE TIPO SOBRE ORGANIZACION.
+		data: JSON.stringify( { tipo: 3, activo: -1 } ),// 3 SON LOS REGISTROS DE TIPO SOBRE ORGANIZACION.
 		success: function ( data )
 		{
 			ocultarLoading();
@@ -187,6 +187,9 @@ function mostrarInformacion( informacion )
 {
 	var fecha = informacion.Fecha;
 	var titulo = informacion.Titulo;
-	var fecha = informacion.Fecha;
-	
+	var descripcion = informacion.Descripcion;
+
+	$( '#txbNombreOrganizacion' ).val( titulo );
+	$( '#txaDescripcionOrganizacion' ).val( descripcion );
+	$( '#txbFechaFundacion' ).val( fecha );
 }
