@@ -3,63 +3,111 @@
 	obtenerInformacionOrganizacion()
 } );
 
-function mantenimientoActividad()
+function multimediaSobreOrganizacion()
 {
-	actividad = new Actividad();
-	actividad.mantenimientoActividad();
+	var informacionId = $( '#hdfActividadId' ).val();
+	mostrarPopUpMultimedia( informacionId );
 }
 
-function mostrarMantenimientoActividadCrear()
+function mostrarMultimediaSobreOrganizacion( informacionId )
 {
-	$( "#hdfAccion" ).val( 'I' );
-	$( "#hdfActividadId" ).val( 0 );
-	$( "#txbTitulo" ).val( '' );
-	$( "#txbFecha" ).val( '' );
-	$( "#txbCupo" ).val( 0 );
-	$( "#checkActivo" ).prop( 'checked', true );
-	$( "#txaDescripcion" ).val( '' );
-	$( "#lblTituloMantenimiento" ).html( 'Crear actividad' );
+	$.ajax( {
+		type: "POST",
+		url: '/Mantenimiento/MostrarMultimedia',
+		data: { informacionId: parseInt( informacionId ) },
+		dataType: "html",
+		success: function ( data )
+		{
+			var datos = JSON.parse( data );
+			var mensajeError = datos.mensajeError;
+			var exitoEnConsulta = mensajeError == '';
+			var poseeDatos = datos.poseeDatos;
 
-	$( '#popUpMantenimientoActividad' ).modal( 'show' );
+			if ( exitoEnConsulta && poseeDatos )
+			{
+				var vista = datos.vistaHtml;
+				$( '#multimediaSobreOrganizacion' ).empty();
+				$( '#multimediaSobreOrganizacion' ).html( vista );
+			}
+			else if ( !exitoEnConsulta )
+			{
+				mostrarMensaje( 'Error', mensajeError, 'error' );
+			}
+			else if ( !poseeDatos )
+			{
+				$( '#multimediaSobreOrganizacion' ).empty();
+			}
+		},
+		error: function ( data )
+		{
+			ocultarLoading();
+			mostrarMensaje( 'Error', 'No se pudo realizar la consulta', 'error' );
+		}
+	} );
 }
 
-function mostrarMantenimientoActividad( actividadId, titulo, fecha, cupo, activo, descripcion )
-{
-	$( "#hdfAccion" ).val( 'A' );
-	$( "#hdfActividadId" ).val( actividadId );
-	$( "#txbTitulo" ).val( titulo );
-	$( "#txbFecha" ).val( fecha );
-	$( "#txbCupo" ).val( cupo );
-	$( "#checkActivo" ).prop( 'checked', ( activo == 'true' ) );
-	$( "#txaDescripcion" ).val( descripcion );
-	$( "#lblTituloMantenimiento" ).html( 'Editar actividad' );
 
-	$( '#popUpMantenimientoActividad' ).modal( 'show' );
+function obtenerInformacionOrganizacion()
+{
+	$.ajax( {
+		type: "POST",
+		url: '/Mantenimiento/ObtenerInformacion',
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		data: JSON.stringify( { tipo: 1, activo: -1 } ),// 1 SON LOS REGISTROS DE TIPO SOBRE ORGANIZACION.
+		success: function ( data )
+		{
+			var lista = $.parseJSON( data );
+			var contieneElementos = lista.length > 0;
+
+			if ( contieneElementos )
+			{
+				$( '#hdfAccion' ).val( 'A' );
+				var informacion = lista[0];
+				mostrarInformacion( informacion );
+			}
+			else
+			{
+				$( '#hdfAccion' ).val( 'I' );
+				$( '#hdfActividadId' ).val( 0 );
+			}
+		},
+		error: function ( jqXHR, textStatus, errorThrown )
+		{
+			var responseText = jqXHR.responseText;
+			var mensajeError = obtenerMensajeError( responseText );
+			mostrarMensaje( 'Error', mensajeError, 'error' );
+		}
+	} );
 }
 
-function mostrarPopUpEliminarActividad( actividadId, titulo )
+function mostrarInformacion( informacion )
 {
-	$( "#hdfAccion" ).val( 'E' );
-	$( "#hdfActividadId" ).val( actividadId );
-	$( "#txbTitulo" ).val( '' );
-	$( "#txbFecha" ).val( '' );
-	$( "#txbCupo" ).val( 0 );
-	$( "#checkActivo" ).prop( 'checked', false );
-	$( "#txaDescripcion" ).val( '' );
+	var fecha = informacion.Fecha;
+	var titulo = informacion.Titulo;
+	var descripcion = informacion.Descripcion;
 
-	$( "#lblAEliminar" ).html( '¿Desea eliminar la actividad: ' + titulo + '?' );
-	$( '#popUpEliminarActividad' ).modal( 'show' );
+	$( '#hdfActividadId' ).val( informacion.InformacionId )
+	$( '#txbNombreOrganizacion' ).val( titulo );
+	$( '#txaDescripcionOrganizacion' ).val( descripcion );
+	$( '#txbFechaFundacion' ).val( fecha );
+
+	mostrarMultimediaSobreOrganizacion( informacion.InformacionId );
 }
 
-var Actividad = function ()
+function mantenimientoOrganizacion()
+{
+	sobreOrganizacion = new SobreOrganizacion();
+	sobreOrganizacion.mantenimientoSobreOrganizacion();
+}
+
+var SobreOrganizacion = function ()
 {
 	this.accion = $( '#hdfAccion' ).val();
 	this.actividadId = $( '#hdfActividadId' ).val();
-	this.titulo = $( '#txbTitulo' ).val();
-	this.fecha = $( '#txbFecha' ).val();
-	this.cupo = $( '#txbCupo' ).val();
-	this.activo = $( "#checkActivo" ).is( ":checked" );
-	this.descripcion = $( '#txaDescripcion' ).val();
+	this.nombre = $( '#txbNombreOrganizacion' ).val();
+	this.fecha = $( '#txbFechaFundacion' ).val();
+	this.descripcion = $( '#txaDescripcionOrganizacion' ).val();
 
 	this.obtenerDatos = function ()
 	{
@@ -67,35 +115,25 @@ var Actividad = function ()
 			Accion: this.accion,
 			InformacionId: this.actividadId,
 			Fecha: this.fecha,
-			Titulo: this.titulo,
-			Cupo: this.cupo,
+			Titulo: this.nombre,
+			Cupo: 0,
 			Descripcion: this.descripcion,
-			Activo: this.activo,
-			Tipo: 3,
+			Activo: true,
+			Tipo: 1,// 1 SON LOS REGISTROS DE TIPO SOBRE ORGANIZACION.
 		} );
 
 		return datos;
 	}
 
-	this.validarEnvioDatos = function ()
-	{
-		var esAccionEliminar = this.accion == 'E';
-		var envioDatosValido = esAccionEliminar ? true : this.validarFormulario();
-
-		return envioDatosValido;
-	}
-
 	this.validarFormulario = function ()
 	{
 		var mensajeError = '';
-		var tituloEsValido = this.titulo != '';
+		var nombreEsValido = this.nombre != '';
 		var fechaEsValido = this.fecha != '';
-		var cupoEsValido = this.cupo != '' && this.cupo > 0;
 		var descripcionEsValida = this.descripcion != '';
 
-		mensajeError = tituloEsValido ? mensajeError : ( mensajeError + '<p>Digite el titulo.</p>' );
+		mensajeError = nombreEsValido ? mensajeError : ( mensajeError + '<p>Digite el nombre.</p>' );
 		mensajeError = fechaEsValido ? mensajeError : ( mensajeError + '<p>Seleccione la fecha.</p>' );
-		mensajeError = cupoEsValido ? mensajeError : ( mensajeError + '<p>Digite el cupo.</p>' );
 		mensajeError = descripcionEsValida ? mensajeError : ( mensajeError + '<p>Digite la descripcion.</p>' );
 
 		var formularioValido = mensajeError == '';
@@ -108,9 +146,9 @@ var Actividad = function ()
 		return formularioValido;
 	}
 
-	this.mantenimientoActividad = function ()
+	this.mantenimientoSobreOrganizacion = function ()
 	{
-		var envioDatosEsValido = this.validarEnvioDatos();
+		var envioDatosEsValido = this.validarFormulario();
 
 		if ( envioDatosEsValido )
 		{
@@ -153,43 +191,5 @@ var Actividad = function ()
 	}
 };
 
-function obtenerInformacionOrganizacion()
-{
-	$.ajax( {
-		type: "POST",
-		url: '/Mantenimiento/ObtenerInformacion',
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		data: JSON.stringify( { tipo: 3, activo: -1 } ),// 3 SON LOS REGISTROS DE TIPO SOBRE ORGANIZACION.
-		success: function ( data )
-		{
-			ocultarLoading();
-			var lista = $.parseJSON( data );
-			var contieneElementos = lista.length > 0;
 
-			if ( contieneElementos )
-			{
-				var informacion = lista[0];
-				mostrarInformacion( informacion );
-			}
-		},
-		error: function ( jqXHR, textStatus, errorThrown )
-		{
-			ocultarLoading();
-			var responseText = jqXHR.responseText;
-			var mensajeError = obtenerMensajeError( responseText );
-			mostrarMensaje( 'Error', mensajeError, 'error' );
-		}
-	} );
-}
 
-function mostrarInformacion( informacion )
-{
-	var fecha = informacion.Fecha;
-	var titulo = informacion.Titulo;
-	var descripcion = informacion.Descripcion;
-
-	$( '#txbNombreOrganizacion' ).val( titulo );
-	$( '#txaDescripcionOrganizacion' ).val( descripcion );
-	$( '#txbFechaFundacion' ).val( fecha );
-}

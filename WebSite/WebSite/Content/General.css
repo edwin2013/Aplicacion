@@ -1,4 +1,11 @@
-﻿.titulo {
+﻿
+.imagenCentrada {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titulo {
 	padding: 20px;
 }
 

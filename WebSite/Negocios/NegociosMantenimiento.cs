@@ -20,7 +20,7 @@ namespace Negocios
 			}
 		}
 
-		public List<InformacionModelo> ObtenerInformacionMultimedia(int tipo, int activo)
+		public List<InformacionModelo> ObtenerMultimediaInformacion(int tipo, int activo)
 		{
 			try
 			{

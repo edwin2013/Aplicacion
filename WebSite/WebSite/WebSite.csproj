@@ -525,6 +525,7 @@
     <Content Include="Views\Paciente\_CarouselActividades.cshtml" />
     <Content Include="Views\Paciente\_SobreOrganizacion.cshtml" />
     <Content Include="Views\Paciente\_Testimonios.cshtml" />
+    <Content Include="Views\Mantenimiento\_MultimediaInformacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -137,7 +137,7 @@ namespace WebSite.Controllers
 			List<InformacionModelo> lista = new List<InformacionModelo>(); ;
 			try
 			{
-				lista = new Negocios.NegociosMantenimiento().ObtenerInformacionMultimedia(tipoProximasActividades, consultaTodos);
+				lista = new Negocios.NegociosMantenimiento().ObtenerMultimediaInformacion(tipoProximasActividades, consultaTodos);
 			}
 			catch (Exception excepcion)
 			{

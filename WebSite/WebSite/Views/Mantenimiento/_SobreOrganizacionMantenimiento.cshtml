@@ -1,8 +1,5 @@
 ﻿
-
-
-
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 row">
 	<div class="col-md-6">
 		<div class="form-group">
 			<div class="form-row">
@@ -24,19 +21,28 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" onclick="mantenimientoSobreOrganizacion()">Guardar</button>
+		<div class="form-row text-center">
+			<div class="col-12">
+				<button type="button" class="btn btn-primary" onclick="mantenimientoOrganizacion()">Guardar</button>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-6">
+		<div class="form-row text-center">
+			<div class="col-12">
+				<button type="button" class="btn btn-primary" onclick="multimediaSobreOrganizacion()">Agregar multimedia</button>
+			</div>
+		</div>
+		<div id="multimediaSobreOrganizacion">
+		</div>
 	</div>
 </div>
 
 @Scripts.Render("~/Scripts/Mantenimiento/sobreOrganizacion.js")
 
 <script>
-		$( document ).ready( function ()
-		{
-			$( "#txbFechaFundacion" ).datepicker();
-		} );
+	$( document ).ready( function ()
+	{
+		$( "#txbFechaFundacion" ).datepicker();
+	} );
 </script>

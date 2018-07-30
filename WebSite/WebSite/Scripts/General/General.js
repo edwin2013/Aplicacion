@@ -248,3 +248,10 @@ function convertirValorADate( fechaValor )
 }
 
 
+function obtenerMensajeError( responseText )
+{
+	var html = $.parseHTML( responseText );
+	var titulo = html[1].innerText;
+
+	return titulo;
+}

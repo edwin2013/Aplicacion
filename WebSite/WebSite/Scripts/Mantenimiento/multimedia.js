@@ -2,7 +2,6 @@
 
 $( document ).ready( function ()
 {
-	//Inicio Control Upload
 	$( document ).on( 'change', '.btn-file :file', function ()
 	{
 		var input = $( this ), label = input.val().replace( /\\/g, '/' ).replace( /.*\//, '' );
@@ -49,10 +48,19 @@ $( document ).ready( function ()
 	{
 		readURL( this );
 	} );
-
-	//Fin Control Upload
 } );
 
+
+function mantenimientoMultimedia()
+{
+	multimedia = new Multimedia();
+	multimedia.mantenimientoMultimediaInformacion();
+}
+
+function establecerPagina( paginaActual )
+{
+	$( '#hdfPaginaActual' ).val( paginaActual );
+}
 
 function validarExtensionImagen()
 {
@@ -65,10 +73,11 @@ function validarExtensionImagen()
 function mostrarPopUpMultimedia( informacionId )
 {
 	$( "#hdfAccion" ).val( 'I' );
-	$( "#hdfInformacionId" ).val( informacionId );
+	$( "#hdfActividadId" ).val( informacionId );
 	$( "#ddlTipoArchivo" ).val( '-1' );
 	$( "#txbUrlVideo" ).val( '' );
 	$( "#txbImagen" ).val( '' );
+	$( '#hdfMultimediaId' ).val( 0 )
 
 	var $image = $( '#img-upload' );
 	$image.removeAttr( 'src' ).replaceWith( $image.clone() );
@@ -79,16 +88,29 @@ function mostrarPopUpMultimedia( informacionId )
 	$( '#popUpMultimedia' ).modal( 'show' );
 }
 
-function mantenimientoMultimedia()
+function mostrarPopUpMultimediaEliminar( multimediaId, tipoArchivo )
 {
-	multimedia = new Multimedia();
-	multimedia.mantenimientoMultimediaInformacion();
+	$( "#hdfAccion" ).val( 'E' );
+	$( "#hdfMultimediaId" ).val( multimediaId );
+	$( "#ddlTipoArchivo" ).val( '-1' );
+	$( "#txbUrlVideo" ).val( '' );
+	$( "#txbImagen" ).val( '' );
+	$( "#lblAEliminarMultimedia" ).html( '¿Desea eliminar el archivo de tipo ' + tipoArchivo + '?' );
+
+	var $image = $( '#img-upload' );
+	$image.removeAttr( 'src' ).replaceWith( $image.clone() );
+
+	$( "#divImagen" ).hide();
+	$( "#divVideo" ).hide();
+
+	$( '#popUpEliminarMultimedia' ).modal( 'show' );
 }
 
 var Multimedia = function ()
 {
 	this.accion = $( '#hdfAccion' ).val();
-	this.informacionId = $( '#hdfInformacionId' ).val();
+	this.informacionId = $( '#hdfActividadId' ).val();
+	this.multimediaInformacionId = $( '#hdfMultimediaId' ).val();
 	this.rutaVideo = $( '#txbUrlVideo' ).val();
 	this.tipoArchivo = $( '#ddlTipoArchivo' ).val();
 	this.esTipoImagen = this.tipoArchivo == '1';
@@ -98,7 +120,7 @@ var Multimedia = function ()
 	{
 		var datos = JSON.stringify( {
 			Accion: this.accion,
-			MultimediaInformacionId: 0,
+			MultimediaInformacionId: this.multimediaInformacionId,
 			Datos: '',
 			Ruta: this.rutaVideo,
 			InformacionId: this.informacionId,
@@ -153,7 +175,7 @@ var Multimedia = function ()
 			var fileInput = document.getElementById( 'imgInp' );
 			formdata.append( 'imagen', fileInput.files[0] );
 			formdata.append( 'Accion', this.accion );
-			formdata.append( 'MultimediaInformacionId', 0 );
+			formdata.append( 'MultimediaInformacionId', this.multimediaInformacionId );
 			formdata.append( 'Ruta', this.rutaVideo );
 			formdata.append( 'InformacionId', this.informacionId );
 			formdata.append( 'Tipo', this.tipoArchivo );
@@ -176,8 +198,16 @@ var Multimedia = function ()
 					var mensaje = respuesta.Respuesta;
 					if ( exito )
 					{
+						var esAccionEliminar = this.accion == 'E';
+
+
+						$( '#popUpEliminarMultimedia' ).modal( 'hide' );
+
 						$( '#popUpMultimedia' ).modal( 'hide' );
+
+
 						mostrarMensaje( 'Éxito', mensaje, 'exito' );
+						actualizarMultimedia();
 					}
 					else
 					{
@@ -195,6 +225,17 @@ var Multimedia = function ()
 		}
 	}
 };
+
+function actualizarMultimedia()
+{
+	var paginaActual = $( '#hdfPaginaActual' ).val();
+	var informacionId = $( '#hdfActividadId' ).val();
+
+	if ( paginaActual == 'sobreOrganizacion' )
+	{
+		mostrarMultimediaSobreOrganizacion( informacionId );
+	}
+}
 
 function mostrarTipoArchivo()
 {

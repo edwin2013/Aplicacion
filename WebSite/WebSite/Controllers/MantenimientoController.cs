@@ -1,5 +1,6 @@
 ﻿using Modelo.General;
 using Modelo.Mantenimiento;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,6 +63,53 @@ namespace WebSite.Controllers
 			seralizador.MaxJsonLength = Int32.MaxValue;
 			var datos = new JavaScriptSerializer().Serialize(listaRetornar);
 			return Json(datos, JsonRequestBehavior.AllowGet);
+		}
+
+
+		public ActionResult MostrarMultimedia(int informacionId)
+		{
+			var vista = (string)null;
+			string mensajeError = string.Empty;
+			bool poseeDatos = false;
+			var datos = new { mensajeError = "", vistaHtml = "", poseeDatos = false };
+
+			List<MultimediaInformacionModelo> lista = new List<MultimediaInformacionModelo>(); ;
+			try
+			{
+				lista = new Negocios.NegociosMantenimiento().ObtenerMultimediaInformacion(informacionId);
+				poseeDatos = lista.Count > 0;
+			}
+			catch (Exception excepcion)
+			{
+				mensajeError = "Ocurrio un error consultando los datos.";
+			}
+
+			vista = ConvertirVistaString("/Views/Mantenimiento/_MultimediaInformacion.cshtml", lista);
+
+			JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+			jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+			datos = new
+			{
+				mensajeError = mensajeError,
+				vistaHtml = vista,
+				poseeDatos = poseeDatos
+			};
+
+			var converted = JsonConvert.SerializeObject(datos, null, jsSettings);
+			return Content(converted, "application/json");
+		}
+
+		private string ConvertirVistaString(string viewName, object model)
+		{
+			ViewData.Model = model;
+			using (StringWriter writer = new StringWriter())
+			{
+				ViewEngineResult vResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+				ViewContext vContext = new ViewContext(this.ControllerContext, vResult.View, ViewData, new TempDataDictionary(), writer);
+				vResult.View.Render(vContext, writer);
+				return writer.ToString();
+			}
 		}
 	}
 }
