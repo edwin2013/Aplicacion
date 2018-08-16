@@ -62,13 +62,13 @@ function obtenerInformacionOrganizacion()
 
 			if ( contieneElementos )
 			{
-				$( '#hdfAccion' ).val( 'A' );
+				$( '#hdfAccion' ).val( 'A' );//Actualizar la informacion
 				var informacion = lista[0];
 				mostrarInformacion( informacion );
 			}
 			else
 			{
-				$( '#hdfAccion' ).val( 'I' );
+				$( '#hdfAccion' ).val( 'I' );//Ingresar informacion
 				$( '#hdfActividadId' ).val( 0 );
 			}
 		},
@@ -87,7 +87,7 @@ function mostrarInformacion( informacion )
 	var titulo = informacion.Titulo;
 	var descripcion = informacion.Descripcion;
 
-	$( '#hdfActividadId' ).val( informacion.InformacionId )
+    $('#hdfActividadId').val(informacion.InformacionId);
 	$( '#txbNombreOrganizacion' ).val( titulo );
 	$( '#txaDescripcionOrganizacion' ).val( descripcion );
 	$( '#txbFechaFundacion' ).val( fecha );

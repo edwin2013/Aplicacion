@@ -127,12 +127,12 @@ namespace WebSite.Controllers
 			return Json(datos, JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult ObtenerProximasActividades()
+		public ActionResult ObtenerTestimonios()
 		{
 			var vista = (string)null;
 			string mensajeError = string.Empty;
 			var datos = new { mensajeError = "", vistaHtml = "" };
-			int tipoProximasActividades = (int)TipoInformacion.ProximasActividades;
+			int tipoProximasActividades = (int)TipoInformacion.Testimonios;
 			int consultaTodos = -1;
 			List<InformacionModelo> lista = new List<InformacionModelo>(); ;
 			try
@@ -144,7 +144,7 @@ namespace WebSite.Controllers
 				mensajeError = "Ocurrio un error consultando los datos.";
 			}
 
-			vista = ConvertirVistaString("/Views/Paciente/_ProximasActividades.cshtml", lista);
+			vista = ConvertirVistaString("/Views/Paciente/_Testimonios.cshtml", lista);
 			datos = new { mensajeError = mensajeError, vistaHtml = vista };
 			return Json(datos);
 		}
@@ -173,7 +173,29 @@ namespace WebSite.Controllers
 			return Json(datos);
 		}
 
-		private string ConvertirVistaString(string viewName, object model)
+        public ActionResult ObtenerActividades()
+        {
+            var vista = (string)null;
+            string mensajeError = string.Empty;
+            var datos = new { mensajeError = "", vistaHtml = "" };
+            int tipoProximasActividades = (int)TipoInformacion.ProximasActividades;
+            int consultaTodos = -1;
+            List<InformacionModelo> lista = new List<InformacionModelo>(); ;
+            try
+            {
+                lista = new Negocios.NegociosMantenimiento().ObtenerMultimediaInformacion(tipoProximasActividades, consultaTodos);
+            }
+            catch (Exception excepcion)
+            {
+                mensajeError = "Ocurrio un error consultando los datos.";
+            }
+
+            vista = ConvertirVistaString("/Views/Paciente/_ProximasActividades.cshtml", lista);
+            datos = new { mensajeError = mensajeError, vistaHtml = vista };
+            return Json(datos);
+        }
+
+        private string ConvertirVistaString(string viewName, object model)
 		{
 			ViewData.Model = model;
 			using (StringWriter writer = new StringWriter())

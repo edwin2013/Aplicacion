@@ -1,7 +1,7 @@
 ﻿
 $( document ).ready( function ( elementos )
 {
-	mostrarProximasActividades()
+	mostrarTestimonios()
 } );
 
 function mostrarCorousel()
@@ -40,12 +40,12 @@ function activarCarouselActividades()
 	} );
 }
 
-function mostrarProximasActividades()
+function mostrarTestimonios()
 {
 	mostrarLoading();
 	$.ajax( {
 		type: "POST",
-		url: '/Paciente/ObtenerProximasActividades',
+		url: '/Paciente/ObtenerTestimonios',
 		data: '',
 		dataType: "html",
 		success: function ( data )
@@ -57,8 +57,8 @@ function mostrarProximasActividades()
 			if ( exitoEnConsulta )
 			{
 				var vista = datos.vistaHtml;
-				$( '#divProximasActividades' ).empty();
-				$( '#divProximasActividades' ).html( vista );
+				$( '#divTestimonios' ).empty();
+				$( '#divTestimonios' ).html( vista );
 				activarCarouselActividades();
 			}
 			else
@@ -91,8 +91,8 @@ function mostrarMultimediaActividades( informacionId )
 			if ( exitoEnConsulta )
 			{
 				var vista = datos.vistaHtml;
-				$( '#divMultimediaActividades' ).empty();
-				$( '#divMultimediaActividades' ).html( vista );
+				$( '#divMultimediaTestimonios' ).empty();
+				$( '#divMultimediaTestimonios' ).html( vista );
 				mostrarCorousel();
 			}
 			else

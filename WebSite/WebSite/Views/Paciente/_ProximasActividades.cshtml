@@ -1,59 +1,58 @@
 ﻿@model List<Modelo.Mantenimiento.InformacionModelo>
 
-@{
-	int contador = 0;
-}
 
-<div class="container-fluid">
-	<h1 class="text-center mb-3">Actividades</h1>
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		<div class="carouselActividades carousel-inner row w-100 mx-auto">
-			@foreach (var item in Model.ToList())
-			{
-				bool esPrimerIteracion = contador == 0;
-				contador++;
-				string activo = esPrimerIteracion ? "active" : "";
+<div class="container-fluid pre-scrollable">
+    @foreach (var item in Model.ToList())
+    {
+        <div class="card card-outline-primary mb-3 text-center">
+            <div class="card-block">
+                <h3 class="card-title">@item.Titulo</h3>
+                <blockquote class="card-blockquote">
+                    <p>@item.Descripcion</p>
+                    <footer>Cupo: @item.Cupo, <cite title="Source Title">Fecha: @item.Fecha</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    }
 
-				<div class="carousel-item col-md-4 @activo">
-					<div class="card">
-						<a href="#" onclick="mostrarMultimediaActividades('@item.InformacionId'); return false;">
+        @*<div class="card card-outline-secondary mb-3 text-center">
+                <div class="card-block">
+                    <h3 class="card-title">Special title treatment 2</h3>
+                    <blockquote class="card-blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
 
-							@{
-								bool existeMultimedia = item.Multimedia.MultimediaInformacionId != 0;
+            <div class="card card-outline-success mb-3 text-center">
+                <div class="card-block">
+                    <h3 class="card-title">Special title treatment 3</h3>
+                    <blockquote class="card-blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
 
-								if (existeMultimedia)
-								{
-									bool esTipoImagen = item.Multimedia.Tipo == (int)Utiles.Archivos.Imagen;
+            <div class="card card-outline-info mb-3 text-center">
+                <div class="card-block">
+                    <h3 class="card-title">Special title treatment 4</h3>
+                    <blockquote class="card-blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
 
-									if (esTipoImagen)
-									{
-										<img class="card-img-top img-fluid" src="@item.Multimedia.ConversionImagen" alt="Card image cap">
-									}
-									else
-									{
-										<img class="card-img-top img-fluid" src="~/Imagenes/default.png" alt="Card image cap">
-									}
-								}
-							}
-						</a>
-						<div class="card-body">
-							<h4 class="card-title">@item.Titulo</h4>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">Cupo: @item.Cupo</li>
-							<li class="list-group-item">Fecha: @item.Fecha</li>
-						</ul>
-					</div>
-				</div>
-			}
-		</div>
-		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
-</div>
+            <div class="card card-outline-warning mb-3 text-center">
+                <div class="card-block">
+                    <h3 class="card-title">Special title treatment 5</h3>
+                    <blockquote class="card-blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div>*@
+
+    </div>

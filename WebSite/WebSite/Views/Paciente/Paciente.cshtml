@@ -1,180 +1,181 @@
 ﻿@{
-	Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Creative - Start Bootstrap Theme</title>
-	<!-- Bootstrap core CSS -->
-	<link href="~/TemplatePaciente/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Custom fonts for this template -->
-	<link href="~/TemplatePaciente/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-	<!-- Plugin CSS -->
-	<link href="~/TemplatePaciente/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-	<!-- Custom styles for this template -->
-	<link href="~/TemplatePaciente/css/creative.min.css" rel="stylesheet">
-	<link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
-	<link href="~/Content/Paciente.css" rel="stylesheet" />
-	<link href="~/Content/carousel.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Creative - Start Bootstrap Theme</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/TemplatePaciente/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="~/TemplatePaciente/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="~/TemplatePaciente/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="~/TemplatePaciente/css/creative.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicke.css" rel="stylesheet" />
+    <link href="~/Content/Paciente.css" rel="stylesheet" />
+    <link href="~/Content/carousel.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 
-	@Html.Hidden("hdfIdentificadorGUID", (object)ViewBag.IdentificadorGUID)
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
-			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#about">Testimonios</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#services">Obtener su cita</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#portfolio">Proximas actividades</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<header class="masthead text-center text-white d-flex">
-		<div class="container my-auto">
-			<div class="row">
-				@Html.Partial("~/Views/Paciente/_SobreOrganizacion.cshtml")
-			</div>
-		</div>
-	</header>
-	<section class="bg-primary" id="about">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 mx-auto text-center">
-					@Html.Partial("~/Views/Paciente/_Testimonios.cshtml")
-				</div>
-			</div>
-		</div>
-	</section>
-	<section id="services" style="padding-top: 10px !important;padding-bottom: 171px !important;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h2 class="section-heading">Obtenga su cita</h2>
-					<hr class="my-4">
-				</div>
-			</div>
-		</div>
-		@Html.Partial("~/Views/Paciente/_CrearCita.cshtml")
-	</section>
+    @Html.Hidden("hdfIdentificadorGUID", (object)ViewBag.IdentificadorGUID)
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">Proximas actividades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#services">Obtener su cita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#portfolio">Testimonios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                @Html.Partial("~/Views/Paciente/_SobreOrganizacion.cshtml")
+            </div>
+        </div>
+    </header>
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mx-auto text-center">
+                    <div id="divActividades"></div>
+                    @*@Html.Partial("~/Views/Paciente/_ProximasActividades.cshtml")*@
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="services" style="padding-top: 10px !important;padding-bottom: 171px !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Obtenga su cita</h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+        </div>
+        @Html.Partial("~/Views/Paciente/_CrearCita.cshtml")
+    </section>
 
-	<section class="p-0" id="portfolio">
-		<div class="container-fluid p-0">
-			<div id="divProximasActividades"></div>
-			<div id="divMultimediaActividades"></div>
-		</div>
-	</section>
+    <section class="p-0" id="portfolio">
+        <div class="container-fluid p-0">
+            <div id="divTestimonios"></div>
+            <div id="divMultimediaTestimonios"></div>
+        </div>
+    </section>
 
-	<section id="contact">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 mx-auto text-center">
-					<h2 class="section-heading">Let's Get In Touch!</h2>
-					<hr class="my-4">
-					<p class="mb-5">Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 ml-auto text-center">
-					<i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
-					<p>123-456-6789</p>
-				</div>
-				<div class="col-lg-4 mr-auto text-center">
-					<i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-					<p>
-						<a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
-	<div class="modal fade" id="popUpMensaje" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 id="headerPopUp" class="modal-title"></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-heading">Let's Get In Touch!</h2>
+                    <hr class="my-4">
+                    <p class="mb-5">Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 ml-auto text-center">
+                    <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+                    <p>123-456-6789</p>
+                </div>
+                <div class="col-lg-4 mr-auto text-center">
+                    <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+                    <p>
+                        <a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="popUpMensaje" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="headerPopUp" class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-				</div>
-				<div class="modal-body" id="divMensajePopUp">
-					<p>Some text in the modal.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+                <div class="modal-body" id="divMensajePopUp">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="modal_loading" style="display:none;">
-		<img src="~/Imagenes/img_cargando.gif" />
-	</div>
-	<!-- Loading Container -->
-	<div class="loading-container">
-		<div class="loader"></div>
-	</div>
+    <div class="modal_loading" style="display:none;">
+        <img src="~/Imagenes/img_cargando.gif" />
+    </div>
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="~/TemplatePaciente/vendor/jquery/jquery.min.js"></script>
-	<script src="~/TemplatePaciente/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Plugin JavaScript -->
-	<script src="~/TemplatePaciente/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="~/TemplatePaciente/vendor/scrollreveal/scrollreveal.min.js"></script>
-	<script src="~/TemplatePaciente/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-	<!-- Custom scripts for this template -->
-	<script src="~/TemplatePaciente/js/creative.min.js"></script>
-	<script src="~/Scripts/bootstrap-datepicker.js"></script>
-	<script src="~/Scripts/General/General.js"></script>
-	<script src="~/Scripts/Paciente/crearCita.js"></script>
-	@Html.Partial("~/Views/Paciente/_CalificacionEstrellas.cshtml")
-	<script src="~/Scripts/Paciente/calificarCita.js"></script>
-	<script src="~/Scripts/General/carousel.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/TemplatePaciente/vendor/jquery/jquery.min.js"></script>
+    <script src="~/TemplatePaciente/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="~/TemplatePaciente/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/TemplatePaciente/vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="~/TemplatePaciente/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="~/TemplatePaciente/js/creative.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/General/General.js"></script>
+    <script src="~/Scripts/Paciente/crearCita.js"></script>
+    @Html.Partial("~/Views/Paciente/_CalificacionEstrellas.cshtml")
+    <script src="~/Scripts/Paciente/calificarCita.js"></script>
+    <script src="~/Scripts/General/carousel.js"></script>
+    <script src="~/Scripts/Paciente/informacionorganizacion.js"></script>
+    <script src="~/Scripts/Paciente/actividad.js"></script>
 
-	<script type="text/javascript">
-		$( document ).ready( function ( elementos )
-		{
-			var identificadorGUID = $( '#hdfIdentificadorGUID' ).val();
-			var cargaNormal = identificadorGUID == '';
-			var citaNoExiste = identificadorGUID == 'NoExiste';
-			var citaFueCalificada = identificadorGUID == 'YaFueCalificada';
+    <script type="text/javascript">
+        $(document).ready(function (elementos) {
+            var identificadorGUID = $('#hdfIdentificadorGUID').val();
+            var cargaNormal = identificadorGUID == '';
+            var citaNoExiste = identificadorGUID == 'NoExiste';
+            var citaFueCalificada = identificadorGUID == 'YaFueCalificada';
 
-			if ( citaNoExiste )
-			{
-				mostrarMensaje( 'Atención', 'La cita por calificar no existe', 'alerta' );
-			}
-			else if ( citaFueCalificada )
-			{
-				mostrarMensaje( 'Atención', 'La cita ya fue previamente calificada', 'alerta' );
-			}
-			else if ( !cargaNormal )
-			{
-				$( '#popUpCalificacion' ).modal( 'show' );
-			}
-		} );
-	</script>
+            if (citaNoExiste) {
+                mostrarMensaje('Atención', 'La cita por calificar no existe', 'alerta');
+            }
+            else if (citaFueCalificada) {
+                mostrarMensaje('Atención', 'La cita ya fue previamente calificada', 'alerta');
+            }
+            else if (!cargaNormal) {
+                $('#popUpCalificacion').modal('show');
+            }
+
+            consultarInformacionOrganizacion();
+        });
+    </script>
 </body>
 </html>

@@ -237,9 +237,12 @@
     <Content Include="Scripts\Mantenimiento\sobreOrganizacion.js" />
     <Content Include="Scripts\Mantenimiento\testimonios.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Paciente\actividad.js" />
     <Content Include="Scripts\Paciente\ActualizarPaciente.js" />
     <Content Include="Scripts\Paciente\calificarCita.js" />
     <Content Include="Scripts\Paciente\crearCita.js" />
+    <Content Include="Scripts\Paciente\informacionorganizacion.js" />
+    <Content Include="Scripts\Paciente\sobreOrganizaacion.js" />
     <Content Include="Scripts\Practicante\cambiarHorarioCita.js" />
     <Content Include="Scripts\Practicante\citasPracticante.js" />
     <Content Include="Scripts\Practicante\oferta.js" />

@@ -13,12 +13,12 @@ function mostrarMantenimientoActividadCrear()
 {
 	$( "#hdfAccion" ).val( 'I' );
 	$( "#hdfActividadId" ).val( 0 );
-	$( "#txbTitulo" ).val( '' );
-	$( "#txbFecha" ).val( '' );
-	$( "#txbCupo" ).val( 0 );
-	$( "#checkActivo" ).prop( 'checked', true );
-	$( "#txaDescripcion" ).val( '' );
-	$( "#lblTituloMantenimiento" ).html( 'Crear actividad' );
+	$( "#txbTituloActividad" ).val( '' );
+	$( "#txbFechaActividad" ).val( '' );
+	$( "#txbCupoActividad" ).val( 0 );
+	$( "#checkActivoActividad" ).prop( 'checked', true );
+	$( "#txaDescripcionActividad" ).val( '' );
+	$( "#lblTituloMantenimientoActividad" ).html( 'Crear actividad' );
 
 	$( '#popUpMantenimientoActividad' ).modal( 'show' );
 }
@@ -27,12 +27,12 @@ function mostrarMantenimientoActividad( actividadId, titulo, fecha, cupo, activo
 {
 	$( "#hdfAccion" ).val( 'A' );
 	$( "#hdfActividadId" ).val( actividadId );
-	$( "#txbTitulo" ).val( titulo );
-	$( "#txbFecha" ).val( fecha );
-	$( "#txbCupo" ).val( cupo );
-	$( "#checkActivo" ).prop( 'checked', ( activo == 'true' ) );
-	$( "#txaDescripcion" ).val( descripcion );
-	$( "#lblTituloMantenimiento" ).html( 'Editar actividad' );
+	$( "#txbTituloActividad" ).val( titulo );
+	$( "#txbFechaActividad" ).val( fecha );
+	$( "#txbCupoActividad" ).val( cupo );
+	$( "#checkActivoActividad" ).prop( 'checked', ( activo == 'true' ) );
+    $( "#txaDescripcionActividad" ).val( descripcion );
+    $( "#lblTituloMantenimientoActividad" ).html( 'Editar actividad' );
 
 	$( '#popUpMantenimientoActividad' ).modal( 'show' );
 }
@@ -41,13 +41,13 @@ function mostrarPopUpEliminarActividad( actividadId, titulo )
 {
 	$( "#hdfAccion" ).val( 'E' );
 	$( "#hdfActividadId" ).val( actividadId );
-	$( "#txbTitulo" ).val( '' );
-	$( "#txbFecha" ).val( '' );
-	$( "#txbCupo" ).val( 0 );
-	$( "#checkActivo" ).prop( 'checked', false );
-	$( "#txaDescripcion" ).val( '' );
+    $( "#txbTituloActividad" ).val( '' );
+    $( "#txbFechaActividad" ).val( '' );
+    $( "#txbCupoActividad" ).val( 0 );
+    $( "#checkActivoActividad" ).prop( 'checked', false );
+    $( "#txaDescripcionActividad" ).val( '' );
 
-	$( "#lblAEliminar" ).html( '¿Desea eliminar la actividad: ' + titulo + '?' );
+    $( "#lblAEliminarActividad" ).html( '¿Desea eliminar la actividad: ' + titulo + '?' );
 	$( '#popUpEliminarActividad' ).modal( 'show' );
 }
 
@@ -55,11 +55,11 @@ var Actividad = function ()
 {
 	this.accion = $( '#hdfAccion' ).val();
 	this.actividadId = $( '#hdfActividadId' ).val();
-	this.titulo = $( '#txbTitulo' ).val();
-	this.fecha = $( '#txbFecha' ).val();
-	this.cupo = $( '#txbCupo' ).val();
-	this.activo = $( "#checkActivo" ).is( ":checked" );
-	this.descripcion = $( '#txaDescripcion' ).val();
+	this.titulo = $( '#txbTituloActividad' ).val();
+    this.fecha = $( '#txbFechaActividad' ).val();
+    this.cupo = $( '#txbCupoActividad' ).val();
+    this.activo = $( "#checkActivoActividad" ).is( ":checked" );
+    this.descripcion = $( '#txaDescripcionActividad' ).val();
 
 	this.obtenerDatos = function ()
 	{
@@ -165,7 +165,7 @@ function obtenerActividades()
 		{
 			ocultarLoading();
 			var lista = $.parseJSON( data );
-			crearGridUsuarios( lista );
+            crearGriAdtividades( lista );
 		},
 		error: function ( jqXHR, textStatus, errorThrown )
 		{
@@ -177,7 +177,7 @@ function obtenerActividades()
 	} );
 }
 
-function crearGridUsuarios( lista )
+function crearGriAdtividades( lista )
 {
 	var divContenedor = $( '#divGridActividades' );
 	divContenedor.empty();
@@ -185,7 +185,6 @@ function crearGridUsuarios( lista )
 	var tabla = '<table id="gridActividades" class="table table-striped table-hover table-bordered"  >' +
         '<thead>' +
         '<tr>' +
-        '<th></th>' +
         '<th></th>' +
         '<th></th>' +
         '<th>Título</th>' +
@@ -233,7 +232,6 @@ function crearGridUsuarios( lista )
 		var fila =
             '<tr>' +
             '<td>' + botonEditar + '</td>' +
-            '<td>' + botonAgregarMultimedia + '</td>' +
             '<td>' + botonEliminar + '</td>' +
             '<td>' + item.Titulo + '</td>' +
             '<td>' + item.Fecha + '</td>' +

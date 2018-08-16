@@ -73,7 +73,7 @@ function validarExtensionImagen()
 function mostrarPopUpMultimedia( informacionId )
 {
 	$( "#hdfAccion" ).val( 'I' );
-	$( "#hdfActividadId" ).val( informacionId );
+	$( "#hdfInformacionId" ).val( informacionId );
 	$( "#ddlTipoArchivo" ).val( '-1' );
 	$( "#txbUrlVideo" ).val( '' );
 	$( "#txbImagen" ).val( '' );
@@ -109,7 +109,7 @@ function mostrarPopUpMultimediaEliminar( multimediaId, tipoArchivo )
 var Multimedia = function ()
 {
 	this.accion = $( '#hdfAccion' ).val();
-	this.informacionId = $( '#hdfActividadId' ).val();
+	this.informacionId = $( '#hdfInformacionId' ).val();
 	this.multimediaInformacionId = $( '#hdfMultimediaId' ).val();
 	this.rutaVideo = $( '#txbUrlVideo' ).val();
 	this.tipoArchivo = $( '#ddlTipoArchivo' ).val();
@@ -229,7 +229,7 @@ var Multimedia = function ()
 function actualizarMultimedia()
 {
 	var paginaActual = $( '#hdfPaginaActual' ).val();
-	var informacionId = $( '#hdfActividadId' ).val();
+	var informacionId = $( '#hdfInformacionId' ).val();
 
 	if ( paginaActual == 'sobreOrganizacion' )
 	{

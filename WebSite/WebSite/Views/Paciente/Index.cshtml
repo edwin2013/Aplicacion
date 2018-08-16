@@ -10,19 +10,20 @@
 </head>
 
 <input type="hidden" id="hdfInformacionId">
+<input type="hidden" id="hdfActividadId">
 <input type="hidden" id="hdfPaginaActual">
 <input type="hidden" id="hdfAccion" name="hdfAccion">
 
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
-		<a href="#">Paciente</a>
+		<a href="#">Organización</a>
 	</li>
 	<li class="breadcrumb-item active">Inicio</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
 	<li class="nav-item">
-		<a class="nav-link active" href="#sobreOrganizacion" onclick="establecerPagina( 'sobreOrganizacion' )" role="tab" data-toggle="tab">Sobre la organización</a>
+		<a class="nav-link active show" href="#sobreOrganizacion" onclick="establecerPagina( 'sobreOrganizacion' )" role="tab" data-toggle="tab">Sobre la organización</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="#obtenerCita" onclick="establecerPagina( 'obtenerCita' )" role="tab" data-toggle="tab">Obtener su cita</a>
@@ -35,7 +36,7 @@
 	</li>
 </ul>
 <div class="tab-content">
-	<div role="tabpanel" class="tab-pane fade in active" id="sobreOrganizacion">
+	<div role="tabpanel" class="tab-pane fade in active show" id="sobreOrganizacion">
 		@Html.Partial("~/Views/Mantenimiento/_SobreOrganizacionMantenimiento.cshtml")
 	</div>
 	<div role="tabpanel" class="tab-pane fade" id="obtenerCita">
@@ -43,14 +44,13 @@
 			@Html.Partial("~/Views/Paciente/_CrearCita.cshtml")
 		</div>
 	</div>
-	<div role="tabpanel" class="tab-pane fade" id="testimonios">Testimonios</div>
+    <div role="tabpanel" class="tab-pane fade" id="testimonios">
+        @Html.Partial("~/Views/Mantenimiento/_TestimoniosMantenimiento.cshtml")
+    </div>
 	<div role="tabpanel" class="tab-pane fade" id="proximasActividades">
 		@Html.Partial("~/Views/Mantenimiento/_ActividadesMantenimiento.cshtml")
 	</div>
 </div>
-
-
-
 
 <div class="modal fade" id="popUpEliminarMultimedia" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -138,7 +138,3 @@
 	<script src="~/Scripts/Paciente/crearCita.js"></script>
 	@Scripts.Render("~/Scripts/Mantenimiento/multimedia.js")
 }
-
-<script type="text/javascript">
-
-</script>
