@@ -26,7 +26,6 @@ namespace WebSite.Controllers
 
 		public JsonResult RecuperarPassword(string correo)
 		{
-
 			UsuarioModelo usuario =
 			new Negocios.NegociosUsuario().ObtenerUsuariosPorCredenciales(correo, "-1").FirstOrDefault();
 			bool existeUsuario = usuario != null;

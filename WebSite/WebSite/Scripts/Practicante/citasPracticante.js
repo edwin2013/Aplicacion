@@ -230,7 +230,7 @@ function crearGridCitas(lista) {
         var antecedentes = "'" + item.Antecedentes + "'";
         var identificadorGUID = "'" + item.IdentificadorGUID + "'";
 
-        var botonEditar = '<i class="fa fa-pencil-square-o" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' +
+        var botonEditar = '<i class="fa fa-pencil-square-o AgregarRecomendacionesPaciente" style="font-size: x-large; cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEditarCita(' + item.CitaId + ',' +
             recomendaciones + ',' +
             antecedentes + ',' +
             paciente + ',' +
@@ -239,7 +239,7 @@ function crearGridCitas(lista) {
             ');"></i>';
 
         var botonEliminar =
-            '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' +
+            '<i class="fa fa-trash-o EliminarCitasPaciente" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarCita(' +
             item.CitaId + ',' +
             fecha + ',' +
             hora + ',' +
@@ -247,7 +247,7 @@ function crearGridCitas(lista) {
 
         //LA FUNCION mostrarPopUpCambiarHorarioCita SE ENCUENTRA EN EL ARCHIVO cambiarHorarioCita.jsm
         var botonCambiarHorarioCita =
-            '<i class="fa fa-clock-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpCambiarHorarioCita(' +
+            '<i class="fa fa-clock-o CambiarHorarioCita" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpCambiarHorarioCita(' +
             item.CitaId + ',' +
             fecha + ',' +
             hora + ',' +
@@ -255,7 +255,7 @@ function crearGridCitas(lista) {
             pacienteId + ');"></i>';
 
         var botonInformacion =
-            '<i class="fa fa-file-text-o" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' +
+            '<i class="fa fa-file-text-o EditarInformacionPaciente" style="font-size: x-large;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpInformacionPaciente(' +
             item.PacienteId + ',' +
             citaId +
             ');"></i>';

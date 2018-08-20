@@ -9,7 +9,33 @@ namespace Datos
 {
 	public class DatosUsuario
 	{
-		public Mensaje ActualizarPassword(int usuarioId, string password, bool solicitarCambioPassword)
+        public List<FuncionalidadModelo> ObtenerPermisosUsuario(int usuarioId)
+        {
+            List<FuncionalidadModelo> lista = new List<FuncionalidadModelo>();
+
+            using (ManejoCitasEntities contexto = new ManejoCitasEntities())
+            {
+                var listaDiasConsulta = contexto.SP_ObtenerPermisosUsuario(usuarioId);
+
+                foreach (SP_ObtenerPermisosUsuario_Result item in listaDiasConsulta)
+                {
+                    FuncionalidadModelo funcionalidad = new FuncionalidadModelo();
+                    funcionalidad.FuncionalidadId = item.FuncionalidadId;
+                    funcionalidad.Descripcion = item.Descripcion;
+                    funcionalidad.Identificador = item.Identificador ?? default(int);
+                    funcionalidad.Nombre = item.Nombre;
+                    funcionalidad.Tipo = item.Tipo;
+                    funcionalidad.Nombre = item.Nombre;
+                    funcionalidad.Permiso = item.Permiso ?? default(bool); 
+               
+                    lista.Add(funcionalidad);
+                }
+            }
+
+            return lista;
+        }
+
+        public Mensaje ActualizarPassword(int usuarioId, string password, bool solicitarCambioPassword)
 		{
 			ObjectParameter resultado = new ObjectParameter("Resultado", typeof(bool));
 			ObjectParameter mensaje = new ObjectParameter("Mensaje", typeof(string));
@@ -56,6 +82,7 @@ namespace Datos
 					usuario.FinPractica = usuarioActual.FinPractica;
 					usuario.Correo = usuarioActual.Correo;
 					usuario.SolicitarCambioPassword = usuarioActual.SolicitarCambioPassword ?? default(bool);
+   
 					listaUsuarios.Add(usuario);
 				}
 			}

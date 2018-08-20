@@ -307,6 +307,9 @@
           <Parameter Name="FechaInicio" Type="varchar" Mode="In" />
           <Parameter Name="FechaFin" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioId" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ObtenerSesionesActivas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dia" Type="varchar" Mode="In" />
         </Function>
@@ -516,6 +519,9 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(ManejoCitasModel.SP_ObtenerPermisosUsuario_Result)">
+            <Parameter Name="UsuarioId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -671,6 +677,14 @@
           <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="1000" />
           <Property Type="Boolean" Name="Activo" Nullable="true" />
           <Property Type="Int32" Name="Tipo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
+          <Property Type="Int32" Name="FuncionalidadId" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Identificador" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Tipo" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="Permiso" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -890,6 +904,18 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_MantenimientoInformacion" FunctionName="ManejoCitasModel.Store.SP_MantenimientoInformacion" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="ManejoCitasModel.Store.SP_ObtenerPermisosUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManejoCitasModel.SP_ObtenerPermisosUsuario_Result">
+                <ScalarProperty Name="FuncionalidadId" ColumnName="FuncionalidadId" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Permiso" ColumnName="Permiso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -158,7 +158,8 @@ function obtenerUsuariosPorRol()
 		type: "POST",
 		url: '/Usuario/ObtenerUsuariosPorRol',
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
+        dataType: "json",
+        async: false,
 		data: JSON.stringify( { rolId: rolPacienteId } ),
 		success: function ( data )
 		{
@@ -177,7 +178,6 @@ function obtenerUsuariosPorRol()
 			mostrarMensaje( 'Error', mensajeError, 'error' );
 		}
 	} );
-
 }
 
 function llenarComboUsuarios( listaUsuarios, esRolPracticante, usuarioId )
@@ -324,7 +324,7 @@ function crearGridCitas( lista )
 		var poseeCitas = "'" + item.PoseeCitas + "'";
 		var estado = "'" + item.EstadoCita + "'";
 
-		var botonEliminar = '<i class="fa fa-trash-o" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarOferta(' + item.OfertaHorarioId + ',' + fecha + ',' + horaInicio + ',' + horaFin + ',' + poseeCitas + ');"></i>';
+        var botonEliminar = '<i class="fa fa-trash-o EliminarOfertas" style="font-size: x-large;color:red;cursor: pointer;" aria-hidden="true" onclick="mostrarPopUpEliminarOferta(' + item.OfertaHorarioId + ',' + fecha + ',' + horaInicio + ',' + horaFin + ',' + poseeCitas + ');"></i>';
 
 		var citasDetalle = item.PoseeCitas ? "<b style='color:red;'>Sí</b>" : "No";
 
