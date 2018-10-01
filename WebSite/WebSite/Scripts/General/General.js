@@ -114,12 +114,6 @@ function mostrarFuncionalidades(listaFuncionalidades, usuarioId) {
             if (esTipoOcultar) {
                 $('.' + item.Nombre).attr('id');
             }
-            //else {
-            //    var selectId = $('.' + item.Nombre).attr('id');
-            //    var combo = $("#" + selectId);
-            //    combo.val(usuarioId);
-            //    combo.prop('disabled', true);
-            //}
         }
     });
 }

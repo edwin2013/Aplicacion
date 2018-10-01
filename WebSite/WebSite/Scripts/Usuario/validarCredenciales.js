@@ -44,7 +44,7 @@ var Usuario = function () {
 
             $.ajax({
                 type: "POST",
-                url: '/Usuario/ValidarCredenciales',
+                url: '/Login/ValidarCredenciales',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: datos,
@@ -76,4 +76,53 @@ var Usuario = function () {
 function validarCredenciales() {
     usuario = new Usuario();
     usuario.validarCredenciales();
+}
+
+function validarCorreo(email) {
+    var emailReg = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    return emailReg.test(email);
+}
+
+function mostrarLoading() {
+
+    $('.modal_loading').show();
+    $('body').addClass("loading");
+}
+
+function ocultarLoading() {
+
+    window.setTimeout(function () {
+        $('body').removeClass("loading");
+        $('.modal_loading').hide();
+    }, 100);
+
+}
+
+function mostrarMensaje(headerMensaje, bodyMensaje, tipoMensaje) {
+    var esTipoAlerta = tipoMensaje == 'alerta';
+    var esTipoError = tipoMensaje == 'error';
+    var esTipoExito = tipoMensaje == 'exito';
+    var esTipoInformacion = tipoMensaje == 'informacion';
+
+    if (esTipoAlerta) {
+        $('#popUpMensaje .modal-header').css('background-color', '#FEEFB3');
+        $('#headerPopUp').css('color', '#9F6000');
+    }
+    else if (esTipoError) {
+        $('#popUpMensaje .modal-header').css('background-color', '#FFD2D2');
+        $('#headerPopUp').css('color', '#D8000C');
+    }
+    else if (esTipoExito) {
+        $('#popUpMensaje .modal-header').css('background-color', '#DFF2BF');
+        $('#headerPopUp').css('color', '#4F8A10');
+    }
+    else {
+        $('#popUpMensaje .modal-header').css('background-color', '#BDE5F8');
+        $('#headerPopUp').css('color', '#00529B');
+    }
+
+    $('#headerPopUp').html(headerMensaje);
+    $('#divMensajePopUp').html(bodyMensaje);
+    document.getElementById("popUpMensaje").style.zIndex = 2000;
+    $('#popUpMensaje').modal('show');
 }

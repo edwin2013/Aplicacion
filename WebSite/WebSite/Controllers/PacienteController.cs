@@ -14,8 +14,8 @@ using WebSite.Models;
 
 namespace WebSite.Controllers
 {
-	public class PacienteController : Controller
-	{
+	public class PacienteController : BaseController
+    {
 		// GET: Paciente
 		public ActionResult Index()
 		{

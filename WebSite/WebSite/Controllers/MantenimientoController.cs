@@ -11,8 +11,8 @@ using Utiles;
 
 namespace WebSite.Controllers
 {
-	public class MantenimientoController : Controller
-	{
+	public class MantenimientoController : BaseController
+    {
 		public ActionResult Mantenimiento()
 		{
 			return View();

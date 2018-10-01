@@ -50,7 +50,7 @@ var RecuperarPassword = function ()
 
 			$.ajax( {
 				type: "POST",
-				url: '/Usuario/RecuperarPassword',
+				url: '/Login/RecuperarPassword',
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				data: datos,
@@ -74,14 +74,12 @@ var RecuperarPassword = function ()
 				{
 					ocultarLoading();
 					var responseText = jqXHR.responseText;
-					//var mensajeError = obtenerMensajeError(responseText);
 					mostrarMensaje( 'Error', responseText, 'error' );
 				}
 			} );
 		}
 	}
-};
-
+} ;
 
 function recuperarPassword()
 {

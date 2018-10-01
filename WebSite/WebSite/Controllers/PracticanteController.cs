@@ -14,7 +14,7 @@ using WebSite.Models.Seguridad;
 
 namespace WebSite.Controllers
 {
-    public class PracticanteController : Controller
+    public class PracticanteController : BaseController
     {
         public ActionResult Index()
         {
